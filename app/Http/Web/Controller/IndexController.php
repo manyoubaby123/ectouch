@@ -10,7 +10,7 @@ use Think\Request;
 
 class IndexController extends InitController
 {
-    public function index()
+    public function indexAction()
     {
         $ua = Request::server('HTTP_USER_AGENT');
 

@@ -14,7 +14,8 @@ use Think\Request;
 
 class InitController extends Controller
 {
-    protected function _initialize()
+
+    protected function initialize()
     {
         if (!file_exists(storage_path('install.lock'))) {
             // header("Location: ./install/index.php\n");

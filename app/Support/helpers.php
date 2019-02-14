@@ -6,7 +6,7 @@
  */
 function asset($path = null)
 {
-    $root = think\facade\Request::rootUrl();
+    $root = __ROOT__ . '/';
 
     $path = is_null($path) ? '' : trim($path, '/');
 

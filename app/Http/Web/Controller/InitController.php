@@ -2,7 +2,7 @@
 
 namespace App\Http\Web\Controller;
 
-use App\Http\Common\Controllers\Controller;
+use App\Common\Controllers\Controller;
 use App\Libraries\Error;
 use App\Libraries\Mysql;
 use App\Libraries\Shop;

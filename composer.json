@@ -61,6 +61,14 @@
             ]
         }
     },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        },
+        "files": [
+            "app/support/helpers.php"
+        ]
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {

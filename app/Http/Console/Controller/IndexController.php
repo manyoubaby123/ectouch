@@ -7,7 +7,7 @@ use App\Libraries\Transport;
 
 class IndexController extends InitController
 {
-    public function index()
+    public function indexAction()
     {
         load_helper('order');
 

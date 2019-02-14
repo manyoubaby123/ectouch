@@ -2,12 +2,13 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Http\Common\Controllers\Controller;
+use App\Common\Controllers\Controller;
 use App\Libraries\Error;
 use App\Libraries\Mysql;
 use App\Libraries\Shop;
 use App\Libraries\Template;
 use App\Libraries\Transport;
+use App\Services\ConfigService;
 use Think\Request;
 
 class InitController extends Controller
@@ -15,7 +16,7 @@ class InitController extends Controller
     protected function initialize()
     {
         define('ECS_ADMIN', true);
-        define('PHP_SELF', $this->getSelf());
+        define('PHP_SELF', parse_name(CONTROLLER_NAME) . '.php');
 
         load_helper(['time', 'base', 'common']);
         load_helper('main', 'admin');
@@ -40,7 +41,8 @@ class InitController extends Controller
         $GLOBALS['sess'] = session();
 
         /* 载入系统参数 */
-        $GLOBALS['_CFG'] = load_config();
+        $configService = new ConfigService();
+        $GLOBALS['_CFG'] = $configService->load_config();
 
         load_lang(['common', 'log_action', PHP_SELF], 'admin');
 

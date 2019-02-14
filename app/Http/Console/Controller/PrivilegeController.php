@@ -7,7 +7,7 @@ use App\Libraries\Exchange;
 
 class PrivilegeController extends InitController
 {
-    public function index()
+    public function indexAction()
     {
         /* act操作项的初始化 */
         if (empty($_REQUEST['act'])) {

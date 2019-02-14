@@ -77,14 +77,13 @@ class InitController extends Controller
         }
 
         if (!defined('INIT_NO_USERS')) {
-            /* 初始化session */
-            $GLOBALS['sess'] = new Session();
-
             define('SESS_ID', session_id());
         }
+
         if (isset($_SERVER['PHP_SELF'])) {
             $_SERVER['PHP_SELF'] = htmlspecialchars($_SERVER['PHP_SELF']);
         }
+
         if (!defined('INIT_NO_SMARTY')) {
             header('Cache-control: private');
             header('Content-type: text/html; charset=' . EC_CHARSET);
@@ -116,8 +115,8 @@ class InitController extends Controller
 
         if (!defined('INIT_NO_USERS')) {
             /* 会员信息 */
-            $user = app(UserService::class);
-            $GLOBALS['user'] = $user->init_users();
+            $userService = new UserService();
+            $GLOBALS['user'] = $userService->init_users();
 
             if (!session('?user_id')) {
                 /* 获取投放站点的名称 */

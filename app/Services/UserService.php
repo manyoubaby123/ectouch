@@ -19,9 +19,9 @@ class UserService
      * UserService constructor.
      * @param UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
+        $this->userRepository = new UserRepository();
     }
 
     /**
@@ -883,7 +883,7 @@ class UserService
      * @access  public
      * @return  object
      */
-    public function &init_users()
+    public function init_users()
     {
         $set_modules = false;
         static $cls = null;

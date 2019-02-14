@@ -19,9 +19,9 @@ class UserRepository
      * UserRepository constructor.
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        $this->user = new User();
     }
 
     /**

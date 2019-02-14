@@ -2,7 +2,7 @@
 
 namespace App\Http\Web\Controller;
 
-use App\Libraries\Sms;
+use app\libraries\Sms;
 
 class WholesaleController extends InitController
 {

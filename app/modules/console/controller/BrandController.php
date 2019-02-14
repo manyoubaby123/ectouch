@@ -2,8 +2,8 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Exchange;
-use App\Libraries\Image;
+use app\libraries\Exchange;
+use app\libraries\Image;
 
 class BrandController extends InitController
 {

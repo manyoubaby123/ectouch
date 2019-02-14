@@ -2,7 +2,7 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Exchange;
+use app\libraries\Exchange;
 
 class RoleController extends InitController
 {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Mysql;
-use App\Libraries\Transport;
+use app\libraries\Mysql;
+use app\libraries\Transport;
 
 class IntegrateController extends InitController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace app\console;
 
 use Phinx\Console\Command;
 use Symfony\Component\Console\Application as Foundation;

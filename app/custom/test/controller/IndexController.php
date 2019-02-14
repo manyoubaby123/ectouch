@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Custom\Test\Controller;
+namespace app\custom\Test\Controller;
 
 class IndexController
 {

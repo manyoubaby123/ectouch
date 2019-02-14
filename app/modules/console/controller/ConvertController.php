@@ -2,7 +2,7 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Mysql;
+use app\libraries\Mysql;
 
 class ConvertController extends InitController
 {

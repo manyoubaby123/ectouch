@@ -2,7 +2,7 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Sms;
+use app\libraries\Sms;
 
 class SmsController extends InitController
 {

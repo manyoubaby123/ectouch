@@ -2,13 +2,13 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Common\Controllers\Controller;
-use App\Libraries\Error;
-use App\Libraries\Mysql;
-use App\Libraries\Shop;
-use App\Libraries\Template;
-use App\Libraries\Transport;
-use App\Services\ConfigService;
+use app\common\Controllers\Controller;
+use app\libraries\Error;
+use app\libraries\Mysql;
+use app\libraries\Shop;
+use app\libraries\Template;
+use app\libraries\Transport;
+use app\services\ConfigService;
 use Think\Request;
 
 class InitController extends Controller

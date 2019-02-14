@@ -1,7 +1,14 @@
 {
     "name": "ectouch/ectouch",
     "description": "A Modern E-Commerce Platform.",
-    "keywords": ["ectouch", "b2c", "o2o", "shop", "mall", "wechat"],
+    "keywords": [
+        "ectouch",
+        "b2c",
+        "o2o",
+        "shop",
+        "mall",
+        "wechat"
+    ],
     "homepage": "https://www.ectouch.cn",
     "type": "project",
     "license": "GPL-3.0",
@@ -57,7 +64,7 @@
         },
         "yii\\composer\\Installer::postInstall": {
             "generateCookieValidationKey": [
-                "config/web.php"
+                "config/config.php"
             ]
         }
     },
@@ -66,6 +73,7 @@
             "app\\": "app/"
         },
         "files": [
+            "config/constant.php",
             "app/support/helpers.php"
         ]
     },

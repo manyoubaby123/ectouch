@@ -2,8 +2,8 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\GoogleSitemap;
-use App\Libraries\GoogleSitemapItem;
+use app\libraries\GoogleSitemap;
+use app\libraries\GoogleSitemapItem;
 
 class SitemapController extends InitController
 {

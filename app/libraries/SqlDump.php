@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries;
+namespace app\libraries;
 
 /**
  * 对mysql敏感字符串转义

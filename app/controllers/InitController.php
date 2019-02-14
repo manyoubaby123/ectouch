@@ -28,8 +28,8 @@ class InitController extends Controller
         load_helper(['time', 'base', 'common', 'main', 'insert', 'goods', 'article']);
 
         /* 对用户传入的变量进行转义操作。*/
-        $_GET = Request::get();
-        $_POST = Request::post();
+        $_GET = app('request')->get();
+        $_POST = app('request')->post();
         $_REQUEST = $_GET + $_POST;
         $_REQUEST['act'] = isset($_REQUEST['act']) ? $_REQUEST['act'] : '';
 

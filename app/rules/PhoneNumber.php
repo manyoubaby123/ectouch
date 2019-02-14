@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules;
+namespace app\rules;
 
 class PhoneNumber
 {

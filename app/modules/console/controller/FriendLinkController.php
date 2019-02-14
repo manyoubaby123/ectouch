@@ -2,8 +2,8 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Exchange;
-use App\Libraries\Iconv;
+use app\libraries\Exchange;
+use app\libraries\Iconv;
 
 class FriendLinkController extends InitController
 {

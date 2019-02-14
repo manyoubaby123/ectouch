@@ -2,8 +2,8 @@
 
 namespace App\Http\Web\Controller;
 
-use App\Libraries\Captcha;
-use App\Libraries\Sms;
+use app\libraries\Captcha;
+use app\libraries\Sms;
 
 class FlowController extends InitController
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace app\services;
 
 /**
  * Class BonusService
- * @package App\Services
+ * @package app\services
  */
 class BonusService
 {

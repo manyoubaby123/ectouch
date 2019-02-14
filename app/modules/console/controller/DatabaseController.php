@@ -2,7 +2,7 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\SqlDump;
+use app\libraries\SqlDump;
 
 class DatabaseController extends InitController
 {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Captcha;
-use App\Libraries\Exchange;
+use app\libraries\Captcha;
+use app\libraries\Exchange;
 
 class PrivilegeController extends InitController
 {

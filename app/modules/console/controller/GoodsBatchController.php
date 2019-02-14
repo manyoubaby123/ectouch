@@ -2,7 +2,7 @@
 
 namespace App\Http\Console\Controller;
 
-use App\Libraries\Image;
+use app\libraries\Image;
 
 class GoodsBatchController extends InitController
 {

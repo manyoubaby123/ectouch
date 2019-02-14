@@ -2,7 +2,7 @@
 
 namespace App\Http\Web\Controller;
 
-use App\Libraries\Captcha;
+use app\libraries\Captcha;
 
 class CommentController extends InitController
 {

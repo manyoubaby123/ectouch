@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries;
+namespace app\libraries;
 
-use think\Db;
+use Yii;
 
 class Mysql
 {
@@ -10,9 +10,9 @@ class Mysql
     {
         $m = strtolower(substr(ltrim(trim($sql), '('), 0, 6));
         if ($m == 'select' || substr($m, 0, 4) == 'desc' || substr($m, 0, 4) == 'show') {
-            $res = Db::query($sql);
+            $res = Yii::$app->db->createCommand($sql)->queryAll();
         } else {
-            $res = Db::execute($sql);
+            $res = Yii::$app->db->createCommand($sql)->execute();
         }
 
         return $res;
@@ -30,7 +30,7 @@ class Mysql
 
     public function insert_id()
     {
-        return $this->getOne('SELECT LAST_INSERT_ID()');
+        return Yii::$app->db->getLastInsertID();
     }
 
     public function version()
@@ -292,7 +292,7 @@ class Mysql
             if (!empty($fields)) {
                 $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $fields) . ') VALUES (' . implode(', ', $values) . ')';
                 if (!empty($sets)) {
-                    $sql .=  'ON DUPLICATE KEY UPDATE ' . implode(', ', $sets);
+                    $sql .= 'ON DUPLICATE KEY UPDATE ' . implode(', ', $sets);
                 }
             }
         }

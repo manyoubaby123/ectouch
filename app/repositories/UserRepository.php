@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace app\repositories;
 
-use App\Models\User;
+use app\models\User;
 
 /**
  * Class UserRepository

@@ -7,8 +7,6 @@
  * @homepage https://www.ectouch.cn
  */
 
-define('ROOT_PATH', str_replace('\\', '/', dirname(__DIR__)) . '/');
-
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -35,7 +33,7 @@ require __DIR__ . '/../vendor/autoload.php';
 |
 */
 
-require_once __DIR__ . '/../bootstrap/app.php';
+$app = require __DIR__ . '/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +47,4 @@ require_once __DIR__ . '/../bootstrap/app.php';
 |
 */
 
-App::start();
+$app->run();

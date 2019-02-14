@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Http\Web\Controller;
+namespace app\controllers;
 
-use App\Common\Controllers\Controller;
-use App\Libraries\Error;
-use App\Libraries\Mysql;
-use App\Libraries\Shop;
-use App\Libraries\Template;
-use App\Services\ConfigService;
-use App\Services\StatService;
-use App\Services\UserService;
-use Think\Request;
+use yii\web\Controller;
+use app\libraries\Error;
+use app\libraries\Mysql;
+use app\libraries\Shop;
+use app\libraries\Template;
+use app\services\ConfigService;
+use app\services\StatService;
+use app\services\UserService;
 
 class InitController extends Controller
 {
-
-    protected function initialize()
+    public function init()
     {
         if (!file_exists(storage_path('install.lock'))) {
             // header("Location: ./install/index.php\n");

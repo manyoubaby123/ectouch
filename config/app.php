@@ -1,8 +1,30 @@
 <?php
 
 return [
-    'APP_SUB_DOMAIN_DEPLOY' => true,
-    'APP_SUB_DOMAIN_RULES' => [ADMIN_PATH => 'Console'],
-    'DEFAULT_MODULE' => 'Web',
-    'MODULE_ALLOW_LIST' => ['Api', 'Web'],
+
+    /**
+     * 应用名称
+     */
+    'name' => '',
+
+    /**
+     * 应用URL
+     */
+    'url' => '',
+
+    /**
+     * 静态资源URL
+     */
+    'static' => '',
+
+    /**
+     * 应用运行模式
+     */
+    'mode' => 0,
+
+    /**
+     * 调试模式
+     */
+    'debug' => YII_DEBUG,
+
 ];

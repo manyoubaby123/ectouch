@@ -46,7 +46,8 @@ class InitController extends Controller
         $GLOBALS['err'] = new Error('message.dwt');
 
         /* 载入系统参数 */
-        $GLOBALS['_CFG'] = app(ConfigService::class)->load_config();
+        $configService = new ConfigService();
+        $GLOBALS['_CFG'] = $configService->load_config();
 
         /* 载入语言文件 */
         load_lang('common');

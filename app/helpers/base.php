@@ -713,7 +713,7 @@ function ecs_header($string, $replace = true, $http_response_code = 0)
     if (strpos($string, '../upgrade/index.php') === 0) {
         echo '<script type="text/javascript">window.location.href="' . $string . '";</script>';
     }
-    $string = str_replace(array("\r", "\n"), array('', ''), $string);
+    $string = str_replace(array("\r", "\n"), '', $string);
 
     if (preg_match('/^\s*location:/is', $string)) {
         @header($string . "\n", $replace);
@@ -721,11 +721,7 @@ function ecs_header($string, $replace = true, $http_response_code = 0)
         exit();
     }
 
-    if (empty($http_response_code) || PHP_VERSION < '4.3') {
-        @header($string, $replace);
-    } else {
-        @header($string, $replace, $http_response_code);
-    }
+    @header($string, $replace, $http_response_code);
 }
 
 function ecs_iconv($source_lang, $target_lang, $source_string = '')

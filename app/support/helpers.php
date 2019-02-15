@@ -325,6 +325,7 @@ function load_helper($files = [], $module = '')
     if (empty($module)) {
         $base_path = app_path('helpers/');
     } else {
+        $module = ($module == 'admin') ? 'console' : $module; // 兼容模块名称
         $base_path = app_path('modules/' . parse_name($module) . '/common/');
     }
 

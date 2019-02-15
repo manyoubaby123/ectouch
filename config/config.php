@@ -31,10 +31,10 @@ $config = [
     'basePath' => '@app',
     'viewPath' => '@view',
     'runtimePath' => '@runtime',
-    'vendorPath' => '@vendor',    'bootstrap' => ['log'],
+    'vendorPath' => '@vendor', 'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -78,13 +78,11 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => $rules,
         ],
-        */
     ],
     'modules' => require __DIR__ . '/module.php',
     'params' => $params,

@@ -1472,9 +1472,9 @@ class FlowController extends InitController
             $GLOBALS['smarty']->assign('order_submit_back', sprintf($GLOBALS['_LANG']['order_submit_back'], $GLOBALS['_LANG']['back_home'], $GLOBALS['_LANG']['goto_user_center'])); // 返回提示
 
             user_uc_call('add_feed', [$order['order_id'], BUY_GOODS]); //推送feed到uc
-            session()->forget('flow_consignee'); // 清除session中保存的收货人信息
-            session()->forget('flow_order');
-            session()->forget('direct_shopping');
+            session('flow_consignee', null); // 清除session中保存的收货人信息
+            session('flow_order', null);
+            session('direct_shopping', null);
         }
 
         /*------------------------------------------------------ */
@@ -1566,11 +1566,11 @@ class FlowController extends InitController
             if (session('user_id') > 0) {
                 $rec_id = intval($_GET['id']);
                 $goods_id = $GLOBALS['db']->getOne("SELECT  goods_id FROM " . $GLOBALS['ecs']->table('cart') . " WHERE rec_id = '$rec_id' AND session_id = '" . SESS_ID . "' ");
-                $count = $GLOBALS['db']->getOne("SELECT goods_id FROM " . $GLOBALS['ecs']->table('collect_goods') . " WHERE user_id = '". session('user_id') ."' AND goods_id = '$goods_id'");
+                $count = $GLOBALS['db']->getOne("SELECT goods_id FROM " . $GLOBALS['ecs']->table('collect_goods') . " WHERE user_id = '" . session('user_id') . "' AND goods_id = '$goods_id'");
                 if (empty($count)) {
                     $time = gmtime();
                     $sql = "INSERT INTO " . $GLOBALS['ecs']->table('collect_goods') . " (user_id, goods_id, add_time)" .
-                        "VALUES ('". session('user_id') ."', '$goods_id', '$time')";
+                        "VALUES ('" . session('user_id') . "', '$goods_id', '$time')";
                     $GLOBALS['db']->query($sql);
                 }
                 $this->flow_drop_cart_goods($rec_id);
@@ -2252,7 +2252,7 @@ class FlowController extends InitController
         $sql = "INSERT INTO " . $GLOBALS['ecs']->table('cart') . " (" .
             "user_id, session_id, goods_id, goods_sn, goods_name, market_price, goods_price, " .
             "goods_number, is_real, extension_code, parent_id, is_gift, rec_type ) " .
-            "SELECT '". session('user_id') ."', '" . SESS_ID . "', goods_id, goods_sn, goods_name, market_price, " .
+            "SELECT '" . session('user_id') . "', '" . SESS_ID . "', goods_id, goods_sn, goods_name, market_price, " .
             "'$price', 1, is_real, extension_code, 0, '$act_id', '" . CART_GENERAL_GOODS . "' " .
             "FROM " . $GLOBALS['ecs']->table('goods') .
             " WHERE goods_id = '$id'";
@@ -2270,7 +2270,7 @@ class FlowController extends InitController
         $sql = "INSERT INTO " . $GLOBALS['ecs']->table('cart') . "(" .
             "user_id, session_id, goods_id, goods_sn, goods_name, market_price, goods_price, " .
             "goods_number, is_real, extension_code, parent_id, is_gift, rec_type ) " .
-            "VALUES('". session('user_id') ."', '" . SESS_ID . "', 0, '', '$act_name', 0, " .
+            "VALUES('" . session('user_id') . "', '" . SESS_ID . "', 0, '', '$act_name', 0, " .
             "'" . (-1) * $amount . "', 1, 0, '', 0, '$act_id', '" . CART_GENERAL_GOODS . "')";
         $GLOBALS['db']->query($sql);
     }

@@ -742,10 +742,10 @@ class IntegrateController extends InitController
                 $result['end'] = 1;
 
                 /* 清理多余信息 */
-                session()->forget('cfg');
-                session()->forget('code');
-                session()->forget('task');
-                session()->forget('domain');
+                session('cfg', null);
+                session('code', null);
+                session('task', null);
+                session('domain', null);
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " set flag = 0, alias = '' WHERE flag > 0";
                 $GLOBALS['db']->query($sql);
                 return json_encode($result);

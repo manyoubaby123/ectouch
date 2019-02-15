@@ -52,6 +52,7 @@ class PrivilegeController extends InitController
         //-- 验证登陆信息
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'signin') {
+
             if (intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_ADMIN) {
                 /* 检查验证码是否正确 */
                 $validator = new Captcha();
@@ -77,6 +78,7 @@ class PrivilegeController extends InitController
                     " WHERE user_name = '" . $_POST['username'] . "' AND password = '" . md5($_POST['password']) . "'";
             }
             $row = $GLOBALS['db']->getRow($sql);
+
             if ($row) {
                 // 检查是否为供货商的管理员 所属供货商是否有效
                 if (!empty($row['suppliers_id'])) {
@@ -115,7 +117,7 @@ class PrivilegeController extends InitController
                 // 清除购物车中过期的数据
                 $this->clear_cart();
 
-                return ecs_header("Location: ./index.php\n");
+                return $this->redirect(['default/index']);
             } else {
                 sys_msg($GLOBALS['_LANG']['login_faild'], 1);
             }

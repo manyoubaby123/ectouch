@@ -127,7 +127,7 @@ class DefaultController extends InitController
         if ($_REQUEST['act'] == 'main') {
             //开店向导第一步
             if (session('?shop_guide') && session('shop_guide') === true) {
-                session()->forget('shop_guide');//销毁session
+                session('shop_guide', null);//销毁session
 
                 return ecs_header("Location: ./index.php?act=first\n");
             }

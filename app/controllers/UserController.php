@@ -531,8 +531,8 @@ class UserController extends InitController
             } else {
                 session('user_id', session('temp_user'));
                 session('user_name', session('temp_user_name'));
-                session()->forget('temp_user');
-                session()->forget('temp_user');
+                session('temp_user', null);
+                session('temp_user_name', null);
                 $GLOBALS['smarty']->assign('uid', session('user_id'));
                 $GLOBALS['smarty']->assign('action', 'reset_password');
                 return $GLOBALS['smarty']->display('user_passport.dwt');

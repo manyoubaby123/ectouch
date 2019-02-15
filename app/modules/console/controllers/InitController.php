@@ -15,8 +15,7 @@ class InitController extends Controller
     public function init()
     {
         define('ECS_ADMIN', true);
-        dd(\Yii::$app->request);
-        define('PHP_SELF', parse_name(CONTROLLER_NAME) . '.php');
+        define('PHP_SELF', basename(app('request')->getPathInfo()));
 
         load_helper(['time', 'base', 'common']);
         load_helper('main', 'admin');
@@ -41,14 +40,14 @@ class InitController extends Controller
         $configService = new ConfigService();
         $GLOBALS['_CFG'] = $configService->load_config();
 
-        load_lang(['common', 'log_action', PHP_SELF], 'admin');
+        load_lang(['common', 'log_action', basename(PHP_SELF, '.php')], 'admin');
 
         /* 创建 Smarty 对象。*/
         $GLOBALS['smarty'] = new Template();
 
-        $GLOBALS['smarty']->template_dir = resource_path('views/admin');
+        $GLOBALS['smarty']->template_dir = dirname(__DIR__) . '/views/';
         $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled/admin');
-        if (config('app_debug')) {
+        if (YII_DEBUG) {
             $GLOBALS['smarty']->force_compile = true;
         }
 

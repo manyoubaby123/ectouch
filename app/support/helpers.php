@@ -347,11 +347,9 @@ function load_lang($files = [], $module = '')
         $files = [$files];
     }
 
-    if (empty($module)) {
-        $base_path = resource_path('lang/' . $GLOBALS['_CFG']['lang'] . '/');
-    } else {
-        $base_path = app_path(strtolower($module) . '/lang/' . $GLOBALS['_CFG']['lang'] . '/');
-    }
+    $base_path = resource_path('lang/' . $GLOBALS['_CFG']['lang'] . '/');
+
+    $base_path .= empty($module) ? $module : parse_name($module) . '/';
 
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';

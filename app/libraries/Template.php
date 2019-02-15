@@ -65,12 +65,9 @@ class Template
 
     /**
      * 显示页面函数
-     *
-     * @access  public
-     * @param   string $filename
-     * @param   sting $cache_id
-     *
-     * @return  void
+     * @param $filename
+     * @param string $cache_id
+     * @return sring|string|string[]|null
      */
     public function display($filename, $cache_id = '')
     {
@@ -95,17 +92,14 @@ class Template
         error_reporting($this->_errorlevel);
         $this->_seterror--;
 
-        echo $out;
+        return $out;
     }
 
     /**
      * 处理模板文件
-     *
-     * @access  public
-     * @param   string $filename
-     * @param   sting $cache_id
-     *
-     * @return  sring
+     * @param $filename
+     * @param string $cache_id
+     * @return sring|false|mixed|string|string[]|null
      */
     public function fetch($filename, $cache_id = '')
     {
@@ -140,7 +134,7 @@ class Template
                     $out = $this->make_compiled($filename);
 
                     if ($cache_id) {
-                        $cachename = basename($filename, strrchr($filename, '.')) . '_' . $cache_id;
+                        $cacheName = basename($filename, strrchr($filename, '.')) . '_' . $cache_id;
                         $data = serialize(['template' => $this->template, 'expires' => $this->_nowtime + $this->cache_lifetime, 'maketime' => $this->_nowtime]);
                         $out = str_replace("\r", '', $out);
 
@@ -148,12 +142,12 @@ class Template
                             $out = str_replace("\n\n", "\n", $out);
                         }
 
-                        $hash_dir = $this->cache_dir . '/' . substr(md5($cachename), 0, 1);
+                        $hash_dir = $this->cache_dir . '/' . substr(md5($cacheName), 0, 1);
                         if (!is_dir($hash_dir)) {
                             mkdir($hash_dir, 0755, true);
                         }
-                        if (file_put_contents($hash_dir . '/' . $cachename . '.php', '<?php exit;?>' . $data . $out, LOCK_EX) === false) {
-                            trigger_error('can\'t write:' . $hash_dir . '/' . $cachename . '.php');
+                        if (file_put_contents($hash_dir . '/' . $cacheName . '.php', '<?php exit;?>' . $data . $out, LOCK_EX) === false) {
+                            trigger_error('can\'t write:' . $hash_dir . '/' . $cacheName . '.php');
                         }
                         $this->template = [];
                     }

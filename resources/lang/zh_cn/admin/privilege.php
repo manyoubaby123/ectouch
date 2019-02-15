@@ -1,7 +1,5 @@
 <?php
 
-
-
 /* 字段信息 */
 $_LANG['user_id'] = '编号';
 $_LANG['user_name'] = '用户名';

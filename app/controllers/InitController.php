@@ -19,11 +19,8 @@ class InitController extends Controller
             // header("Location: ./install/index.php\n");
         }
 
-        $php_self = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
-        if ('/' == substr($php_self, -1)) {
-            $php_self .= 'index.php';
-        }
-        define('PHP_SELF', $php_self);
+        $PHP_SELF = basename(app('request')->getPathInfo());
+        define('PHP_SELF', empty($PHP_SELF) ? 'index.php' : $PHP_SELF);
 
         load_helper(['time', 'base', 'common', 'main', 'insert', 'goods', 'article']);
 
@@ -94,7 +91,7 @@ class InitController extends Controller
             $GLOBALS['smarty']->cache_dir = storage_path('temp/caches');
             $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled');
 
-            if (config('app_debug')) {
+            if (YII_DEBUG) {
                 $GLOBALS['smarty']->direct_output = true;
                 $GLOBALS['smarty']->force_compile = true;
             } else {

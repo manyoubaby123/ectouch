@@ -387,7 +387,7 @@ class Ucenter extends Integrate
     public function set_session($username = '')
     {
         if (empty($username)) {
-            $GLOBALS['sess']->destroy_session();
+            session(null);
         } else {
             $sql = "SELECT user_id, password, email FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_name='$username' LIMIT 1";
             $row = $GLOBALS['db']->getRow($sql);

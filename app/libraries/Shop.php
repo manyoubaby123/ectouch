@@ -90,11 +90,7 @@ class Shop
      */
     public function url()
     {
-        $curr = strpos(PHP_SELF, ADMIN_PATH . '/') !== false ?
-            preg_replace('/(.*)(' . ADMIN_PATH . ')(\/?)(.)*/i', '\1', dirname(PHP_SELF)) :
-            dirname(PHP_SELF);
-
-        $root = str_replace('\\', '/', $curr);
+        $root = app('request')->getBaseUrl();
 
         if (substr($root, -1) != '/') {
             $root .= '/';

@@ -59,7 +59,7 @@ class DefaultController extends InitController
         //-- 左边的框架
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'menu') {
-            global $modules;
+            global $modules, $purview;
 
             load_helper(['menu', 'priv'], 'admin');
 
@@ -1054,6 +1054,15 @@ class DefaultController extends InitController
                 return make_json_error(0);
             }
         }
+    }
+
+    /**
+     * 兼容地址栏 URL 地址
+     * @return \yii\web\Response
+     */
+    public function actionPrettyUrl()
+    {
+        return $this->redirect(['index']);
     }
 
     /**

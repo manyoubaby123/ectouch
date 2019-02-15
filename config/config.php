@@ -18,8 +18,7 @@ foreach ($api as $version => $rules) {
 
 foreach ($dashboard as $key => $vo) {
     if ($key <= 0) {
-        $admin['admin'] = '404';
-        $admin[ADMIN_PATH] = 'console';
+        $admin[ADMIN_PATH] = 'console/default/pretty-url';
     }
     $admin[ADMIN_PATH . '/' . $key] = 'console/' . $vo;
 }

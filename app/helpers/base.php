@@ -755,7 +755,7 @@ function ecs_geoip($ip)
     }
 
     if ($fp === null) {
-        $fp = fopen(ROOT_PATH . 'includes/codetable/ipdata.dat', 'rb');
+        $fp = fopen(resource_path('codetable/ipdata.dat'), 'rb');
         if ($fp === false) {
             return 'Invalid IP data file';
         }

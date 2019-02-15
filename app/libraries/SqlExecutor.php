@@ -687,7 +687,7 @@ class SqlExecutor
         $result = $this->db->query("SHOW INDEX FROM $table_name", 'SILENT');
 
         if ($result) {
-            while ($row = $this->db->fetchRow($result)) {
+            foreach ($result as $row) {
                 $indexes[] = $row['Key_name'];
             }
         }
@@ -709,7 +709,7 @@ class SqlExecutor
         $result = $this->db->query("SHOW FIELDS FROM $table_name", 'SILENT');
 
         if ($result) {
-            while ($row = $this->db->fetchRow($result)) {
+            foreach ($result as $row) {
                 $fields[] = $row['Field'];
             }
         }

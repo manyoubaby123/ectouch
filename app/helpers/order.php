@@ -237,7 +237,7 @@ function available_payment_list($support_cod, $cod_fee = 0, $is_online = false)
     $res = $GLOBALS['db']->query($sql);
 
     $pay_list = array();
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         if ($row['is_cod'] == '1') {
             $row['pay_fee'] = $cod_fee;
         }
@@ -264,7 +264,7 @@ function pack_list()
     $res = $GLOBALS['db']->query($sql);
 
     $list = array();
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         $row['format_pack_fee'] = price_format($row['pack_fee'], false);
         $row['format_free_money'] = price_format($row['free_money'], false);
         $list[] = $row;
@@ -313,7 +313,7 @@ function card_list()
     $res = $GLOBALS['db']->query($sql);
 
     $list = array();
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         $row['format_card_fee'] = price_format($row['card_fee'], false);
         $row['format_free_money'] = price_format($row['free_money'], false);
         $list[] = $row;
@@ -419,7 +419,7 @@ function order_goods($order_id)
 
     $res = $GLOBALS['db']->query($sql);
 
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         if ($row['extension_code'] == 'package_buy') {
             $row['package_goods_list'] = get_package_goods($row['goods_id']);
         }
@@ -1022,7 +1022,7 @@ function addto_cart($goods_id, $num = 1, $spec = array(), $parent = 0)
         " AND parent_id = '$_parent_id'" .
         " ORDER BY goods_price";
     $res = $GLOBALS['db']->query($sql);
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         $basic_list[$row['parent_id']] = $row['goods_price'];
     }
 
@@ -1037,7 +1037,7 @@ function addto_cart($goods_id, $num = 1, $spec = array(), $parent = 0)
             " AND goods_id " . db_create_in(array_keys($basic_list)) .
             " GROUP BY goods_id";
         $res = $GLOBALS['db']->query($sql);
-        while ($row = $GLOBALS['db']->fetchRow($res)) {
+        foreach ($res as $row) {
             $basic_count_list[$row['goods_id']] = $row['count'];
         }
     }
@@ -1053,7 +1053,7 @@ function addto_cart($goods_id, $num = 1, $spec = array(), $parent = 0)
             " AND parent_id " . db_create_in(array_keys($basic_count_list)) .
             " GROUP BY parent_id";
         $res = $GLOBALS['db']->query($sql);
-        while ($row = $GLOBALS['db']->fetchRow($res)) {
+        foreach ($res as $row) {
             $basic_count_list[$row['parent_id']] -= $row['count'];
         }
     }
@@ -1168,7 +1168,7 @@ function get_goods_attr_info($arr, $type = 'pice')
             "WHERE " . db_create_in($arr, 'ga.goods_attr_id') . " AND a.attr_id = ga.attr_id";
         $res = $GLOBALS['db']->query($sql);
 
-        while ($row = $GLOBALS['db']->fetchRow($res)) {
+        foreach ($res as $row) {
             $attr_price = round(floatval($row['attr_price']), 2);
             $attr .= sprintf($fmt, $row['attr_name'], $row['attr_value'], $attr_price);
         }
@@ -1454,7 +1454,7 @@ function get_cart_goods()
     $virtual_goods_count = 0;
     $real_goods_count = 0;
 
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         $total['goods_price'] += $row['goods_price'] * $row['goods_number'];
         $total['market_price'] += $row['market_price'] * $row['goods_number'];
 
@@ -1925,7 +1925,7 @@ function get_agency_by_regions($regions)
         " WHERE region_id " . db_create_in($regions) .
         " AND region_id > 0 AND agency_id > 0";
     $res = $GLOBALS['db']->query($sql);
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         $arr[$row['region_id']] = $row['agency_id'];
     }
     if (empty($arr)) {
@@ -1983,7 +1983,7 @@ function change_order_goods_storage($order_id, $is_dec = true, $storage = 0)
     }
 
     $res = $GLOBALS['db']->query($sql);
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $row) {
         if ($row['extension_code'] != "package_buy") {
             if ($is_dec) {
                 change_goods_storage($row['goods_id'], $row['product_id'], -$row['num']);
@@ -1996,7 +1996,7 @@ function change_order_goods_storage($order_id, $is_dec = true, $storage = 0)
                 " FROM " . $GLOBALS['ecs']->table('package_goods') .
                 " WHERE package_id = '" . $row['goods_id'] . "'";
             $res_goods = $GLOBALS['db']->query($sql);
-            while ($row_goods = $GLOBALS['db']->fetchRow($res_goods)) {
+            foreach ($res_goods as $row_goods) {
                 $sql = "SELECT is_real" .
                     " FROM " . $GLOBALS['ecs']->table('goods') .
                     " WHERE goods_id = '" . $row_goods['goods_id'] . "'";

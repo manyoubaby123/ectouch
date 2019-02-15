@@ -52,7 +52,7 @@ function get_member_price_list($goods_id)
         $GLOBALS['ecs']->table('member_price') .
         " WHERE goods_id = '$goods_id'";
     $res = $GLOBALS['db']->query($sql);
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res => $row) {
         $price_list[$row['user_rank']] = $row['user_price'];
     }
 
@@ -388,7 +388,7 @@ function delete_goods($goods_id)
         "FROM " . $GLOBALS['ecs']->table('goods') .
         " WHERE goods_id " . db_create_in($goods_id);
     $res = $GLOBALS['db']->query($sql);
-    while ($goods = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res as $goods) {
         if (!empty($goods['goods_thumb'])) {
             @unlink('../' . $goods['goods_thumb']);
         }
@@ -415,7 +415,7 @@ function delete_goods($goods_id)
         "FROM " . $GLOBALS['ecs']->table('goods_gallery') .
         " WHERE goods_id " . db_create_in($goods_id);
     $res = $GLOBALS['db']->query($sql);
-    while ($row = $GLOBALS['db']->fetchRow($res)) {
+    foreach ($res => $row) {
         if (!empty($row['img_url'])) {
             @unlink('../' . $row['img_url']);
         }

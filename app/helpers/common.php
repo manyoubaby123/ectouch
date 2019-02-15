@@ -536,7 +536,7 @@ function get_brands($cat = 0, $app = 'brand')
     global $page_libs;
     $template = basename(PHP_SELF);
     $template = substr($template, 0, strrpos($template, '.'));
-    include_once(ROOT_PATH . ADMIN_PATH . '/includes/lib_template.php');
+    load_helper('template', 'admin');
     static $static_page_libs = null;
     if ($static_page_libs == null) {
         $static_page_libs = $page_libs;

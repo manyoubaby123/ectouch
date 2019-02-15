@@ -36,7 +36,7 @@ class ReceiveController extends InitController
         }
 
         /* 显示模板 */
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         $position = assign_ur_here();
         $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
         $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置

@@ -31,7 +31,7 @@ class RespondController extends InitController
             if ($GLOBALS['db']->getOne($sql) == 0) {
                 $msg = $GLOBALS['_LANG']['pay_disabled'];
             } else {
-                $plugin = '\\app\\plugins\\payment\\' . studly_case($pay_code);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($pay_code, true);
 
                 /* 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 */
                 if (class_exists($plugin)) {
@@ -44,7 +44,7 @@ class RespondController extends InitController
             }
         }
 
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         $position = assign_ur_here();
         $GLOBALS['smarty']->assign('page_title', $position['title']);   // 页面标题
         $GLOBALS['smarty']->assign('ur_here', $position['ur_here']); // 当前位置

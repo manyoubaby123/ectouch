@@ -6,7 +6,7 @@ class TagCloudController extends InitController
 {
     public function actionIndex()
     {
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         $position = assign_ur_here(0, $GLOBALS['_LANG']['tag_cloud']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
         $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置

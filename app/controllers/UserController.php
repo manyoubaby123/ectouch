@@ -11,7 +11,7 @@ class UserController extends InitController
         load_lang('user');
 
         $user_id = session('user_id');
-        $action = request('act', 'default');
+        $action = app('request')->get('act', 'default');
 
         $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
         $GLOBALS['smarty']->assign('affiliate', $affiliate);
@@ -53,7 +53,7 @@ class UserController extends InitController
 
         /* 如果是显示页面，对页面进行相应赋值 */
         if (in_array($action, $ui_arr)) {
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             $position = assign_ur_here(0, $GLOBALS['_LANG']['user_center']);
             $GLOBALS['smarty']->assign('page_title', $position['title']); // 页面标题
             $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);
@@ -1185,7 +1185,7 @@ class UserController extends InitController
                 $order['log_id'] = insert_pay_log($surplus['rec_id'], $order['order_amount'], $type = PAY_SURPLUS, 0);
 
                 /* 调用相应的支付方式文件 */
-                $plugin = '\\app\\plugins\\payment\\' . studly_case($payment_info['pay_code']);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment_info['pay_code'], true);
 
                 /* 取得在线支付方式的支付按钮 */
                 $pay_obj = new $plugin;
@@ -1266,7 +1266,7 @@ class UserController extends InitController
                 }
 
                 /* 调用相应的支付方式文件 */
-                $plugin = '\\app\\plugins\\payment\\' . studly_case($payment_info['pay_code']);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment_info['pay_code'], true);
 
                 /* 取得在线支付方式的支付按钮 */
                 $pay_obj = new $plugin;
@@ -1325,7 +1325,7 @@ class UserController extends InitController
             } else {
                 /* 检查是否已经存在于用户的收藏夹 */
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('collect_goods') .
-                    " WHERE user_id='". session('user_id') ."' AND goods_id = '$goods_id'";
+                    " WHERE user_id='" . session('user_id') . "' AND goods_id = '$goods_id'";
                 if ($GLOBALS['db']->getOne($sql) > 0) {
                     $result['error'] = 1;
                     $result['message'] = $GLOBALS['_LANG']['collect_existed'];
@@ -1333,7 +1333,7 @@ class UserController extends InitController
                 } else {
                     $time = gmtime();
                     $sql = "INSERT INTO " . $GLOBALS['ecs']->table('collect_goods') . " (user_id, goods_id, add_time)" .
-                        "VALUES ('". session('user_id') ."', '$goods_id', '$time')";
+                        "VALUES ('" . session('user_id') . "', '$goods_id', '$time')";
 
                     if ($GLOBALS['db']->query($sql) === false) {
                         $result['error'] = 1;
@@ -1961,7 +1961,7 @@ class UserController extends InitController
             if ($row['invoice_no'] && $row['shipping_id'] > 0) {
                 $sql = "SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id = '$row[shipping_id]'";
                 $shipping_code = $GLOBALS['db']->getOne($sql);
-                $plugin = '\\app\\plugins\\payment\\' . studly_case($shipping_code);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($shipping_code, true);
                 if (class_exists($plugin)) {
                     $shipping = new $plugin;
                     $order_query['invoice_no'] = $shipping->query((string)$row['invoice_no']);

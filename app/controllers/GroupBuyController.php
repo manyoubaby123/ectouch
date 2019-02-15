@@ -50,7 +50,7 @@ class GroupBuyController extends InitController
 
                 /* 模板赋值 */
                 $GLOBALS['smarty']->assign('cfg', $GLOBALS['_CFG']);
-                app(ShopService::class)->assign_template();
+                $this->shopService->assign_template();
                 $position = assign_ur_here();
                 $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
                 $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置
@@ -115,7 +115,7 @@ class GroupBuyController extends InitController
 
                 //模板赋值
                 $GLOBALS['smarty']->assign('cfg', $GLOBALS['_CFG']);
-                app(ShopService::class)->assign_template();
+                $this->shopService->assign_template();
 
                 $position = assign_ur_here(0, $goods['goods_name']);
                 $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题

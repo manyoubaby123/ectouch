@@ -23,7 +23,7 @@ class MyshipController extends InitController
             $choose['district'] = isset($_POST['district']) ? intval($_POST['district']) : 417;
         }
 
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         assign_dynamic('myship');
         $position = assign_ur_here(0, $GLOBALS['_LANG']['shopping_myship']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题

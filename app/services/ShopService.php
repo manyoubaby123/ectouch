@@ -8,7 +8,31 @@ namespace app\services;
  */
 class ShopService
 {
-    public function assign_template($ctype = '', $catlist = [])
+    /**
+     * @var LicenseService
+     */
+    protected $licenseService;
+
+    /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+    /**
+     * ShopService constructor.
+     */
+    public function __construct()
+    {
+        $this->licenseService = new LicenseService();
+        $this->categoryService = new CategoryService();
+    }
+
+    /**
+     * 模板公共变量赋值
+     * @param string $cType
+     * @param array $catList
+     */
+    public function assign_template($cType = '', $catList = [])
     {
         $GLOBALS['smarty']->assign('image_width', $GLOBALS['_CFG']['image_width']);
         $GLOBALS['smarty']->assign('image_height', $GLOBALS['_CFG']['image_height']);
@@ -24,14 +48,14 @@ class ShopService
         $GLOBALS['smarty']->assign('service_email', $GLOBALS['_CFG']['service_email']);
         $GLOBALS['smarty']->assign('service_phone', $GLOBALS['_CFG']['service_phone']);
         $GLOBALS['smarty']->assign('shop_address', $GLOBALS['_CFG']['shop_address']);
-        $GLOBALS['smarty']->assign('licensed', app(LicenseService::class)->license_info());
+        $GLOBALS['smarty']->assign('licensed', $this->licenseService->license_info());
         $GLOBALS['smarty']->assign('ecs_version', VERSION);
         $GLOBALS['smarty']->assign('icp_number', $GLOBALS['_CFG']['icp_number']);
         $GLOBALS['smarty']->assign('username', !empty(session('user_name')) ? session('user_name') : '');
-        $GLOBALS['smarty']->assign('category_list', app(CategoryService::class)->cat_list(0, 0, true, 2, false));
-        $GLOBALS['smarty']->assign('catalog_list', app(CategoryService::class)->cat_list(0, 0, false, 1, false));
-        $GLOBALS['smarty']->assign('navigator_list', app(ShopService::class)->get_navigator($ctype, $catlist));  //自定义导航栏
-    
+        $GLOBALS['smarty']->assign('category_list', $this->categoryService->cat_list(0, 0, true, 2, false));
+        $GLOBALS['smarty']->assign('catalog_list', $this->categoryService->cat_list(0, 0, false, 1, false));
+        $GLOBALS['smarty']->assign('navigator_list', $this->get_navigator($cType, $catList));  //自定义导航栏
+
         if (!empty($GLOBALS['_CFG']['search_keywords'])) {
             $searchkeywords = explode(',', trim($GLOBALS['_CFG']['search_keywords']));
         } else {
@@ -65,18 +89,18 @@ class ShopService
         $noindex = false;
         $active = 0;
         $navlist = [
-        'top' => [],
-        'middle' => [],
-        'bottom' => []
-    ];
+            'top' => [],
+            'middle' => [],
+            'bottom' => []
+        ];
         foreach ($res as $row) {
             $navlist[$row['type']][] = [
-            'name' => $row['name'],
-            'opennew' => $row['opennew'],
-            'url' => $row['url'],
-            'ctype' => $row['ctype'],
-            'cid' => $row['cid'],
-        ];
+                'name' => $row['name'],
+                'opennew' => $row['opennew'],
+                'url' => $row['url'],
+                'ctype' => $row['ctype'],
+                'cid' => $row['cid'],
+            ];
         }
 
         /*遍历自定义是否存在currentPage*/
@@ -121,7 +145,7 @@ class ShopService
      */
     public function show_message($content, $links = '', $hrefs = '', $type = 'info', $auto_redirect = true)
     {
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
 
         $msg['content'] = $content;
         if (is_array($links) && is_array($hrefs)) {
@@ -141,11 +165,11 @@ class ShopService
         $msg['type'] = $type;
         $position = assign_ur_here(0, $GLOBALS['_LANG']['sys_msg']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);   // 页面标题
-    $GLOBALS['smarty']->assign('ur_here', $position['ur_here']); // 当前位置
+        $GLOBALS['smarty']->assign('ur_here', $position['ur_here']); // 当前位置
 
-    if (is_null($GLOBALS['smarty']->get_template_vars('helps'))) {
-        $GLOBALS['smarty']->assign('helps', get_shop_help()); // 网店帮助
-    }
+        if (is_null($GLOBALS['smarty']->get_template_vars('helps'))) {
+            $GLOBALS['smarty']->assign('helps', get_shop_help()); // 网店帮助
+        }
 
         $GLOBALS['smarty']->assign('auto_redirect', $auto_redirect);
         $GLOBALS['smarty']->assign('message', $msg);

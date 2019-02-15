@@ -52,7 +52,7 @@ class SearchController extends InitController
             $GLOBALS['smarty']->assign('goods_type_list', $attributes['cate']);
             $GLOBALS['smarty']->assign('goods_attributes', $attributes['attr']);
 
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             assign_dynamic('search');
             $position = assign_ur_here(0, $GLOBALS['_LANG']['advanced_search']);
             $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
@@ -401,7 +401,7 @@ class SearchController extends InitController
             $GLOBALS['smarty']->assign('url_format', $url_format);
             $GLOBALS['smarty']->assign('pager', $pager);
 
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             assign_dynamic('search');
             $position = assign_ur_here(0, $ur_here . ($_REQUEST['keywords'] ? '_' . $_REQUEST['keywords'] : ''));
             $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题

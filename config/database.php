@@ -6,9 +6,9 @@ return [
     'username' => 'homestead',
     'password' => 'secret',
     'charset' => 'utf8',
-    //'on afterOpen' => function($event) {
-    //    $event->sender->createCommand("set session sql_mode=''")->execute();
-    //},
+    'on afterOpen' => function ($event) {
+        $event->sender->createCommand("set session sql_mode=''")->execute();
+    },
 
     // Schema cache options (for production environment)
     'enableSchemaCache' => !YII_DEBUG,

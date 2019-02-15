@@ -133,7 +133,7 @@ class IntegrateController extends InitController
         //-- 检查用户填写资料
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'check_config') {
-            $code = '\\app\\plugins\\integrates\\' . studly_case($_POST['code']);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
@@ -223,7 +223,7 @@ class IntegrateController extends InitController
         if ($_REQUEST['act'] == 'save_uc_config') {
             $cfg = unserialize($GLOBALS['_CFG']['integrate_config']);
 
-            $code = '\\app\\plugins\\integrates\\' . studly_case($_POST['code']);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
@@ -255,7 +255,7 @@ class IntegrateController extends InitController
         //-- 第一次保存UCenter安装的资料
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'save_uc_config_first') {
-            $code = '\\app\\plugins\\integrates\\' . studly_case($_POST['code']);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
@@ -326,7 +326,7 @@ class IntegrateController extends InitController
         if ($_REQUEST['act'] == 'check_user') {
             $code = session('code');
 
-            $code = '\\app\\plugins\\integrates\\' . studly_case($code);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
             $cls_user = new $code(session('cfg'));
 
             $start = empty($_GET['start']) ? 0 : intval($_GET['start']);
@@ -545,7 +545,7 @@ class IntegrateController extends InitController
 
                 /* 检查和商城是否有重名 */
                 $code = session('code');
-                $code = '\\app\\plugins\\integrates\\' . studly_case($code);
+                $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
                 $cls_user = new $code(session('cfg'));
 
                 $bbs_error_list = $cls_user->test_conflict($alias);
@@ -699,7 +699,7 @@ class IntegrateController extends InitController
                 return json_encode($result);
             } elseif (session('task.sync.start') < session('task.sync.total')) {
                 $code = session('code');
-                $code = '\\app\\plugins\\integrates\\' . studly_case($code);
+                $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
                 $cls_user = new $code(session('cfg'));
                 $cls_user->need_sync = false;
 
@@ -728,9 +728,9 @@ class IntegrateController extends InitController
 
                 if ($GLOBALS['db']->getOne($sql) == 0) {
                     $sql = "INSERT INTO " . $GLOBALS['ecs']->table('shop_config') . " (code, value) " .
-                        "VALUES ('integrate_code', '". session('code') ."')";
+                        "VALUES ('integrate_code', '" . session('code') . "')";
                 } else {
-                    $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') . " SET value = '". session('code') ."' WHERE code = 'integrate_code'";
+                    $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') . " SET value = '" . session('code') . "' WHERE code = 'integrate_code'";
                 }
                 $GLOBALS['db']->query($sql);
 

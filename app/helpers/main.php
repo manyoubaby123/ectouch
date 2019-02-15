@@ -410,7 +410,7 @@ function assign_pager(
     $sort,
     $order,
     $page = 1,
-                      $keywords = '',
+    $keywords = '',
     $brand = 0,
     $price_min = 0,
     $price_max = 0,
@@ -418,7 +418,8 @@ function assign_pager(
     $filter_attr = '',
     $url_format = '',
     $sch_array = ''
-) {
+)
+{
     $sch = array('keywords' => $keywords,
         'sort' => $sort,
         'order' => $order,
@@ -1613,7 +1614,7 @@ function get_library_number($library, $template = null)
         $num = intval($lib_list[$template][$library]);
     } else {
         /* 模板设置文件查找默认值 */
-        include_once(ROOT_PATH . ADMIN_PATH . '/includes/lib_template.php');
+        load_helper('template', 'admin');
         static $static_page_libs = null;
         if ($static_page_libs == null) {
             $static_page_libs = $page_libs;

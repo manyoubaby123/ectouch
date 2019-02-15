@@ -70,7 +70,7 @@ class MessageController extends InitController
         }
 
         if ($action == 'default') {
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             $position = assign_ur_here(0, $GLOBALS['_LANG']['message_board']);
             $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
             $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置

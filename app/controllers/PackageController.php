@@ -10,7 +10,7 @@ class PackageController extends InitController
         load_lang(['user', 'shopping_flow']);
         load_lang('package', 'admin');
 
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         assign_dynamic('package');
         $position = assign_ur_here(0, $GLOBALS['_LANG']['shopping_package']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题

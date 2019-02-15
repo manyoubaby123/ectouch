@@ -5,10 +5,31 @@ namespace app\controllers;
 use app\services\ArticleService;
 use app\services\CategoryService;
 use app\services\GoodsService;
-use app\services\ShopService;
 
 class SiteController extends InitController
 {
+    /**
+     * @var ArticleService
+     */
+    protected $articleService;
+
+    /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+    /**
+     * @var GoodsService
+     */
+    protected $goodsService;
+
+    public function init()
+    {
+        parent::init();
+        $this->articleService = new ArticleService();
+        $this->categoryService = new CategoryService();
+        $this->goodsService = new GoodsService();
+    }
 
     public function actions()
     {
@@ -25,14 +46,6 @@ class SiteController extends InitController
 
     public function actionIndex()
     {
-        $ua = Request::server('HTTP_USER_AGENT');
-
-        $uachar = "/(nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|cldc|midp|mobile)/i";
-
-        if (($ua == '' || preg_match($uachar, $ua)) && !strpos(strtolower($_SERVER['REQUEST_URI']), 'wap')) {
-            return ecs_header("Location: ./mobile\n");
-        }
-
         //判断是否有ajax请求
         $act = !empty($_GET['act']) ? $_GET['act'] : '';
         if ($act == 'cat_rec') {
@@ -56,7 +69,7 @@ class SiteController extends InitController
         $cache_id = sprintf('%X', crc32(session('user_rank') . '-' . $GLOBALS['_CFG']['lang']));
 
         if (!$GLOBALS['smarty']->is_cached('index.dwt', $cache_id)) {
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
 
             $position = assign_ur_here();
             $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
@@ -69,9 +82,9 @@ class SiteController extends InitController
 
             $GLOBALS['smarty']->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? 'feed.xml' : 'feed.php'); // RSS URL
 
-            $GLOBALS['smarty']->assign('categories', app(CategoryService::class)->get_categories_tree()); // 分类树
-            $GLOBALS['smarty']->assign('helps', app(ArticleService::class)->get_shop_help());       // 网店帮助
-            $GLOBALS['smarty']->assign('top_goods', app(GoodsService::class)->get_top10());           // 销售排行
+            $GLOBALS['smarty']->assign('categories', $this->categoryService->get_categories_tree()); // 分类树
+            $GLOBALS['smarty']->assign('helps', $this->articleService->get_shop_help());       // 网店帮助
+            $GLOBALS['smarty']->assign('top_goods', $this->goodsService->get_top10());           // 销售排行
 
             $GLOBALS['smarty']->assign('best_goods', get_recommend_goods('best'));    // 推荐商品
             $GLOBALS['smarty']->assign('new_goods', get_recommend_goods('new'));     // 最新商品
@@ -132,7 +145,7 @@ class SiteController extends InitController
         $all = $GLOBALS['db']->getAll($sql);
 
         foreach ($all as $key => $row) {
-            $plugin = '\\app\\plugins\\shipping\\' . studly_case($row['shipping_code']);
+            $plugin = '\\app\\plugins\\shipping\\' . parse_name($row['shipping_code'], true);
 
             if (class_exists($plugin)) {
                 $shipping = new $plugin;

@@ -17,7 +17,7 @@ class BrandController extends InitController
             /* 缓存编号 */
             $cache_id = sprintf('%X', crc32($GLOBALS['_CFG']['lang']));
             if (!$GLOBALS['smarty']->is_cached('brand_list.dwt', $cache_id)) {
-                app(ShopService::class)->assign_template();
+                $this->shopService->assign_template();
                 $position = assign_ur_here('', $GLOBALS['_LANG']['all_brand']);
                 $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
                 $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置
@@ -66,7 +66,7 @@ class BrandController extends InitController
             $GLOBALS['smarty']->assign('description', htmlspecialchars($brand_info['brand_desc']));
 
             /* 赋值固定内容 */
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             $position = assign_ur_here($cate, $brand_info['brand_name']);
             $GLOBALS['smarty']->assign('page_title', $position['title']);   // 页面标题
             $GLOBALS['smarty']->assign('ur_here', $position['ur_here']); // 当前位置

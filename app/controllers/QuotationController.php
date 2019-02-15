@@ -46,7 +46,7 @@ class QuotationController extends InitController
             return $html;
         }
 
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
 
         $position = assign_ur_here(0, $GLOBALS['_LANG']['quotation']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);   // 页面标题

@@ -9,7 +9,7 @@ class ActivityController extends InitController
         load_helper(['order', 'transaction']);
         load_lang(['shopping_flow', 'user']);
 
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         assign_dynamic('activity');
         $position = assign_ur_here(0, $GLOBALS['_LANG']['shopping_activity']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题

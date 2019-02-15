@@ -9,15 +9,15 @@ namespace app\services;
 class ShippingService
 {
 
-/**
- * 取得已安装的配送方式
- * @return  array   已安装的配送方式
- */
+    /**
+     * 取得已安装的配送方式
+     * @return  array   已安装的配送方式
+     */
     public function shipping_list()
     {
         $sql = 'SELECT shipping_id, shipping_name ' .
-        'FROM ' . $GLOBALS['ecs']->table('shipping') .
-        ' WHERE enabled = 1';
+            'FROM ' . $GLOBALS['ecs']->table('shipping') .
+            ' WHERE enabled = 1';
 
         return $GLOBALS['db']->getAll($sql);
     }
@@ -30,8 +30,8 @@ class ShippingService
     public function shipping_info($shipping_id)
     {
         $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('shipping') .
-        " WHERE shipping_id = '$shipping_id' " .
-        'AND enabled = 1';
+            " WHERE shipping_id = '$shipping_id' " .
+            'AND enabled = 1';
 
         return $GLOBALS['db']->getRow($sql);
     }
@@ -44,12 +44,12 @@ class ShippingService
     public function available_shipping_list($region_id_list)
     {
         $sql = 'SELECT s.shipping_id, s.shipping_code, s.shipping_name, ' .
-        's.shipping_desc, s.insure, s.support_cod, a.configure ' .
-        'FROM ' . $GLOBALS['ecs']->table('shipping') . ' AS s, ' .
-        $GLOBALS['ecs']->table('shipping_area') . ' AS a, ' .
-        $GLOBALS['ecs']->table('area_region') . ' AS r ' .
-        'WHERE r.region_id ' . db_create_in($region_id_list) .
-        ' AND r.shipping_area_id = a.shipping_area_id AND a.shipping_id = s.shipping_id AND s.enabled = 1 ORDER BY s.shipping_order';
+            's.shipping_desc, s.insure, s.support_cod, a.configure ' .
+            'FROM ' . $GLOBALS['ecs']->table('shipping') . ' AS s, ' .
+            $GLOBALS['ecs']->table('shipping_area') . ' AS a, ' .
+            $GLOBALS['ecs']->table('area_region') . ' AS r ' .
+            'WHERE r.region_id ' . db_create_in($region_id_list) .
+            ' AND r.shipping_area_id = a.shipping_area_id AND a.shipping_id = s.shipping_id AND s.enabled = 1 ORDER BY s.shipping_order';
 
         return $GLOBALS['db']->getAll($sql);
     }
@@ -63,13 +63,13 @@ class ShippingService
     public function shipping_area_info($shipping_id, $region_id_list)
     {
         $sql = 'SELECT s.shipping_code, s.shipping_name, ' .
-        's.shipping_desc, s.insure, s.support_cod, a.configure ' .
-        'FROM ' . $GLOBALS['ecs']->table('shipping') . ' AS s, ' .
-        $GLOBALS['ecs']->table('shipping_area') . ' AS a, ' .
-        $GLOBALS['ecs']->table('area_region') . ' AS r ' .
-        "WHERE s.shipping_id = '$shipping_id' " .
-        'AND r.region_id ' . db_create_in($region_id_list) .
-        ' AND r.shipping_area_id = a.shipping_area_id AND a.shipping_id = s.shipping_id AND s.enabled = 1';
+            's.shipping_desc, s.insure, s.support_cod, a.configure ' .
+            'FROM ' . $GLOBALS['ecs']->table('shipping') . ' AS s, ' .
+            $GLOBALS['ecs']->table('shipping_area') . ' AS a, ' .
+            $GLOBALS['ecs']->table('area_region') . ' AS r ' .
+            "WHERE s.shipping_id = '$shipping_id' " .
+            'AND r.region_id ' . db_create_in($region_id_list) .
+            ' AND r.shipping_area_id = a.shipping_area_id AND a.shipping_id = s.shipping_id AND s.enabled = 1';
         $row = $GLOBALS['db']->getRow($sql);
 
         if (!empty($row)) {
@@ -103,7 +103,7 @@ class ShippingService
             $shipping_config = unserialize($shipping_config);
         }
 
-        $plugin = '\\app\\plugins\\shipping\\' . studly_case($shipping_code);
+        $plugin = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
         if (class_exists($plugin)) {
             $obj = new $plugin($shipping_config);
 
@@ -128,7 +128,7 @@ class ShippingService
             /* 如果保价费用不是百分比则直接返回该数值 */
             return floatval($insure);
         } else {
-            $plugin = '\\app\\plugins\\shipping\\' . studly_case($shipping_code);
+            $plugin = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
             if (class_exists($plugin)) {
                 $shipping = new $plugin;
                 $insure = floatval($insure) / 100;
@@ -157,7 +157,7 @@ class ShippingService
             return $object;
         }
 
-        $plugin = '\\app\\plugins\\shipping\\' . studly_case($shipping['shipping_code']);
+        $plugin = '\\app\\plugins\\shipping\\' . parse_name($shipping['shipping_code'], true);
         $object = new $plugin;
         return $object;
     }

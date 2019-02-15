@@ -16,7 +16,7 @@ class CatalogController extends InitController
                 }
             }
 
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             assign_dynamic('catalog');
             $position = assign_ur_here(0, $GLOBALS['_LANG']['catalog']);
             $GLOBALS['smarty']->assign('page_title', $position['title']);   // 页面标题

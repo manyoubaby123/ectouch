@@ -16,7 +16,7 @@ class FlowController extends InitController
             $_REQUEST['step'] = "cart";
         }
 
-        app(ShopService::class)->assign_template();
+        $this->shopService->assign_template();
         assign_dynamic('flow');
         $position = assign_ur_here(0, $GLOBALS['_LANG']['shopping_flow']);
         $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
@@ -1452,7 +1452,7 @@ class FlowController extends InitController
             if ($order['order_amount'] > 0) {
                 $payment = payment_info($order['pay_id']);
 
-                $plugin = '\\app\\plugins\\payment\\' . studly_case($payment['pay_code']);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment['pay_code'], true);
                 $pay_obj = new $plugin;
 
                 $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));

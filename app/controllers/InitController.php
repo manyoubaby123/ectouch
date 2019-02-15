@@ -2,17 +2,23 @@
 
 namespace app\controllers;
 
-use yii\web\Controller;
 use app\libraries\Error;
 use app\libraries\Mysql;
 use app\libraries\Shop;
 use app\libraries\Template;
 use app\services\ConfigService;
+use app\services\ShopService;
 use app\services\StatService;
 use app\services\UserService;
+use yii\web\Controller;
 
 class InitController extends Controller
 {
+    /**
+     * @var ShopService
+     */
+    protected $shopService;
+
     public function init()
     {
         if (!file_exists(storage_path('install.lock'))) {
@@ -173,5 +179,7 @@ class InitController extends Controller
                 }
             }
         }
+
+        $this->shopService = new ShopService();
     }
 }

@@ -65,7 +65,7 @@ class SnatchController extends InitController
                 $GLOBALS['smarty']->assign('vote', $vote['content']);
             }
 
-            app(ShopService::class)->assign_template();
+            $this->shopService->assign_template();
             assign_dynamic('snatch');
             $GLOBALS['smarty']->assign('page_title', $position['title']);
             $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);

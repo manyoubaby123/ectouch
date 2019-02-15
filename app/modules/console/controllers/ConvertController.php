@@ -60,7 +60,7 @@ class ConvertController extends InitController
             $sprefix = $config->prefix;
             $config->path = rtrim(str_replace('\\', '/', $config->path), '/');  // 把斜线替换为反斜线，去掉结尾的反斜线
 
-            $config->code = '\\app\\plugins\\convert\\' . studly_case($config->code);
+            $config->code = '\\app\\plugins\\convert\\' . parse_name($config->code, true);
             $convert = new $config->code($sdb, $sprefix, $config->path);
             $required_table_list = $convert->required_tables();
 
@@ -149,7 +149,7 @@ class ConvertController extends InitController
             $sdb->set_mysql_charset($config->charset);
 
             /* 创建插件对象 */
-            $config->code = '\\app\\plugins\\convert\\' . studly_case($config->code);
+            $config->code = '\\app\\plugins\\convert\\' . parse_name($config->code, true);
             $convert = new $config->code($sdb, $config->prefix, $config->path, $config->charset);
 
             /* 包含插件语言文件 */

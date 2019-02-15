@@ -2,33 +2,37 @@
 
 namespace app\libraries;
 
+use app\services\ShopService;
+
 class Error
 {
-    public $_message   = [];
-    public $_template  = '';
-    public $error_no   = 0;
+    public $_message = [];
+    public $_template = '';
+    public $error_no = 0;
+    public $shopService;
 
     /**
      * 构造函数
      *
      * @access  public
-     * @param   string  $tpl
+     * @param   string $tpl
      * @return  void
      */
     public function __construct($tpl)
     {
         $this->_template = $tpl;
+        $this->shopService = new ShopService();
     }
 
     /**
      * 添加一条错误信息
      *
      * @access  public
-     * @param   string  $msg
+     * @param   string $msg
      * @param   integer $errno
      * @return  void
      */
-    public function add($msg, $errno=1)
+    public function add($msg, $errno = 1)
     {
         if (is_array($msg)) {
             $this->_message = array_merge($this->_message, $msg);
@@ -36,7 +40,7 @@ class Error
             $this->_message[] = $msg;
         }
 
-        $this->error_no     = $errno;
+        $this->error_no = $errno;
     }
 
     /**
@@ -77,8 +81,8 @@ class Error
      * 显示错误信息
      *
      * @access  public
-     * @param   string  $link
-     * @param   string  $href
+     * @param   string $link
+     * @param   string $href
      * @return  void
      */
     public function show($link = '', $href = '')
@@ -96,7 +100,7 @@ class Error
             }
 
             if (isset($GLOBALS['smarty'])) {
-                app(ShopService::class)->assign_template();
+                $this->shopService->assign_template();
                 $GLOBALS['smarty']->assign('auto_redirect', true);
                 $GLOBALS['smarty']->assign('message', $message);
                 return $GLOBALS['smarty']->display($this->_template);

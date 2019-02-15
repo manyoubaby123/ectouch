@@ -6,7 +6,7 @@ use app\libraries\Captcha;
 
 class MessageController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (empty($GLOBALS['_CFG']['message_board'])) {
             return show_message($GLOBALS['_LANG']['message_board_close']);

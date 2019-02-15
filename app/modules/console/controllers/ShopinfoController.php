@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class ShopinfoController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("article"), $GLOBALS['db'], 'article_id', 'title');
 

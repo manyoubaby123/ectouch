@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class SearchController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (empty($_GET['encode'])) {
             $string = array_merge($_GET, $_POST);

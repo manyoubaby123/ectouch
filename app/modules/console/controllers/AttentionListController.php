@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class AttentionListController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('attention_list');
         if ($_REQUEST['act'] == 'list') {

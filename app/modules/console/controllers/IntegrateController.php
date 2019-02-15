@@ -7,7 +7,7 @@ use app\libraries\Transport;
 
 class IntegrateController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /*------------------------------------------------------ */

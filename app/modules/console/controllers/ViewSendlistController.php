@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class ViewSendlistController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('view_sendlist');
         if ($_REQUEST['act'] == 'list') {

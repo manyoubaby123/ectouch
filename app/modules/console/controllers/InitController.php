@@ -60,29 +60,6 @@ class InitController extends Controller
             $GLOBALS['smarty']->assign('enable_order_check', 0);
         }
 
-        /* 验证通行证信息 */
-        if (isset($_GET['ent_id']) && isset($_GET['ent_ac']) && isset($_GET['ent_sign']) && isset($_GET['ent_email'])) {
-            $ent_id = trim($_GET['ent_id']);
-            $ent_ac = trim($_GET['ent_ac']);
-            $ent_sign = trim($_GET['ent_sign']);
-            $ent_email = trim($_GET['ent_email']);
-            $certificate_id = trim($GLOBALS['_CFG']['certificate_id']);
-            $domain_url = $GLOBALS['ecs']->url();
-            $token = $_GET['token'];
-            if ($token == md5(md5($GLOBALS['_CFG']['token']) . $domain_url . ADMIN_PATH)) {
-                $t = new Transport('-1', 5);
-                $apiget = "act=ent_sign&ent_id= $ent_id & certificate_id=$certificate_id";
-
-                $t->request('http://www.ectouch.cn/api.php', $apiget);
-                $GLOBALS['db']->query('UPDATE ' . $GLOBALS['ecs']->table('shop_config') . ' SET value = "' . $ent_id . '" WHERE code = "ent_id"');
-                $GLOBALS['db']->query('UPDATE ' . $GLOBALS['ecs']->table('shop_config') . ' SET value = "' . $ent_ac . '" WHERE code = "ent_ac"');
-                $GLOBALS['db']->query('UPDATE ' . $GLOBALS['ecs']->table('shop_config') . ' SET value = "' . $ent_sign . '" WHERE code = "ent_sign"');
-                $GLOBALS['db']->query('UPDATE ' . $GLOBALS['ecs']->table('shop_config') . ' SET value = "' . $ent_email . '" WHERE code = "ent_email"');
-                clear_cache_files();
-                return ecs_header("Location: ./index.php\n");
-            }
-        }
-
         /* 验证管理员身份 */
         if ((!session('?admin_id') || intval(session('admin_id')) <= 0) &&
             $_REQUEST['act'] != 'login' && $_REQUEST['act'] != 'signin' &&

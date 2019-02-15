@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class ShippingAreaController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table('shipping_area'), $GLOBALS['db'], 'shipping_area_id', 'shipping_area_name');
 

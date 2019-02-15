@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class RespondController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper(['payment', 'order']);
         /* 支付方式代码 */

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class AffiliateController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('affiliate');
         $config = $this->get_affiliate();

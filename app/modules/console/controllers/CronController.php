@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class CronController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $_REQUEST['act'] = trim($_REQUEST['act']);
         admin_priv('cron');

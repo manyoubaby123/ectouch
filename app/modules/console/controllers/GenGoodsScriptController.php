@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class GenGoodsScriptController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if ($_REQUEST['act'] == 'setup') {
             /* 检查权限 */

@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class SnatchController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("goods_activity"), $GLOBALS['db'], 'act_id', 'act_name');
 

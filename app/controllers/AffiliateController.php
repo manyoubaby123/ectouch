@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class AffiliateController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $display_mode = empty($_GET['display_mode']) ? 'javascript' : $_GET['display_mode'];
 

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class ArticleAutoController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('article_auto');
         $GLOBALS['smarty']->assign('thisfile', 'article_auto.php');

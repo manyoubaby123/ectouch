@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class FilecheckController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /* 检查权限 */

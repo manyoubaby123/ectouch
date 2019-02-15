@@ -6,7 +6,7 @@ use app\libraries\Sms;
 
 class OrderController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper(['order', 'goods']);
 

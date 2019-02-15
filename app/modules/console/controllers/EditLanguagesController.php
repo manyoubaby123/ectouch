@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class EditLanguagesController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* act操作项的初始化 */
         if (empty($_REQUEST['act'])) {

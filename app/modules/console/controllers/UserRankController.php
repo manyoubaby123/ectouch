@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class UserRankController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("user_rank"), $GLOBALS['db'], 'rank_id', 'rank_name');
         $exc_user = new Exchange($GLOBALS['ecs']->table("users"), $GLOBALS['db'], 'user_rank', 'user_rank');

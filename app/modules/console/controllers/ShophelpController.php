@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class ShophelpController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /*初始化数据交换对象 */
         $exc_article = new Exchange($GLOBALS['ecs']->table("article"), $GLOBALS['db'], 'article_id', 'title');

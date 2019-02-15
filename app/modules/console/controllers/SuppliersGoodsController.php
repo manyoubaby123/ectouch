@@ -7,7 +7,7 @@ use app\libraries\Image;
 
 class SuppliersGoodsController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper('goods', 'admin');
 

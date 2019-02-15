@@ -6,7 +6,7 @@ use app\libraries\Image;
 
 class PictureBatchController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper('goods', 'admin');
         $image = new Image($GLOBALS['_CFG']['bgcolor']);

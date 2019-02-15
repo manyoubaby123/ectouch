@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class AttributeController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /* act操作项的初始化 */

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class MagazineListController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('magazine_list');
         if ($_REQUEST['act'] == 'list') {

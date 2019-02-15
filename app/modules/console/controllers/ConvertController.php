@@ -6,7 +6,7 @@ use app\libraries\Mysql;
 
 class ConvertController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if ($_REQUEST['act'] == 'main') {
             admin_priv('convert');

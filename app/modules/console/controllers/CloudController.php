@@ -6,11 +6,11 @@ use app\libraries\Transport;
 
 class CloudController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $data['api_ver'] = '1.0';
         $data['version'] = VERSION;
-        $data['patch'] = file_get_contents(ROOT_PATH . ADMIN_PATH . "/patch_num");
+        $data['patch'] = 0; // file_get_contents(ROOT_PATH . ADMIN_PATH . "/patch_num"); TODO
         $data['ecs_lang'] = $GLOBALS['_CFG']['lang'];
         $data['release'] = RELEASE;
         $data['charset'] = strtoupper(EC_CHARSET);
@@ -22,7 +22,7 @@ class CloudController extends InitController
         $data['shop_url'] = urlencode($GLOBALS['ecs']->url());
         $data['admin_url'] = urlencode($GLOBALS['ecs']->url() . ADMIN_PATH);
         $data['sess_id'] = session_id();
-        $data['stamp'] = mktime();
+        $data['stamp'] = time();
         $data['ent_id'] = $GLOBALS['_CFG']['ent_id'];
         $data['ent_ac'] = $GLOBALS['_CFG']['ent_ac'];
         $data['ent_sign'] = $GLOBALS['_CFG']['ent_sign'];

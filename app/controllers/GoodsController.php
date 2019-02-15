@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class GoodsController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
         $GLOBALS['smarty']->assign('affiliate', $affiliate);

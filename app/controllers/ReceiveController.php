@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class ReceiveController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /* 取得参数 */

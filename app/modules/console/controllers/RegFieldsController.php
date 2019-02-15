@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class RegFieldsController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("reg_fields"), $GLOBALS['db'], 'id', 'reg_field_name');
 

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class CaptchaManageController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /* 检查权限 */

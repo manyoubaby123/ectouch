@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class WholesaleController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper('goods');
 

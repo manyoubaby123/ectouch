@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class ActivityController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper(['order', 'transaction']);
         load_lang(['shopping_flow', 'user']);

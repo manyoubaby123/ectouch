@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class ArticleController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $_REQUEST['id'] = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
         $article_id = $_REQUEST['id'];

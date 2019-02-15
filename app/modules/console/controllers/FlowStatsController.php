@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class FlowStatsController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_lang('statistic', 'admin');
         $GLOBALS['smarty']->assign('lang', $GLOBALS['_LANG']);

@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class GroupBuyController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (empty($_REQUEST['act'])) {
             $_REQUEST['act'] = 'list';

@@ -6,7 +6,7 @@ use app\libraries\Sms;
 
 class WholesaleController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* 如果没登录，提示登录 */
         if (session('user_rank') <= 0) {

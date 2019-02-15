@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class TagCloudController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         app(ShopService::class)->assign_template();
         $position = assign_ur_here(0, $GLOBALS['_LANG']['tag_cloud']);

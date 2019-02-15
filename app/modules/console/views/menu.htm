@@ -178,7 +178,7 @@ function toggleCollapse()
   }
 
   collapse = !collapse;
-  document.getElementById('toggleImg').src = collapse ? 'images/menu_minus.gif' : 'images/menu_plus.gif';
+  document.getElementById('toggleImg').src = collapse ? '/static/admin/images/menu_minus.gif' : '/static/admin/images/menu_plus.gif';
   document.getElementById('toggleImg').alt = collapse ? collapse_all : expand_all;
 }
 
@@ -397,7 +397,7 @@ Object.extend(ToggleHanlder ,{
         }
      }
     }
-    document.getElementById('toggleImg').src = collapse ? 'images/menu_minus.gif' : 'images/menu_plus.gif';
+    document.getElementById('toggleImg').src = collapse ? '/static/admin/images/menu_minus.gif' : '/static/admin/images/menu_plus.gif';
     document.getElementById('toggleImg').alt = collapse ? collapse_all : expand_all;
   }
 });

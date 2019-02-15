@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class SaleGeneralController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_lang('statistic', 'admin');
 

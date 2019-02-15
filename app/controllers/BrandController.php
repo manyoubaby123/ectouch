@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class BrandController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* 获得请求的分类 ID */
         if (!empty($_REQUEST['id'])) {

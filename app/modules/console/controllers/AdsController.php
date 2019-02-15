@@ -7,7 +7,7 @@ use app\libraries\Image;
 
 class AdsController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $image = new Image($GLOBALS['_CFG']['bgcolor']);
         $exc = new Exchange($GLOBALS['ecs']->table("ad"), $GLOBALS['db'], 'ad_id', 'ad_name');

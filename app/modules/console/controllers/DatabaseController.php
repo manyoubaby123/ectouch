@@ -6,7 +6,7 @@ use app\libraries\SqlDump;
 
 class DatabaseController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /* 备份页面 */

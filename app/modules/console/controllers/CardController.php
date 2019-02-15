@@ -7,7 +7,7 @@ use app\libraries\Image;
 
 class CardController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $image = new Image($GLOBALS['_CFG']['bgcolor']);
 

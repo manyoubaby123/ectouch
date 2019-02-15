@@ -6,7 +6,7 @@ use app\libraries\Sitemap;
 
 class SitemapController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (file_exists(ROOT_PATH . DATA_DIR . '/sitemap.dat') && time() - filemtime(ROOT_PATH . DATA_DIR . '/sitemap.dat') < 86400) {
             $out = file_get_contents(ROOT_PATH . DATA_DIR . '/sitemap.dat');

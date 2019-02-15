@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class AffiliateCkController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('affiliate_ck');
         $timestamp = time();

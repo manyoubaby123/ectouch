@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class SqlController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $_POST['sql'] = !empty($_POST['sql']) ? trim($_POST['sql']) : '';
 

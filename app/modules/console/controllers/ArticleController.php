@@ -7,7 +7,7 @@ use app\libraries\Image;
 
 class ArticleController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /*初始化数据交换对象 */
         $exc = new Exchange($GLOBALS['ecs']->table("article"), $GLOBALS['db'], 'article_id', 'title');

@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class VoteController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (!isset($_REQUEST['vote']) || !isset($_REQUEST['options']) || !isset($_REQUEST['type'])) {
             return ecs_header("Location: ./\n");

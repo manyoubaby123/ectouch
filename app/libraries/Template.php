@@ -310,7 +310,7 @@ class Template
      * @access  public
      * @param   string $tag
      *
-     * @return  sring
+     * @return  string
      */
     public function select($tag)
     {
@@ -899,13 +899,18 @@ class Template
         $arr = explode(',', str_replace(' ', '', $args['files']));
 
         $str = '';
+        $prefix = defined('ECS_ADMIN') ? 'static/admin/' : '';
         foreach ($arr as $val) {
             if (in_array($val, $scripts) == false) {
                 $scripts[] = $val;
                 if ($val{0} == '.') {
-                    $str .= '<script src="' . asset(str_replace('../', '', $val)) . '" type="text/javascript"></script>' . "\n";
+                    $src = str_replace('../', '', $val);
+                    if (stripos($src, './') !== false) {
+                        $src = $prefix . substr($src, 2);
+                    }
+                    $str .= '<script src="' . asset($src) . '" type="text/javascript"></script>' . "\n";
                 } else {
-                    $str .= '<script src="' . asset((defined('ECS_ADMIN') ? 'static/admin/' : '') . 'js/' . $val) . '" type="text/javascript"></script>' . "\n";
+                    $str .= '<script src="' . asset($prefix . 'js/' . $val) . '" type="text/javascript"></script>' . "\n";
                 }
             }
         }

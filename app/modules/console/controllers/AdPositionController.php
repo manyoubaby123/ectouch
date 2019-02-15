@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class AdPositionController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_lang('ads', 'admin');
 

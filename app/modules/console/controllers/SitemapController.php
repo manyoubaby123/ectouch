@@ -7,7 +7,7 @@ use app\libraries\GoogleSitemapItem;
 
 class SitemapController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* 检查权限 */
         admin_priv('sitemap');

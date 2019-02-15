@@ -7,7 +7,7 @@ use app\libraries\Iconv;
 
 class FriendLinkController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $image = new Iconv($GLOBALS['_CFG']['bgcolor']);
 

@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class PaymentController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table('payment'), $GLOBALS['db'], 'pay_code', 'pay_name');
 

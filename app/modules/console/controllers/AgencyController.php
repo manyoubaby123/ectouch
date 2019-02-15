@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class AgencyController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table('agency'), $GLOBALS['db'], 'agency_id', 'agency_name');
 

@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class CatalogController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (!$GLOBALS['smarty']->is_cached('catalog.dwt')) {
             /* 取出所有分类 */

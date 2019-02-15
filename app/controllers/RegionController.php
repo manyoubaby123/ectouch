@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class RegionController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $type = !empty($_REQUEST['type']) ? intval($_REQUEST['type']) : 0;
         $parent = !empty($_REQUEST['parent']) ? intval($_REQUEST['parent']) : 0;

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class CheckFilePrivController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if ($_REQUEST['act'] == 'check') {
             /* 检查权限 */

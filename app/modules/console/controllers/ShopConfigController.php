@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class ShopConfigController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if ($GLOBALS['_CFG']['certificate_id'] == '') {
             $certi_id = 'error';
@@ -14,7 +14,7 @@ class ShopConfigController extends InitController
 
         $sess_id = session_id();
 
-        $auth = mktime();
+        $auth = time();
         $ac = md5($certi_id . 'SHOP_SMS' . $auth);
         $url = 'http://www.ectouch.cn/sms/index.php?certificate_id=' . $certi_id . '&sess_id=' . $sess_id . '&auth=' . $auth . '&ac=' . $ac;
 

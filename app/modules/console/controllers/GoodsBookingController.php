@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class GoodsBookingController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('booking');
         /*------------------------------------------------------ */

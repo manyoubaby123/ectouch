@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class CompareController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if (!empty($_REQUEST['goods']) && is_array($_REQUEST['goods']) && count($_REQUEST['goods']) > 1) {
             foreach ($_REQUEST['goods'] as $key => $val) {

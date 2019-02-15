@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class GoodsScriptController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $charset = empty($_GET['charset']) ? EC_CHARSET : $_GET['charset'];
         $type = empty($_GET['type']) ? '' : 'collection';

@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class ArticlecatController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("article_cat"), $GLOBALS['db'], 'cat_id', 'cat_name');
         /* act操作项的初始化 */

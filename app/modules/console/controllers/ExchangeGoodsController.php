@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class ExchangeGoodsController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /*初始化数据交换对象 */

@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class ShippingController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table('shipping'), $GLOBALS['db'], 'shipping_code', 'shipping_name');
 

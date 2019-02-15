@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class SnatchController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /*------------------------------------------------------ */
         //-- 如果用没有指定活动id，将页面重定向到即将结束的活动

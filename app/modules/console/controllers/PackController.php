@@ -7,7 +7,7 @@ use app\libraries\Iconv;
 
 class PackController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $image = new Iconv($GLOBALS['_CFG']['bgcolor']);
 

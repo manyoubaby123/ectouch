@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class GoodsTypeController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("goods_type"), $GLOBALS['db'], 'cat_id', 'cat_name');
 

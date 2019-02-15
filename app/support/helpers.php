@@ -313,8 +313,9 @@ function parse_name(string $name, int $type = 0, bool $ucfirst = true)
  * 加载函数库
  * @param array $files
  * @param string $module
+ * @param string $sub
  */
-function load_helper($files = [], $module = '')
+function load_helper($files = [], $module = '', $sub = 'common')
 {
     static $_helper = [];
 
@@ -326,7 +327,8 @@ function load_helper($files = [], $module = '')
         $base_path = app_path('helpers/');
     } else {
         $module = ($module == 'admin') ? 'console' : $module; // 兼容模块名称
-        $base_path = app_path('modules/' . parse_name($module) . '/common/');
+        $base_path = app_path('modules/' . parse_name($module) . '/' . $sub . '/');
+
     }
 
     foreach ($files as $vo) {

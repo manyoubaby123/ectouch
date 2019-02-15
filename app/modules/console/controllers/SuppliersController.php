@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class SuppliersController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         define('SUPPLIERS_ACTION_LIST', 'delivery_view,back_view');
         /*------------------------------------------------------ */

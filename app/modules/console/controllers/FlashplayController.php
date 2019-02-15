@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class FlashplayController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $uri = $GLOBALS['ecs']->url();
         $allow_suffix = ['gif', 'jpg', 'png', 'jpeg', 'bmp'];

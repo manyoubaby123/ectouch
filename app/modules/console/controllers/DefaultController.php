@@ -59,9 +59,10 @@ class DefaultController extends InitController
         //-- 左边的框架
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'menu') {
-            global $modules, $purview;
+            load_helper(['menu', 'priv'], 'admin', 'config');
 
-            load_helper(['menu', 'priv'], 'admin');
+            $modules = $GLOBALS['modules'];
+            $purview = $GLOBALS['purview'];
 
             foreach ($modules as $key => $value) {
                 ksort($modules[$key]);
@@ -433,7 +434,7 @@ class DefaultController extends InitController
                 $ecs_style = $style;
                 $shop_url = urlencode($GLOBALS['ecs']->url());
 
-                $patch_file = file_get_contents(ROOT_PATH . ADMIN_PATH . "/patch_num");
+                $patch_file = 0; // file_get_contents(ROOT_PATH . ADMIN_PATH . "/patch_num"); TODO
 
                 $apiget = "ver= $ecs_version &lang= $ecs_lang &release= $ecs_release &php_ver= $php_ver &mysql_ver= $mysql_ver &ocount= $ocount &oamount= $oamount &gcount= $gcount &charset= $ecs_charset &usecount= $ecs_user &template= $ecs_template &style= $ecs_style &url= $shop_url &patch= $patch_file ";
 
@@ -442,7 +443,7 @@ class DefaultController extends InitController
                 $api_str = $api_comment["body"];
                 echo $api_str;
 
-                $f = ROOT_PATH . 'data/config.php';
+                $f = base_path('bootstrap/app.php');
                 file_put_contents($f, str_replace("'API_TIME', '" . API_TIME . "'", "'API_TIME', '" . date('Y-m-d H:i:s', time()) . "'", file_get_contents($f)));
 
                 write_static_cache('api_str', $api_str);
@@ -773,7 +774,6 @@ class DefaultController extends InitController
                     $goods_img = '';  // 初始化商品图片
                     $goods_thumb = '';  // 初始化商品缩略图
                     $original_img = '';  // 初始化原始图片
-                    $old_original_img = '';  // 初始化原始图片旧图
                     // 如果上传了商品图片，相应处理
                     if ($_FILES['goods_img']['tmp_name'] != '' && $_FILES['goods_img']['tmp_name'] != 'none') {
                         $original_img = $image->upload_image($_FILES['goods_img']); // 原始图片
@@ -791,7 +791,6 @@ class DefaultController extends InitController
                         }
                         $img = $newname;
 
-                        $gallery_img = $img;
                         $gallery_thumb = $img;
 
                         // 如果系统支持GD，缩放商品图片，且给商品图片和相册图片加水印
@@ -867,7 +866,6 @@ class DefaultController extends InitController
                 }
             }
 
-            //    $GLOBALS['smarty']->assign('ur_here', '开店向导－添加商品');
             return $GLOBALS['smarty']->display('setting_third.htm');
         }
 
@@ -1071,9 +1069,6 @@ class DefaultController extends InitController
      */
     private function license_check()
     {
-        // return 返回数组
-        $return_array = [];
-
         // 取出网店 license
         $license = get_shop_license();
 

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class EmailListController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('email_list');
 

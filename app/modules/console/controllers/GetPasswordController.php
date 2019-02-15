@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class GetPasswordController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* 操作项的初始化 */
         if (empty($_SERVER['REQUEST_METHOD'])) {

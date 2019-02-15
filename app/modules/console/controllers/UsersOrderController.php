@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class UsersOrderController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper('order');
         load_lang('statistic', 'admin');

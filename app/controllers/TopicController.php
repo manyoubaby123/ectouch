@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class TopicController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $topic_id = empty($_REQUEST['topic_id']) ? 0 : intval($_REQUEST['topic_id']);
 

@@ -6,7 +6,7 @@ use app\libraries\Image;
 
 class GoodsBatchController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_helper('goods');
 

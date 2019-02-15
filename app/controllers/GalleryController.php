@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class GalleryController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* 参数 */
         $_REQUEST['id'] = isset($_REQUEST['id']) ? intval($_REQUEST['id']) : 0; // 商品编号

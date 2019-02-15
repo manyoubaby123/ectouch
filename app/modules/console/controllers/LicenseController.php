@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class LicenseController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
 
         /*------------------------------------------------------ */

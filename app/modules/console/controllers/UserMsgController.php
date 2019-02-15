@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class UserMsgController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         /* 权限判断 */
         admin_priv('feedback_priv');

@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class UsersController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if ($_REQUEST['act'] == 'list') {
             /* 检查权限 */

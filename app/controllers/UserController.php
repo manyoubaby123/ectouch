@@ -6,7 +6,7 @@ use app\libraries\Captcha;
 
 class UserController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         load_lang('user');
 

@@ -4,7 +4,7 @@ namespace app\controllers;
 
 class QuotationController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $action = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : 'default';
         if ($action == 'print_quotation') {

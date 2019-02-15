@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class GoodsAutoController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         admin_priv('goods_auto');
         $GLOBALS['smarty']->assign('thisfile', 'goods_auto.php');

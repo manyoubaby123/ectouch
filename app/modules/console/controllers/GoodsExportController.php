@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class GoodsExportController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         if ($_REQUEST['act'] == 'goods_export') {
             /* 检查权限 */

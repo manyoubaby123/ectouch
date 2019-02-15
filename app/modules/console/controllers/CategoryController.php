@@ -6,7 +6,7 @@ use app\libraries\Exchange;
 
 class CategoryController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $exc = new Exchange($GLOBALS['ecs']->table("category"), $GLOBALS['db'], 'cat_id', 'cat_name');
 

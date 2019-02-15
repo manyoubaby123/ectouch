@@ -4,7 +4,7 @@ namespace app\modules\console\controllers;
 
 class SearchLogController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $_REQUEST['act'] = trim($_REQUEST['act']);
 

@@ -1,110 +1,182 @@
 <?php
 
-return [
-    'activity.php' => 'activity/index',
-    'affiche.php' => 'affiche/index',
-    'affiliate.php' => 'affiliate/index',
-    'api.php' => 'api/index',
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
-    'article-<id:\d+><s:.*>.html' => 'article/index',
-    'article.php' => 'article/index',
+Route::namespace('Shop')->group(function () {
+    Route::any('/', 'IndexController@actionIndex');
 
-    'article_cat-<id:\d+>-<page:\d+>-<sort:.+>-<order:[a-zA-Z]+><s:.*>.html' => 'article-cat/index',
-    'article_cat-<id:\d+>-<page:\d+>-<keywords:.+><s:.*>.html' => 'article-cat/index',
-    'article_cat-<id:\d+>-<page:\d+><s:.*>.html' => 'article-cat/index',
-    'article_cat-<id:\d+><s:.*>.html' => 'article-cat/index',
-    'article_cat.php' => 'article-cat/index',
+    Route::any('activity.php', 'ActivityController@actionIndex');
 
-    [
-        'pattern' => 'auction-<id:\d+>.html',
-        'route' => 'auction/index',
-        'defaults' => ['act' => 'view'],
-    ],
+    Route::any('affiche.php', 'AfficheController@actionIndex');
 
-    'auction.php' => 'auction/index',
+    Route::any('affiliate.php', 'AffiliateController@actionIndex');
 
-    'brand-<id:\d+>-c<cat:\d+>-<page:\d+>-<sort:.+>-<order:[a-zA-Z]+>.html' => 'brand/index',
-    'brand-<id:\d+>-c<cat:\d+>-<page:\d+><s:.*>.html' => 'brand/index',
-    'brand-<id:\d+>-c<cat:\d+><s:.*>.html' => 'brand/index',
-    'brand-<id:\d+><s:.*>.html' => 'brand/index',
-    'brand.php' => 'brand/index',
+    Route::any('api.php', 'ApiController@actionIndex');
 
-    'captcha.php' => 'captcha/index',
-    'catalog.php' => 'catalog/index',
+    Route::any('article-{id}{s?}.html', 'ArticleController@actionIndex')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
 
-    'category-<id:\d+>-b<brand:\d+>-min<price_min:\d+>-max<price_max:\d+>-attr<filter_attr:[^-]*>-<page:\d+>-<sort:.+>-<order:[a-zA-Z]+><s:.*>.html' => 'category/index',
-    'category-<id:\d+>-b<brand:\d+>-min<price_min:\d+>-max<price_max:\d+>-attr<filter_attr:[^-]*><s:.*>.html' => 'category/index',
-    'category-<id:\d+>-b<brand:\d+>-<page:\d+>-<sort:.+>-<order:[a-zA-Z]+><s:.*>.html' => 'category/index',
-    'category-<id:\d+>-b<brand:\d+>-<page:\d+><s:.*>.html' => 'category/index',
-    'category-<id:\d+>-b<brand:\d+><s:.*>.html' => 'category/index',
-    'category-<id:\d+><s:.*>.html' => 'category/index',
-    'category.php' => 'category/index',
+    Route::any('article.php', 'ArticleController@actionIndex');
 
-    'certi.php' => 'certi/index',
-    'comment.php' => 'comment/index',
-    'compare.php' => 'compare/index',
-    'crowd_funding.php' => 'crowd-funding/index',
-    'cycle_image.php' => 'cycle-image/index',
-    'discover.php' => 'discover/index',
+    Route::any('article_cat-{id}-{page}-{sort}-{order}{s?}.html', 'ArticleCatController@actionIndex')
+        ->where(['id' => '[0-9]+', 'page' => '[0-9]+', 'sort' => '.+', 'order' => '[a-zA-Z]+', 's' => '.*']);
 
-    [
-        'pattern' => 'exchange-id<id:\d+><s:.*>.html',
-        'route' => 'exchange/index',
-        'defaults' => ['act' => 'view'],
-    ],
+    Route::any('article_cat-{id}-{page}-{keywords}{s?}.html', 'ArticleCatController@actionIndex')
+        ->where(['id' => '[0-9]+', 'page' => '[0-9]+', 'keywords' => '.+', 's' => '.*']);
 
-    'exchange-<cat_id:\d+>-min<integral_min:\d+>-max<integral_max:\d+>-<page:\d+>-<sort:.+>-<order:[a-zA-Z]+><s:.*>.html' => 'exchange/index',
-    'exchange-<cat_id:\d+>-<page:\d+>-<sort:.+>-<order:[a-zA-Z]+><s:.*>.html' => 'exchange/index',
-    'exchange-<cat_id:\d+>-<page:\d+><s:.*>.html' => 'exchange/index',
-    'exchange-<cat_id:\d+><s:.*>.html' => 'exchange/index',
-    'exchange.php' => 'exchange/index',
+    Route::any('article_cat-{id}-{page}{s?}.html', 'ArticleCatController@actionIndex')
+        ->where(['id' => '[0-9]+', 'page' => '[0-9]+', 's' => '.*']);
 
-    'feed-c<cat:\d+>.xml' => 'feed/index',
-    'feed-b<brand:\d+>.xml' => 'feed/index',
-    'feed-type<type:[^-]+>.xml' => 'feed/index',
-    'feed.<xml|php>' => 'feed/index',
+    Route::any('article_cat-{id}{s?}.html', 'ArticleCatController@actionIndex')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
 
-    'flow.php' => 'flow/index',
-    'gallery.php' => 'gallery/index',
+    Route::any('article_cat.php', 'ArticleCatController@actionIndex');
 
-    'goods-<id:\d+><s:.*>.html' => 'goods/index',
-    'goods.php' => 'goods/index',
+    Route::any('auction-{id}.html', 'auctionController@actionIndex')
+        // ->bind('act', 'view')
+        ->where(['id' => '[0-9]+']);
 
-    'goods_script.php' => 'goods-script/index',
+    Route::any('auction.php', 'AuctionController@actionIndex');
 
-    [
-        'pattern' => 'group_buy-<id:\d+>.html',
-        'route' => 'group-buy/index',
-        'defaults' => ['act' => 'view'],
-    ],
-    'group_buy.php' => 'group-buy/index',
-    'groupon.php' => 'groupon/index',
+    Route::any('brand-{id}-c{cat}-{page}-{sort}-{order}.html', 'BrandController@actionIndex')
+        ->where(['id' => '[0-9]+', 'cat' => '[0-9]+', 'page' => '[0-9]+', 'sort' => '.+', 'order' => '[a-zA-Z]+']);
 
-    'message.php' => 'message/index',
-    'myship.php' => 'myship/index',
-    'oauth.php' => 'oauth/index',
-    'package.php' => 'package/index',
-    'pick_out.php' => 'pick-out/index',
-    'pm.php' => 'pm/index',
-    'quotation.php' => 'quotation/index',
-    'receive.php' => 'receive/index',
-    'region.php' => 'region/index',
-    'respond.php' => 'respond/index',
+    Route::any('brand-{id}-c{cat}-{page}{s?}.html', 'BrandController@actionIndex')
+        ->where(['id' => '[0-9]+', 'cat' => '[0-9]+', 'page' => '[0-9]+', 's' => '.*']);
 
-    'sales.php' => 'sales/index',
+    Route::any('brand-{id}-c{cat}{s?}.html', 'BrandController@actionIndex')
+        ->where(['id' => '[0-9]+', 'cat' => '[0-9]+', 's' => '.*']);
 
-    'tag-<keywords:.*>.html' => 'search/index',
-    'search.php' => 'search/index',
+    Route::any('brand-{id}{s?}.html', 'BrandController@actionIndex')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
 
-    'sitemaps.php' => 'sitemaps/index',
+    Route::any('brand.php', 'BrandController@actionIndex');
 
-    'snatch-<id:\d+>.html' => 'snatch/index',
-    'snatch.php' => 'snatch/index',
+    Route::any('captcha.php', 'CaptchaController@actionIndex');
 
-    'tag_cloud.php' => 'tag-cloud/index',
-    'topic.php' => 'topic/index',
-    'user.php' => 'user/index',
-    'vote.php' => 'vote/index',
-    'wechat.php' => 'wechat/index',
-    'wholesale.php' => 'wholesale/index',
-];
+    Route::any('catalog.php', 'CatalogController@actionIndex');
+
+    Route::any('category-{id}-b{brand}-min{price_min}-max{price_max}-attr{filter_attr}-{page}-{sort}-{order}{s?}.html', 'CategoryController@actionIndex')
+        ->where(['id' => '[0-9]+', 'brand' => '[0-9]+', 'price_min' => '[0-9]+', 'price_max' => '[0-9]+', 'filter_attr' => '[^-]*', 'page' => '[0-9]+', 'sort' => '.+', 'order' => '[a-zA-Z]+', 's' => '.*']);
+
+    Route::any('category-{id}-b{brand}-min{price_min}-max{price_max}-attr{filter_attr}{s?}.html', 'CategoryController@actionIndex')
+        ->where(['id' => '[0-9]+', 'brand' => '[0-9]+', 'price_min' => '[0-9]+', 'price_max' => '[0-9]+', 'filter_attr' => '[^-]*', 's' => '.*']);
+
+    Route::any('category-{id}-b{brand}-{page}-{sort}-{order}{s?}.html', 'CategoryController@actionIndex')
+        ->where(['id' => '[0-9]+', 'brand' => '[0-9]+', 'page' => '[0-9]+', 'sort' => '.+', 'order' => '[a-zA-Z]+', 's' => '.*']);
+
+    Route::any('category-{id}-b{brand}-{page}{s?}.html', 'CategoryController@actionIndex')
+        ->where(['id' => '[0-9]+', 'brand' => '[0-9]+', 'page' => '[0-9]+', 's' => '.*']);
+
+    Route::any('category-{id}-b{brand}{s?}.html', 'CategoryController@actionIndex')
+        ->where(['id' => '[0-9]+', 'brand' => '[0-9]+', 's' => '.*']);
+
+    Route::any('category-{id}{s?}.html', 'CategoryController@actionIndex')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
+
+    Route::any('category.php', 'CategoryController@actionIndex');
+
+    Route::any('certi.php', 'CertiController@actionIndex');
+
+    Route::any('comment.php', 'CommentController@actionIndex');
+
+    Route::any('compare.php', 'CompareController@actionIndex');
+
+    Route::any('cycle_image.php', 'CycleImageController@actionIndex');
+
+    Route::any('exchange-id{id}{s?}.html', 'ExchangeController@actionIndex')
+        // ->bind('act', 'view')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
+
+    Route::any('exchange-{cat_id}-min{integral_min}-max{integral_max}-{page}-{sort}-{order}{s?}.html', 'ExchangeController@actionIndex')
+        ->where(['cat_id' => '[0-9]+', 'integral_min' => '[0-9]+', 'integral_max' => '[0-9]+', 'page' => '[0-9]+', 'sort' => '.+', 'order' => '[a-zA-Z]+', 's' => '.*']);
+
+    Route::any('exchange-{cat_id}-{page}-{sort}-{order}{s?}.html', 'ExchangeController@actionIndex')
+        ->where(['cat_id' => '[0-9]+', 'page' => '[0-9]+', 'sort' => '.+', 'order' => '[a-zA-Z]+', 's' => '.*']);
+
+    Route::any('exchange-{cat_id}-{page}{s?}.html', 'ExchangeController@actionIndex')
+        ->where(['id' => '[0-9]+', 'page' => '[0-9]+', 's' => '.*']);
+
+    Route::any('exchange-{cat_id}{s?}.html', 'ExchangeController@actionIndex')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
+
+    Route::any('exchange.php', 'ExchangeController@actionIndex');
+
+    Route::any('feed-c{cat}.xml', 'FeedController@actionIndex')
+        ->where(['cat' => '[0-9]+']);
+
+    Route::any('feed-b{brand}.xml', 'FeedController@actionIndex')
+        ->where(['brand' => '[0-9]+']);
+
+    Route::any('feed-type{type}.xml', 'FeedController@actionIndex')
+        ->where(['type' => '[^-]+']);
+
+    Route::any('feed.{ext}', 'FeedController@actionIndex')
+        ->where(['ext' => 'xml|php']);
+
+    Route::any('flow.php', 'FlowController@actionIndex');
+
+    Route::any('gallery.php', 'GalleryController@actionIndex');
+
+    Route::any('goods-{id}{s?}.html', 'GoodsController@actionIndex')
+        ->where(['id' => '[0-9]+', 's' => '.*']);
+
+    Route::any('goods.php', 'GoodsController@actionIndex');
+
+    Route::any('goods_script.php', 'GoodsScriptController@actionIndex');
+
+    Route::any('group_buy-{id}.html', 'GroupBuyController@actionIndex')
+        // ->bind('act', 'view')
+        ->where(['id' => '[0-9]+']);
+
+    Route::any('group_buy.php', 'GroupBuyController@actionIndex');
+
+    Route::any('message.php', 'MessageController@actionIndex');
+
+    Route::any('myship.php', 'MyshipController@actionIndex');
+
+    Route::any('package.php', 'PackageController@actionIndex');
+
+    Route::any('pick_out.php', 'PickOutController@actionIndex');
+
+    Route::any('pm.php', 'PmController@actionIndex');
+
+    Route::any('quotation.php', 'QuotationController@actionIndex');
+
+    Route::any('receive.php', 'ReceiveController@actionIndex');
+
+    Route::any('region.php', 'RegionController@actionIndex');
+
+    Route::any('respond.php', 'RespondController@actionIndex');
+
+    Route::any('tag-{keywords}.html', 'SearchController@actionIndex')
+        ->where(['keywords' => '.*']);
+
+    Route::any('search.php', 'SearchController@actionIndex');
+
+    Route::any('sitemaps.php', 'SitemapsController@actionIndex');
+
+    Route::any('snatch-{id}.html', 'SnatchController@actionIndex')
+        ->where(['id' => '[0-9]+']);
+
+    Route::any('snatch.php', 'SnatchController@actionIndex');
+
+    Route::any('tag_cloud.php', 'TagCloudController@actionIndex');
+
+    Route::any('topic.php', 'TopicController@actionIndex');
+
+    Route::any('user.php', 'UserController@actionIndex');
+
+    Route::any('vote.php', 'VoteController@actionIndex');
+
+    Route::any('wholesale.php', 'WholesaleController@actionIndex');
+});

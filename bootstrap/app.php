@@ -7,115 +7,46 @@
  * @homepage https://www.ectouch.cn
  */
 
-if (version_compare(PHP_VERSION, '7.1.3', '<')) {
-    die('require PHP > 7.1.3 !');
-}
-
 /*
 |--------------------------------------------------------------------------
-| 应用名称
+| Create The Application
 |--------------------------------------------------------------------------
-*/
-
-define('APPNAME', 'ECTouch');
-
-/*
-|--------------------------------------------------------------------------
-| 应用版本
-|--------------------------------------------------------------------------
-*/
-
-define('VERSION', 'v3.0.0');
-
-/*
-|--------------------------------------------------------------------------
-| 发布时间
-|--------------------------------------------------------------------------
-*/
-
-define('RELEASE', '20181101');
-
-/*
-|--------------------------------------------------------------------------
-| 编码格式
-|--------------------------------------------------------------------------
-*/
-
-define('EC_CHARSET', 'utf-8');
-
-/*
-|--------------------------------------------------------------------------
-| 编码格式
-|--------------------------------------------------------------------------
-*/
-
-define('ADMIN_PATH', 'seller');
-
-/*
-|--------------------------------------------------------------------------
-| 编码格式
-|--------------------------------------------------------------------------
-*/
-
-define('AUTH_KEY', 'this is a key');
-
-/*
-|--------------------------------------------------------------------------
-| 编码格式
-|--------------------------------------------------------------------------
-*/
-
-define('OLD_AUTH_KEY', '');
-
-/*
-|--------------------------------------------------------------------------
-| API时间
-|--------------------------------------------------------------------------
-*/
-
-define('API_TIME', '2019-02-15 05:44:57');
-
-/*
-|--------------------------------------------------------------------------
-| Setting Debuger
-|--------------------------------------------------------------------------
+|
+| The first thing we will do is create a new Laravel application instance
+| which serves as the "glue" for all the components of Laravel, and is
+| the IoC container for the system binding all of the various parts.
 |
 */
 
-if (!in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
-    defined('YII_DEBUG') or define('YII_DEBUG', false);
-    defined('YII_ENV') or define('YII_ENV', 'prod');
-} else {
-    defined('YII_DEBUG') or define('YII_DEBUG', true);
-    defined('YII_ENV') or define('YII_ENV', 'dev');
-}
+$app = new Illuminate\Foundation\Application(
+    $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
+);
 
 /*
 |--------------------------------------------------------------------------
-| Loading Kernel
+| Bind Important Interfaces
 |--------------------------------------------------------------------------
+|
+| Next, we need to bind some important interfaces into the container so
+| we will be able to resolve them when needed. The kernels serve the
+| incoming requests to this application from both the web and CLI.
 |
 */
 
-require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
+$app->singleton(
+    Illuminate\Contracts\Http\Kernel::class,
+    App\Http\Kernel::class
+);
 
-/*
-|--------------------------------------------------------------------------
-| Loading Bootstrap
-|--------------------------------------------------------------------------
-|
-*/
+$app->singleton(
+    Illuminate\Contracts\Console\Kernel::class,
+    App\Console\Kernel::class
+);
 
-require(__DIR__ . '/../config/bootstrap.php');
-
-/*
-|--------------------------------------------------------------------------
-| Loading Configuration
-|--------------------------------------------------------------------------
-|
-*/
-
-$config = require(__DIR__ . '/../config/config.php');
+$app->singleton(
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    App\Exceptions\Handler::class
+);
 
 /*
 |--------------------------------------------------------------------------
@@ -128,4 +59,4 @@ $config = require(__DIR__ . '/../config/config.php');
 |
 */
 
-return new yii\web\Application($config);
+return $app;

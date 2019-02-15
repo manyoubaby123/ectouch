@@ -150,10 +150,7 @@ class Captcha
             imagepng($img_org);
             imagedestroy($img_org);
 
-            $content = ob_get_clean();
-            return response($content, 200, [
-                'Content-Type' => 'image/png',
-            ]);
+            return ob_get_clean();
         }
     }
 

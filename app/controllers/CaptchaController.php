@@ -6,7 +6,7 @@ use app\libraries\Captcha;
 
 class CaptchaController extends InitController
 {
-    public function index()
+    public function actionIndex()
     {
         $img = new Captcha(public_path('data/captcha'), $GLOBALS['_CFG']['captcha_width'], $GLOBALS['_CFG']['captcha_height']);
 

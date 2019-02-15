@@ -316,6 +316,8 @@ function parse_name(string $name, int $type = 0, bool $ucfirst = true)
  */
 function load_helper($files = [], $module = '')
 {
+    static $_helper = [];
+
     if (!is_array($files)) {
         $files = [$files];
     }
@@ -323,12 +325,19 @@ function load_helper($files = [], $module = '')
     if (empty($module)) {
         $base_path = app_path('helpers/');
     } else {
-        $base_path = app_path(strtolower($module) . '/common/');
+        $base_path = app_path('modules/' . parse_name($module) . '/common/');
     }
 
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';
+        $hash = md5($helper);
+
+        if (isset($_helper[$hash])) {
+            continue;
+        }
+
         if (file_exists($helper)) {
+            $_helper[$hash] = $helper;
             require($helper);
         }
     }

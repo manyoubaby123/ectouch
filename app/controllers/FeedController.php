@@ -1,6 +1,6 @@
 <?php
 
-namespace app\web\controller;
+namespace app\controllers;
 
 use app\libraries\RSSBuilder;
 

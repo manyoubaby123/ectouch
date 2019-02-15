@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Web\Controller;
+namespace app\controllers;
 
 class GoodsScriptController extends InitController
 {

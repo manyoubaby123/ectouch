@@ -31,67 +31,21 @@
         "phpoffice/phpspreadsheet": "^1.6",
         "ramsey/uuid": "^3.8",
         "workerman/phpsocket.io": "^1.1",
-        "yiisoft/yii2": "~2.0.14",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0"
-    },
-    "require-dev": {
-        "yiisoft/yii2-debug": "~2.0.0",
-        "yiisoft/yii2-gii": "~2.0.0",
-        "yiisoft/yii2-faker": "~2.0.0",
-        "codeception/base": "~2.3.0",
-        "codeception/verify": "~0.4.0",
-        "codeception/specify": "~0.4.6"
+        "topthink/framework": "5.2.*-dev"
     },
     "config": {
-        "fxp-asset": {
-            "enabled": false
-        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "process-timeout": 1800,
         "sort-packages": true
-    },
-    "extra": {
-        "yii\\composer\\Installer::postCreateProject": {
-            "setPermission": [
-                {
-                    "storage": "0777",
-                    "public/assets": "0777",
-                    "artisan": "0755"
-                }
-            ]
-        },
-        "yii\\composer\\Installer::postInstall": {
-            "generateCookieValidationKey": [
-                "config/config.php"
-            ]
-        }
     },
     "autoload": {
         "psr-4": {
             "app\\": "app/"
         },
         "files": [
-            "config/constant.php",
             "app/support/helpers.php"
         ]
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "scripts": {
-        "post-install-cmd": [
-            "yii\\composer\\Installer::postInstall"
-        ],
-        "post-create-project-cmd": [
-            "yii\\composer\\Installer::postCreateProject",
-            "yii\\composer\\Installer::postInstall"
-        ]
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ]
+    "prefer-stable": true
 }

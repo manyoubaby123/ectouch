@@ -127,7 +127,8 @@ class InitController extends Controller
                 unset($site_name);
 
                 if (!defined('INGORE_VISIT_STATS')) {
-                    app(StatService::class)->visit_stats();
+                    $statService = new StatService();
+                    $statService->visit_stats();
                 }
             }
 

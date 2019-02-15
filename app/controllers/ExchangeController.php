@@ -328,15 +328,6 @@ class ExchangeController extends InitController
             /* 处理商品水印图片 */
             $watermark_img = '';
 
-//        if ($row['is_new'] != 0)
-//        {
-//            $watermark_img = "watermark_new_small";
-//        }
-//        elseif ($row['is_best'] != 0)
-//        {
-//            $watermark_img = "watermark_best_small";
-//        }
-//        else
             if ($row['is_hot'] != 0) {
                 $watermark_img = 'watermark_hot_small';
             }

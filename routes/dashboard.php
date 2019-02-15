@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'index.php' => 'index/index',
+    'index.php' => 'default/index',
     'account_log.php' => 'account-log/index',
     'ad_position.php' => 'ad-position/index',
     'admin_logs.php' => 'admin-logs/index',

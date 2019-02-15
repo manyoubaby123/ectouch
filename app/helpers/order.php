@@ -117,9 +117,9 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $shipping_code = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
-    if (class_exists($shipping_code)) {
-        $obj = new $shipping_code($shipping_config);
+    $shipping = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+    if (class_exists($shipping)) {
+        $obj = new $shipping($shipping_config);
 
         return $obj->calculate($goods_weight, $goods_amount, $goods_number);
     } else {
@@ -142,11 +142,8 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
         /* 如果保价费用不是百分比则直接返回该数值 */
         return floatval($insure);
     } else {
-        $path = ROOT_PATH . 'includes/modules/shipping/' . $shipping_code . '.php';
-
-        if (file_exists($path)) {
-            include_once($path);
-
+        $shipping = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+        if (class_exists($shipping)) {
             $shipping = new $shipping_code;
             $insure = floatval($insure) / 100;
 
@@ -244,8 +241,6 @@ function available_payment_list($support_cod, $cod_fee = 0, $is_online = false)
             price_format($row['pay_fee'], false);
         $modules[] = $row;
     }
-
-    include_once(ROOT_PATH . 'includes/lib_compositor.php');
 
     if (isset($modules)) {
         return $modules;

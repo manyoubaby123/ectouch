@@ -9,15 +9,15 @@ namespace app\services;
 class PaymentService
 {
 
-/**
- * 取得已安装的支付方式列表
- * @return  array   已安装的配送方式列表
- */
+    /**
+     * 取得已安装的支付方式列表
+     * @return  array   已安装的配送方式列表
+     */
     public function payment_list()
     {
         $sql = 'SELECT pay_id, pay_name ' .
-        'FROM ' . $GLOBALS['ecs']->table('payment') .
-        ' WHERE enabled = 1';
+            'FROM ' . $GLOBALS['ecs']->table('payment') .
+            ' WHERE enabled = 1';
 
         return $GLOBALS['db']->getAll($sql);
     }
@@ -30,7 +30,7 @@ class PaymentService
     public function payment_info($pay_id)
     {
         $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('payment') .
-        " WHERE pay_id = '$pay_id' AND enabled = 1";
+            " WHERE pay_id = '$pay_id' AND enabled = 1";
 
         return $GLOBALS['db']->getRow($sql);
     }
@@ -71,8 +71,8 @@ class PaymentService
     public function available_payment_list($support_cod, $cod_fee = 0, $is_online = false)
     {
         $sql = 'SELECT pay_id, pay_code, pay_name, pay_fee, pay_desc, pay_config, is_cod' .
-        ' FROM ' . $GLOBALS['ecs']->table('payment') .
-        ' WHERE enabled = 1 ';
+            ' FROM ' . $GLOBALS['ecs']->table('payment') .
+            ' WHERE enabled = 1 ';
         if (!$support_cod) {
             $sql .= 'AND is_cod = 0 '; // 如果不支持货到付款
         }
@@ -89,11 +89,9 @@ class PaymentService
             }
 
             $row['format_pay_fee'] = strpos($row['pay_fee'], '%') !== false ? $row['pay_fee'] :
-            price_format($row['pay_fee'], false);
+                price_format($row['pay_fee'], false);
             $modules[] = $row;
         }
-
-        load_helper('compositor');
 
         if (isset($modules)) {
             return $modules;
@@ -107,7 +105,7 @@ class PaymentService
     public function get_payment($code)
     {
         $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('payment') .
-        " WHERE pay_code = '$code' AND enabled = '1'";
+            " WHERE pay_code = '$code' AND enabled = '1'";
         $payment = $GLOBALS['db']->getRow($sql);
 
         if ($payment) {
@@ -160,7 +158,7 @@ class PaymentService
     {
         if (is_numeric($log_id)) {
             $sql = 'SELECT order_amount FROM ' . $GLOBALS['ecs']->table('pay_log') .
-            " WHERE log_id = '$log_id'";
+                " WHERE log_id = '$log_id'";
             $amount = $GLOBALS['db']->getOne($sql);
         } else {
             return false;
@@ -188,33 +186,33 @@ class PaymentService
         if ($log_id > 0) {
             /* 取得要修改的支付记录信息 */
             $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('pay_log') .
-            " WHERE log_id = '$log_id'";
+                " WHERE log_id = '$log_id'";
             $pay_log = $GLOBALS['db']->getRow($sql);
             if ($pay_log && $pay_log['is_paid'] == 0) {
                 /* 修改此次支付操作的状态为已付款 */
                 $sql = 'UPDATE ' . $GLOBALS['ecs']->table('pay_log') .
-                " SET is_paid = '1' WHERE log_id = '$log_id'";
+                    " SET is_paid = '1' WHERE log_id = '$log_id'";
                 $GLOBALS['db']->query($sql);
 
                 /* 根据记录类型做相应处理 */
                 if ($pay_log['order_type'] == PAY_ORDER) {
                     /* 取得订单信息 */
                     $sql = 'SELECT order_id, user_id, order_sn, consignee, address, tel, shipping_id, extension_code, extension_id, goods_amount ' .
-                    'FROM ' . $GLOBALS['ecs']->table('order_info') .
-                    " WHERE order_id = '$pay_log[order_id]'";
+                        'FROM ' . $GLOBALS['ecs']->table('order_info') .
+                        " WHERE order_id = '$pay_log[order_id]'";
                     $order = $GLOBALS['db']->getRow($sql);
                     $order_id = $order['order_id'];
                     $order_sn = $order['order_sn'];
 
                     /* 修改订单状态为已付款 */
                     $sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') .
-                    " SET order_status = '" . OS_CONFIRMED . "', " .
-                    " confirm_time = '" . gmtime() . "', " .
-                    " pay_status = '$pay_status', " .
-                    " pay_time = '" . gmtime() . "', " .
-                    " money_paid = order_amount," .
-                    " order_amount = 0 " .
-                    "WHERE order_id = '$order_id'";
+                        " SET order_status = '" . OS_CONFIRMED . "', " .
+                        " confirm_time = '" . gmtime() . "', " .
+                        " pay_status = '$pay_status', " .
+                        " pay_time = '" . gmtime() . "', " .
+                        " money_paid = order_amount," .
+                        " order_amount = 0 " .
+                        "WHERE order_id = '$order_id'";
                     $GLOBALS['db']->query($sql);
 
                     /* 记录订单操作记录 */
@@ -224,12 +222,12 @@ class PaymentService
                     if ($GLOBALS['_CFG']['sms_order_payed'] == '1' && $GLOBALS['_CFG']['sms_shop_mobile'] != '') {
                         $sms = new sms();
                         $sms->send(
-                        $GLOBALS['_CFG']['sms_shop_mobile'],
-                        sprintf($GLOBALS['_LANG']['order_payed_sms'], $order_sn, $order['consignee'], $order['tel']),
-                        '',
-                        13,
-                        1
-                    );
+                            $GLOBALS['_CFG']['sms_shop_mobile'],
+                            sprintf($GLOBALS['_LANG']['order_payed_sms'], $order_sn, $order['consignee'], $order['tel']),
+                            '',
+                            13,
+                            1
+                        );
                     }
 
                     /* 对虚拟商品的支持 */
@@ -244,8 +242,8 @@ class PaymentService
                         if ($order['shipping_id'] == -1) {
                             /* 将订单标识为已发货状态，并记录发货记录 */
                             $sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_info') .
-                            " SET shipping_status = '" . SS_SHIPPED . "', shipping_time = '" . gmtime() . "'" .
-                            " WHERE order_id = '$order_id'";
+                                " SET shipping_status = '" . SS_SHIPPED . "', shipping_time = '" . gmtime() . "'" .
+                                " WHERE order_id = '$order_id'";
                             $GLOBALS['db']->query($sql);
 
                             /* 记录订单操作记录 */
@@ -260,13 +258,13 @@ class PaymentService
                     if (empty($res_id)) {
                         /* 更新会员预付款的到款状态 */
                         $sql = 'UPDATE ' . $GLOBALS['ecs']->table('user_account') .
-                        " SET paid_time = '" . gmtime() . "', is_paid = 1" .
-                        " WHERE id = '$pay_log[order_id]' LIMIT 1";
+                            " SET paid_time = '" . gmtime() . "', is_paid = 1" .
+                            " WHERE id = '$pay_log[order_id]' LIMIT 1";
                         $GLOBALS['db']->query($sql);
 
                         /* 取得添加预付款的用户以及金额 */
                         $sql = "SELECT user_id, amount FROM " . $GLOBALS['ecs']->table('user_account') .
-                        " WHERE id = '$pay_log[order_id]'";
+                            " WHERE id = '$pay_log[order_id]'";
                         $arr = $GLOBALS['db']->getRow($sql);
 
                         /* 修改会员帐户金额 */
@@ -342,15 +340,13 @@ class PaymentService
     public function get_online_payment_list($include_balance = true)
     {
         $sql = 'SELECT pay_id, pay_code, pay_name, pay_fee, pay_desc ' .
-        'FROM ' . $GLOBALS['ecs']->table('payment') .
-        " WHERE enabled = 1 AND is_cod <> 1";
+            'FROM ' . $GLOBALS['ecs']->table('payment') .
+            " WHERE enabled = 1 AND is_cod <> 1";
         if (!$include_balance) {
             $sql .= " AND pay_code <> 'balance' ";
         }
 
         $modules = $GLOBALS['db']->getAll($sql);
-
-        load_helper('compositor');
 
         return $modules;
     }

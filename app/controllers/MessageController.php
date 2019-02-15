@@ -11,7 +11,8 @@ class MessageController extends InitController
         if (empty($GLOBALS['_CFG']['message_board'])) {
             return show_message($GLOBALS['_LANG']['message_board_close']);
         }
-        $action = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : 'default';
+
+        $action = app('request')->get('act', 'default');
         if ($action == 'act_add_message') {
             load_helper('clips');
 
@@ -32,7 +33,7 @@ class MessageController extends InitController
                     return show_message($GLOBALS['_LANG']['cmt_spam_warning']);
                 }
             }
-            $user_name = '';
+
             if (empty($_POST['anonymous']) && !empty(session('user_name'))) {
                 $user_name = session('user_name');
             } elseif (!empty($_POST['anonymous']) && !isset($_POST['user_name'])) {
@@ -98,6 +99,7 @@ class MessageController extends InitController
             $GLOBALS['smarty']->assign('rand', mt_rand());
             $GLOBALS['smarty']->assign('msg_lists', $msg_lists);
             $GLOBALS['smarty']->assign('pager', $pager);
+
             return $GLOBALS['smarty']->display('message_board.dwt');
         }
     }

@@ -117,10 +117,8 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $filename = ROOT_PATH . 'includes/modules/shipping/' . $shipping_code . '.php';
-    if (file_exists($filename)) {
-        include_once($filename);
-
+    $shipping_code = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+    if (class_exists($shipping_code)) {
         $obj = new $shipping_code($shipping_config);
 
         return $obj->calculate($goods_weight, $goods_amount, $goods_number);

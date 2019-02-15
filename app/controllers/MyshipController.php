@@ -49,8 +49,6 @@ class MyshipController extends InitController
         $region = [$choose['country'], $choose['province'], $choose['city'], $choose['district']];
         $shipping_list = available_shipping_list($region);
         $cart_weight_price = 0;
-        $insure_disabled = true;
-        $cod_disabled = true;
 
         foreach ($shipping_list as $key => $val) {
             $shipping_cfg = unserialize_config($val['configure']);

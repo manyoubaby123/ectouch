@@ -1,5 +1,7 @@
 <?php
 
+use app\libraries\Transport;
+
 /**
  * 获得网店 license 信息
  *
@@ -54,10 +56,9 @@ function make_shopex_ac($post_params, $token)
  *
  * @param   array $certi 登录参数
  * @param   array $license 网店license信息
- * @param   bool $use_lib 使用哪一个json库，0为ec，1为shopex
  * @return  array
  */
-function exchange_shop_license($certi, $license, $use_lib = 0)
+function exchange_shop_license($certi, $license)
 {
     if (!is_array($certi)) {
         return array();
@@ -69,18 +70,12 @@ function exchange_shop_license($certi, $license, $use_lib = 0)
     }
     $params = trim($params, '&');
 
-    $transport = new transport;
+    $transport = new Transport();
     //$transport->connect_timeout = 1;
     $request = $transport->request($license['certi'], $params, 'POST');
     $request_str = json_str_iconv($request['body']);
 
-    if (empty($use_lib)) {
-        $json = new JSON();
-        $request_arr = $json->decode($request_str, 1);
-    } else {
-        include_once(ROOT_PATH . 'includes/shopex_json.php');
-        $request_arr = json_decode($request_str, 1);
-    }
+    $request_arr = json_decode($request_str, true);
 
     return $request_arr;
 }

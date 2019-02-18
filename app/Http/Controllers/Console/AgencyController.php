@@ -109,7 +109,7 @@ class AgencyController extends InitController
         if ($_REQUEST['act'] == 'batch') {
             /* 取得要操作的记录编号 */
             if (empty($_POST['checkboxes'])) {
-                sys_msg($GLOBALS['_LANG']['no_record_selected']);
+                return sys_msg($GLOBALS['_LANG']['no_record_selected']);
             } else {
                 /* 检查权限 */
                 admin_priv('agency_manage');
@@ -135,7 +135,7 @@ class AgencyController extends InitController
                     /* 清除缓存 */
                     clear_cache_files();
 
-                    sys_msg($GLOBALS['_LANG']['batch_drop_ok']);
+                    return sys_msg($GLOBALS['_LANG']['batch_drop_ok']);
                 }
             }
         }
@@ -161,14 +161,14 @@ class AgencyController extends InitController
                 ];
             } else {
                 if (empty($_GET['id'])) {
-                    sys_msg('invalid param');
+                    return sys_msg('invalid param');
                 }
 
                 $id = $_GET['id'];
                 $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('agency') . " WHERE agency_id = '$id'";
                 $agency = $GLOBALS['db']->getRow($sql);
                 if (empty($agency)) {
-                    sys_msg('agency does not exist');
+                    return sys_msg('agency does not exist');
                 }
 
                 /* 关联的地区 */
@@ -227,12 +227,12 @@ class AgencyController extends InitController
 
             /* 判断名称是否重复 */
             if (!$exc->is_only('agency_name', $agency['agency_name'], $agency['agency_id'])) {
-                sys_msg($GLOBALS['_LANG']['agency_name_exist']);
+                return sys_msg($GLOBALS['_LANG']['agency_name_exist']);
             }
 
             /* 检查是否选择了地区 */
             if (empty($_POST['regions'])) {
-                sys_msg($GLOBALS['_LANG']['no_regions']);
+                return sys_msg($GLOBALS['_LANG']['no_regions']);
             }
 
             /* 保存办事处信息 */
@@ -278,12 +278,12 @@ class AgencyController extends InitController
                     ['href' => 'agency.php?act=add', 'text' => $GLOBALS['_LANG']['continue_add_agency']],
                     ['href' => 'agency.php?act=list', 'text' => $GLOBALS['_LANG']['back_agency_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['add_agency_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['add_agency_ok'], 0, $links);
             } else {
                 $links = [
                     ['href' => 'agency.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['back_agency_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['edit_agency_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_agency_ok'], 0, $links);
             }
         }
     }

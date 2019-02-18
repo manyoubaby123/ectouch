@@ -12,8 +12,8 @@ class Shop
      */
     public function __construct()
     {
-        $this->db_name = substr(app('db')->dsn, strripos(app('db')->dsn, '=') + 1);
-        $this->prefix = app('db')->tablePrefix;
+        $this->db_name = config('database.connections.mysql.database');
+        $this->prefix = config('database.connections.mysql.prefix');
     }
 
     /**

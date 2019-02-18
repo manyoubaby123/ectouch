@@ -96,7 +96,7 @@ class AuctionController extends InitController
         if ($_REQUEST['act'] == 'batch') {
             /* 取得要操作的记录编号 */
             if (empty($_POST['checkboxes'])) {
-                sys_msg($GLOBALS['_LANG']['no_record_selected']);
+                return sys_msg($GLOBALS['_LANG']['no_record_selected']);
             } else {
                 /* 检查权限 */
                 admin_priv('auction');
@@ -122,7 +122,7 @@ class AuctionController extends InitController
                         clear_cache_files();
                     }
                     $links[] = ['text' => $GLOBALS['_LANG']['back_auction_list'], 'href' => 'auction.php?act=list&' . list_link_postfix()];
-                    sys_msg($GLOBALS['_LANG']['batch_drop_ok'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['batch_drop_ok'], 0, $links);
                 }
             }
         }
@@ -137,12 +137,12 @@ class AuctionController extends InitController
 
             /* 参数 */
             if (empty($_GET['id'])) {
-                sys_msg('invalid param');
+                return sys_msg('invalid param');
             }
             $id = intval($_GET['id']);
             $auction = auction_info($id);
             if (empty($auction)) {
-                sys_msg($GLOBALS['_LANG']['auction_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['auction_not_exist']);
             }
             $GLOBALS['smarty']->assign('auction', auction_info($id));
 
@@ -186,12 +186,12 @@ class AuctionController extends InitController
                 ];
             } else {
                 if (empty($_GET['id'])) {
-                    sys_msg('invalid param');
+                    return sys_msg('invalid param');
                 }
                 $id = intval($_GET['id']);
                 $auction = auction_info($id, true);
                 if (empty($auction)) {
-                    sys_msg($GLOBALS['_LANG']['auction_not_exist']);
+                    return sys_msg($GLOBALS['_LANG']['auction_not_exist']);
                 }
                 $auction['status'] = $GLOBALS['_LANG']['auction_status'][$auction['status_no']];
                 $GLOBALS['smarty']->assign('bid_user_count', sprintf($GLOBALS['_LANG']['bid_user_count'], $auction['bid_user_count']));
@@ -229,12 +229,12 @@ class AuctionController extends InitController
             /* 检查是否选择了商品 */
             $goods_id = intval($_POST['goods_id']);
             if ($goods_id <= 0) {
-                sys_msg($GLOBALS['_LANG']['pls_select_goods']);
+                return sys_msg($GLOBALS['_LANG']['pls_select_goods']);
             }
             $sql = "SELECT goods_name FROM " . $GLOBALS['ecs']->table('goods') . " WHERE goods_id = '$goods_id'";
             $row = $GLOBALS['db']->getRow($sql);
             if (empty($row)) {
-                sys_msg($GLOBALS['_LANG']['goods_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['goods_not_exist']);
             }
             $goods_name = $row['goods_name'];
 
@@ -283,12 +283,12 @@ class AuctionController extends InitController
                     ['href' => 'auction.php?act=add', 'text' => $GLOBALS['_LANG']['continue_add_auction']],
                     ['href' => 'auction.php?act=list', 'text' => $GLOBALS['_LANG']['back_auction_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['add_auction_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['add_auction_ok'], 0, $links);
             } else {
                 $links = [
                     ['href' => 'auction.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['back_auction_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['edit_auction_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_auction_ok'], 0, $links);
             }
         }
 
@@ -302,18 +302,18 @@ class AuctionController extends InitController
 
             /* 检查参数 */
             if (empty($_POST['id'])) {
-                sys_msg('invalid param');
+                return sys_msg('invalid param');
             }
             $id = intval($_POST['id']);
             $auction = auction_info($id);
             if (empty($auction)) {
-                sys_msg($GLOBALS['_LANG']['auction_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['auction_not_exist']);
             }
             if ($auction['status_no'] != FINISHED) {
-                sys_msg($GLOBALS['_LANG']['invalid_status']);
+                return sys_msg($GLOBALS['_LANG']['invalid_status']);
             }
             if ($auction['deposit'] <= 0) {
-                sys_msg($GLOBALS['_LANG']['no_deposit']);
+                return sys_msg($GLOBALS['_LANG']['no_deposit']);
             }
 
             /* 处理保证金 */
@@ -347,7 +347,7 @@ class AuctionController extends InitController
             clear_cache_files();
 
             /* 提示信息 */
-            sys_msg($GLOBALS['_LANG']['settle_deposit_ok']);
+            return sys_msg($GLOBALS['_LANG']['settle_deposit_ok']);
         }
 
         /*------------------------------------------------------ */

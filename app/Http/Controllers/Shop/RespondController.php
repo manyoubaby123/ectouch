@@ -31,7 +31,7 @@ class RespondController extends InitController
             if ($GLOBALS['db']->getOne($sql) == 0) {
                 $msg = $GLOBALS['_LANG']['pay_disabled'];
             } else {
-                $plugin = '\\app\\plugins\\payment\\' . parse_name($pay_code, true);
+                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($pay_code, true);
 
                 /* 检查插件文件是否存在，如果存在则验证支付是否成功，否则则返回失败信息 */
                 if (class_exists($plugin)) {

@@ -124,7 +124,7 @@ class OrderController extends InitController
             $agency_id = $GLOBALS['db']->getOne($sql);
             if ($agency_id > 0) {
                 if ($order['agency_id'] != $agency_id) {
-                    sys_msg($GLOBALS['_LANG']['priv_error']);
+                    return sys_msg($GLOBALS['_LANG']['priv_error']);
                 }
             }
 
@@ -528,7 +528,7 @@ class OrderController extends InitController
             $agency_id = $GLOBALS['db']->getOne($sql);
             if ($agency_id > 0) {
                 if ($delivery_order['agency_id'] != $agency_id) {
-                    sys_msg($GLOBALS['_LANG']['priv_error']);
+                    return sys_msg($GLOBALS['_LANG']['priv_error']);
                 }
 
                 /* 取当前办事处信息 */
@@ -647,7 +647,7 @@ class OrderController extends InitController
                     if (($value['sums'] > $value['storage'] || $value['storage'] <= 0) && (($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP) || ($GLOBALS['_CFG']['use_storage'] == '0' && $value['is_real'] == 0))) {
                         /* 操作失败 */
                         $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=delivery_info&delivery_id=' . $delivery_id];
-                        sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $value['goods_name']), 1, $links);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $value['goods_name']), 1, $links);
                         break;
                     }
 
@@ -671,7 +671,7 @@ class OrderController extends InitController
                     if (($value['sums'] > $value['goods_number'] || $value['goods_number'] <= 0) && (($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP) || ($GLOBALS['_CFG']['use_storage'] == '0' && $value['is_real'] == 0))) {
                         /* 操作失败 */
                         $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=delivery_info&delivery_id=' . $delivery_id];
-                        sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $value['goods_name']), 1, $links);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $value['goods_name']), 1, $links);
                         break;
                     }
 
@@ -726,7 +726,7 @@ class OrderController extends InitController
             if (!$query) {
                 /* 操作失败 */
                 $links[] = ['text' => $GLOBALS['_LANG']['delivery_sn'] . $GLOBALS['_LANG']['detail'], 'href' => 'order.php?act=delivery_info&delivery_id=' . $delivery_id];
-                sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
+                return sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
             }
 
             /* 标记订单为已确认 “已发货” */
@@ -793,7 +793,7 @@ class OrderController extends InitController
             /* 操作成功 */
             $links[] = ['text' => $GLOBALS['_LANG']['09_delivery_order'], 'href' => 'order.php?act=delivery_list'];
             $links[] = ['text' => $GLOBALS['_LANG']['delivery_sn'] . $GLOBALS['_LANG']['detail'], 'href' => 'order.php?act=delivery_info&delivery_id=' . $delivery_id];
-            sys_msg($GLOBALS['_LANG']['act_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['act_ok'], 0, $links);
         }
 
         /*------------------------------------------------------ */
@@ -827,7 +827,7 @@ class OrderController extends InitController
             if (!$query) {
                 /* 操作失败 */
                 $links[] = ['text' => $GLOBALS['_LANG']['delivery_sn'] . $GLOBALS['_LANG']['detail'], 'href' => 'order.php?act=delivery_info&delivery_id=' . $delivery_id];
-                sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
+                return sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
             }
 
             /* 修改定单发货单号 */
@@ -908,7 +908,7 @@ class OrderController extends InitController
 
             /* 操作成功 */
             $links[] = ['text' => $GLOBALS['_LANG']['delivery_sn'] . $GLOBALS['_LANG']['detail'], 'href' => 'order.php?act=delivery_info&delivery_id=' . $delivery_id];
-            sys_msg($GLOBALS['_LANG']['act_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['act_ok'], 0, $links);
         }
 
         /*------------------------------------------------------ */
@@ -980,7 +980,7 @@ class OrderController extends InitController
             $agency_id = $GLOBALS['db']->getOne($sql);
             if ($agency_id > 0) {
                 if ($back_order['agency_id'] != $agency_id) {
-                    sys_msg($GLOBALS['_LANG']['priv_error']);
+                    return sys_msg($GLOBALS['_LANG']['priv_error']);
                 }
 
                 /* 取当前办事处信息*/
@@ -1128,7 +1128,7 @@ class OrderController extends InitController
                                 "WHERE rec_id = '$rec_id' LIMIT 1";
                             $GLOBALS['db']->query($sql);
                         } else {
-                            sys_msg($GLOBALS['_LANG']['goods_num_err']);
+                            return sys_msg($GLOBALS['_LANG']['goods_num_err']);
                         }
                     }
 
@@ -1285,7 +1285,7 @@ class OrderController extends InitController
 
                     /* 显示提示信息 */
                     if (!empty($msgs)) {
-                        sys_msg(join(chr(13), $msgs), 0, $links);
+                        return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         /* 跳转到订单详情 */
                         return ecs_header("Location: order.php?act=info&order_id=" . $order_id . "\n");
@@ -1339,7 +1339,7 @@ class OrderController extends InitController
                             // 修改配送为空，配送费和保价费为0
                             update_order($order_id, ['shipping_id' => 0, 'shipping_name' => '']);
                             $links[] = ['text' => $GLOBALS['_LANG']['step']['shipping'], 'href' => 'order.php?act=edit&order_id=' . $order_id . '&step=shipping'];
-                            sys_msg($GLOBALS['_LANG']['continue_shipping'], 1, $links);
+                            return sys_msg($GLOBALS['_LANG']['continue_shipping'], 1, $links);
                         }
                     }
 
@@ -1420,7 +1420,7 @@ class OrderController extends InitController
 
                     /* 显示提示信息 */
                     if (!empty($msgs)) {
-                        sys_msg(join(chr(13), $msgs), 0, $links);
+                        return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         /* 完成 */
                         return ecs_header("Location: order.php?act=info&order_id=" . $order_id . "\n");
@@ -1479,7 +1479,7 @@ class OrderController extends InitController
 
                     /* 显示提示信息 */
                     if (!empty($msgs)) {
-                        sys_msg(join(chr(13), $msgs), 0, $links);
+                        return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         /* 完成 */
                         return ecs_header("Location: order.php?act=info&order_id=" . $order_id . "\n");
@@ -1589,14 +1589,14 @@ class OrderController extends InitController
                                     $order['integral'] = intval($_POST['integral']);
                                     $order['integral_money'] = value_of_integral(intval($_POST['integral']));
                                     if ($old_order['integral'] + $user['pay_points'] < $order['integral']) {
-                                        sys_msg($GLOBALS['_LANG']['pay_points_not_enough']);
+                                        return sys_msg($GLOBALS['_LANG']['pay_points_not_enough']);
                                     }
 
                                     $order['order_amount'] -= $order['integral_money'];
                                 }
                             } else {
                                 if (intval($_POST['integral']) > $user['pay_points'] + $old_order['integral']) {
-                                    sys_msg($GLOBALS['_LANG']['pay_points_not_enough']);
+                                    return sys_msg($GLOBALS['_LANG']['pay_points_not_enough']);
                                 }
                             }
                             if ($order['order_amount'] > 0) {
@@ -1605,7 +1605,7 @@ class OrderController extends InitController
                                     /* 检查余额是否足够 */
                                     $order['surplus'] = round(floatval($_POST['surplus']), 2);
                                     if ($old_order['surplus'] + $user['user_money'] + $user['credit_line'] < $order['surplus']) {
-                                        sys_msg($GLOBALS['_LANG']['user_money_not_enough']);
+                                        return sys_msg($GLOBALS['_LANG']['user_money_not_enough']);
                                     }
 
                                     /* 如果红包和积分和余额足以支付，把待付款金额改为0，退回部分积分余额 */
@@ -1693,7 +1693,7 @@ class OrderController extends InitController
 
                     /* 显示提示信息 */
                     if (!empty($msgs)) {
-                        sys_msg(join(chr(13), $msgs), 0, $links);
+                        return sys_msg(join(chr(13), $msgs), 0, $links);
                     } else {
                         return ecs_header("Location: order.php?act=info&order_id=" . $order_id . "\n");
                     }
@@ -1759,7 +1759,7 @@ class OrderController extends InitController
                 /* 如果已发货，就不能修改订单了（配送方式和发货单号除外） */
                 if ($order['shipping_status'] == SS_SHIPPED || $order['shipping_status'] == SS_RECEIVED) {
                     if ($step != 'shipping') {
-                        sys_msg($GLOBALS['_LANG']['cannot_edit_order_shipped']);
+                        return sys_msg($GLOBALS['_LANG']['cannot_edit_order_shipped']);
                     } else {
                         $step = 'invoice';
                         $GLOBALS['smarty']->assign('step', $step);
@@ -2116,7 +2116,7 @@ class OrderController extends InitController
 
             /* 提示信息 */
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'order.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_template_success'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['edit_template_success'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -2192,7 +2192,7 @@ class OrderController extends InitController
                 $agency_id = $GLOBALS['db']->getOne($sql);
                 if ($agency_id > 0) {
                     if ($order['agency_id'] != $agency_id) {
-                        sys_msg($GLOBALS['_LANG']['priv_error'], 0);
+                        return sys_msg($GLOBALS['_LANG']['priv_error'], 0);
                     }
                 }
 
@@ -2339,7 +2339,7 @@ class OrderController extends InitController
                 /* 取得参数 */
                 $new_agency_id = isset($_POST['agency_id']) ? intval($_POST['agency_id']) : 0;
                 if ($new_agency_id == 0) {
-                    sys_msg($GLOBALS['_LANG']['js_languages']['pls_select_agency']);
+                    return sys_msg($GLOBALS['_LANG']['js_languages']['pls_select_agency']);
                 }
 
                 /* 查询订单信息 */
@@ -2350,7 +2350,7 @@ class OrderController extends InitController
                 $admin_agency_id = $GLOBALS['db']->getOne($sql);
                 if ($admin_agency_id > 0) {
                     if ($order['agency_id'] != $admin_agency_id) {
-                        sys_msg($GLOBALS['_LANG']['priv_error']);
+                        return sys_msg($GLOBALS['_LANG']['priv_error']);
                     }
                 }
 
@@ -2368,7 +2368,7 @@ class OrderController extends InitController
 
                 /* 操作成功 */
                 $links[] = ['href' => 'order.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['02_order_list']];
-                sys_msg($GLOBALS['_LANG']['act_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['act_ok'], 0, $links);
             } /* 订单删除 */
             elseif (isset($_POST['remove'])) {
                 $require_note = false;
@@ -2392,7 +2392,7 @@ class OrderController extends InitController
                     admin_log($order['order_sn'], 'remove', 'order');
 
                     /* 返回 */
-                    sys_msg($GLOBALS['_LANG']['order_removed'], 0, [['href' => 'order.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['return_list']]]);
+                    return sys_msg($GLOBALS['_LANG']['order_removed'], 0, [['href' => 'order.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['return_list']]]);
                 }
             } /* 发货单删除 */
             elseif (isset($_REQUEST['remove_invoice'])) {
@@ -2424,7 +2424,7 @@ class OrderController extends InitController
                 }
 
                 /* 返回 */
-                sys_msg($GLOBALS['_LANG']['tips_delivery_del'], 0, [['href' => 'order.php?act=delivery_list', 'text' => $GLOBALS['_LANG']['return_list']]]);
+                return sys_msg($GLOBALS['_LANG']['tips_delivery_del'], 0, [['href' => 'order.php?act=delivery_list', 'text' => $GLOBALS['_LANG']['return_list']]]);
             } /* 退货单删除 */
             elseif (isset($_REQUEST['remove_back'])) {
                 $back_id = $_REQUEST['back_id'];
@@ -2439,11 +2439,11 @@ class OrderController extends InitController
                     $GLOBALS['db']->query($sql);
                 }
                 /* 返回 */
-                sys_msg($GLOBALS['_LANG']['tips_back_del'], 0, [['href' => 'order.php?act=back_list', 'text' => $GLOBALS['_LANG']['return_list']]]);
+                return sys_msg($GLOBALS['_LANG']['tips_back_del'], 0, [['href' => 'order.php?act=back_list', 'text' => $GLOBALS['_LANG']['return_list']]]);
             } /* 批量打印订单 */
             elseif (isset($_POST['print'])) {
                 if (empty($_POST['order_id'])) {
-                    sys_msg($GLOBALS['_LANG']['pls_select_order']);
+                    return sys_msg($GLOBALS['_LANG']['pls_select_order']);
                 }
 
                 /* 赋值公用信息 */
@@ -2802,7 +2802,7 @@ class OrderController extends InitController
                 $sn_list = empty($sn_list) ? '' : $GLOBALS['_LANG']['updated_order'] . join($sn_list, ',');
                 $msg = $sn_list;
                 $links[] = ['text' => $GLOBALS['_LANG']['return_list'], 'href' => 'order.php?act=list&' . list_link_postfix()];
-                sys_msg($msg, 0, $links);
+                return sys_msg($msg, 0, $links);
             } else {
                 $order_list_no_fail = [];
                 $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('order_info') .
@@ -2977,7 +2977,7 @@ class OrderController extends InitController
                 if ($order['order_status'] == OS_SPLITED) {
                     /* 操作失败 */
                     $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                    sys_msg(sprintf(
+                    return sys_msg(sprintf(
                         $GLOBALS['_LANG']['order_splited_sms'],
                         $order['order_sn'],
                         $GLOBALS['_LANG']['os'][OS_SPLITED],
@@ -3046,7 +3046,7 @@ class OrderController extends InitController
                             if (($value['goods_number'] - $sended - $send_number[$value['rec_id']]) < 0) {
                                 /* 操作失败 */
                                 $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                                sys_msg($GLOBALS['_LANG']['act_ship_num'], 1, $links);
+                                return sys_msg($GLOBALS['_LANG']['act_ship_num'], 1, $links);
                             }
                         } else {
                             /* 超值礼包 */
@@ -3054,7 +3054,7 @@ class OrderController extends InitController
                                 if (($pg_value['order_send_number'] - $pg_value['sended'] - $send_number[$value['rec_id']][$pg_value['g_p']]) < 0) {
                                     /* 操作失败 */
                                     $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                                    sys_msg($GLOBALS['_LANG']['act_ship_num'], 1, $links);
+                                    return sys_msg($GLOBALS['_LANG']['act_ship_num'], 1, $links);
                                 }
                             }
                         }
@@ -3064,7 +3064,7 @@ class OrderController extends InitController
                 if (empty($send_number) || empty($goods_list)) {
                     /* 操作失败 */
                     $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                    sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
+                    return sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
                 }
 
                 /* 检查此单发货商品库存缺货情况 */
@@ -3078,7 +3078,7 @@ class OrderController extends InitController
                             if ($pg_value['goods_number'] < $goods_no_package[$pg_value['g_p']] && (($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP) || ($GLOBALS['_CFG']['use_storage'] == '0' && $pg_value['is_real'] == 0))) {
                                 /* 操作失败 */
                                 $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                                sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $pg_value['goods_name']), 1, $links);
+                                return sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $pg_value['goods_name']), 1, $links);
                             }
 
                             /* 商品（超值礼包） 虚拟商品列表 package_virtual_goods*/
@@ -3097,7 +3097,7 @@ class OrderController extends InitController
                         if (($num < $goods_no_package[$value['goods_id']]) && !($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_PLACE)) {
                             /* 操作失败 */
                             $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                            sys_msg(sprintf($GLOBALS['_LANG']['virtual_card_oos'] . '【' . $value['goods_name'] . '】'), 1, $links);
+                            return sys_msg(sprintf($GLOBALS['_LANG']['virtual_card_oos'] . '【' . $value['goods_name'] . '】'), 1, $links);
                         }
 
                         /* 虚拟商品列表 virtual_card*/
@@ -3125,7 +3125,7 @@ class OrderController extends InitController
                         if (($num < $goods_no_package[$_key]) && $GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP) {
                             /* 操作失败 */
                             $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                            sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $value['goods_name']), 1, $links);
+                            return sys_msg(sprintf($GLOBALS['_LANG']['act_good_vacancy'], $value['goods_name']), 1, $links);
                         }
                     }
                 }
@@ -3212,7 +3212,7 @@ class OrderController extends InitController
                 } else {
                     /* 操作失败 */
                     $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-                    sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
+                    return sys_msg($GLOBALS['_LANG']['act_false'], 1, $links);
                 }
                 unset($filter_fileds, $delivery, $_delivery, $order_finish);
 
@@ -3506,7 +3506,7 @@ class OrderController extends InitController
 
             /* 操作成功 */
             $links[] = ['text' => $GLOBALS['_LANG']['order_info'], 'href' => 'order.php?act=info&order_id=' . $order_id];
-            sys_msg($GLOBALS['_LANG']['act_ok'] . $msg, 0, $links);
+            return sys_msg($GLOBALS['_LANG']['act_ok'] . $msg, 0, $links);
         }
         if ($_REQUEST['act'] == 'json') {
             $func = $_REQUEST['func'];

@@ -30,11 +30,11 @@ class SqlController extends InitController
             if (!empty($_POST['sql'])) {
                 preg_match_all("/(SELECT)/i", $_POST['sql'], $matches);
                 if (isset($matches[1]) && count($matches[1]) > 1) {
-                    sys_msg("this sql more than one SELECT ");
+                    return sys_msg("this sql more than one SELECT ");
                 }
 
                 if (preg_match("/(UPDATE|DELETE|TRUNCATE|ALTER|DROP|FLUSH|INSERT|REPLACE|SET|CREATE|CONCAT)/i", $_POST['sql'])) {
-                    sys_msg("this sql May contain UPDATE,DELETE,TRUNCATE,ALTER,DROP,FLUSH,INSERT,REPLACE,SET,CREATE,CONCAT ");
+                    return sys_msg("this sql May contain UPDATE,DELETE,TRUNCATE,ALTER,DROP,FLUSH,INSERT,REPLACE,SET,CREATE,CONCAT ");
                 }
             }
 

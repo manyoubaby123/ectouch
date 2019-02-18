@@ -19,22 +19,36 @@ class InitController extends Controller
      */
     protected $shopService;
 
-    public function init()
+    /**
+     * @var UserService
+     */
+    protected $userService;
+
+    /**
+     * InitController constructor.
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+    protected function initialize()
     {
         if (!file_exists(storage_path('install.lock'))) {
             // header("Location: ./install/index.php\n");
         }
 
-        $PHP_SELF = basename(app('request')->getPathInfo());
+        $PHP_SELF = request()->getPathInfo();
         define('PHP_SELF', empty($PHP_SELF) ? 'index.php' : $PHP_SELF);
 
         load_helper(['time', 'base', 'common', 'main', 'insert', 'goods', 'article']);
 
         /* 对用户传入的变量进行转义操作。*/
-        $_GET = app('request')->get();
-        $_POST = app('request')->post();
+        $_GET = request()->query();
+        $_POST = request()->post();
         $_REQUEST = $_GET + $_POST;
-        $_REQUEST['act'] = isset($_REQUEST['act']) ? $_REQUEST['act'] : '';
+        $_REQUEST['act'] = request()->get('act');
 
         $GLOBALS['ecs'] = new Shop();
         define('DATA_DIR', $GLOBALS['ecs']->data_dir());
@@ -97,7 +111,7 @@ class InitController extends Controller
             $GLOBALS['smarty']->cache_dir = storage_path('temp/caches');
             $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled');
 
-            if (YII_DEBUG) {
+            if (config('app.debug')) {
                 $GLOBALS['smarty']->direct_output = true;
                 $GLOBALS['smarty']->force_compile = true;
             } else {
@@ -116,8 +130,7 @@ class InitController extends Controller
 
         if (!defined('INIT_NO_USERS')) {
             /* 会员信息 */
-            $userService = new UserService();
-            $GLOBALS['user'] = $userService->init_users();
+            $GLOBALS['user'] = $this->userService->init_users();
 
             if (!session('?user_id')) {
                 /* 获取投放站点的名称 */

@@ -53,7 +53,7 @@ class FlashplayController extends InitController
                 $rt = $flashdb[$id];
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['go_url'], 'href' => 'flashplay.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['id_error'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['id_error'], 0, $links);
             }
 
             if (strpos($rt['src'], 'http') === false) {
@@ -90,7 +90,7 @@ class FlashplayController extends InitController
             } elseif ($_POST['step'] == 2) {
                 if (!empty($_FILES['img_file_src']['name'])) {
                     if (!get_file_suffix($_FILES['img_file_src']['name'], $allow_suffix)) {
-                        sys_msg($GLOBALS['_LANG']['invalid_type']);
+                        return sys_msg($GLOBALS['_LANG']['invalid_type']);
                     }
                     $name = date('Ymd');
                     for ($i = 0; $i < 6; $i++) {
@@ -103,7 +103,7 @@ class FlashplayController extends InitController
                     }
                 } elseif (!empty($_POST['img_src'])) {
                     if (!get_file_suffix($_POST['img_src'], $allow_suffix)) {
-                        sys_msg($GLOBALS['_LANG']['invalid_type']);
+                        return sys_msg($GLOBALS['_LANG']['invalid_type']);
                     }
                     $src = $_POST['img_src'];
                     if (strstr($src, 'http') && !strstr($src, $_SERVER['SERVER_NAME'])) {
@@ -111,12 +111,12 @@ class FlashplayController extends InitController
                     }
                 } else {
                     $links[] = ['text' => $GLOBALS['_LANG']['add_new'], 'href' => 'flashplay.php?act=add'];
-                    sys_msg($GLOBALS['_LANG']['src_empty'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['src_empty'], 0, $links);
                 }
 
                 if (empty($_POST['img_url'])) {
                     $links[] = ['text' => $GLOBALS['_LANG']['add_new'], 'href' => 'flashplay.php?act=add'];
-                    sys_msg($GLOBALS['_LANG']['link_empty'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['link_empty'], 0, $links);
                 }
 
                 // 获取flash播放器数据
@@ -140,7 +140,7 @@ class FlashplayController extends InitController
                 $this->put_flash_xml($_flashdb);
                 $this->set_flash_data($GLOBALS['_CFG']['flash_theme'], $error_msg = '');
                 $links[] = ['text' => $GLOBALS['_LANG']['go_url'], 'href' => 'flashplay.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         if ($_REQUEST['act'] == 'edit') {
@@ -152,7 +152,7 @@ class FlashplayController extends InitController
                 $rt = $flashdb[$id];
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['go_url'], 'href' => 'flashplay.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['id_error'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['id_error'], 0, $links);
             }
             if (empty($_POST['step'])) {
                 $rt['act'] = 'edit';
@@ -170,12 +170,12 @@ class FlashplayController extends InitController
                 if (empty($_POST['img_url'])) {
                     //若链接地址为空
                     $links[] = ['text' => $GLOBALS['_LANG']['return_edit'], 'href' => 'flashplay.php?act=edit&id=' . $id];
-                    sys_msg($GLOBALS['_LANG']['link_empty'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['link_empty'], 0, $links);
                 }
 
                 if (!empty($_FILES['img_file_src']['name'])) {
                     if (!get_file_suffix($_FILES['img_file_src']['name'], $allow_suffix)) {
-                        sys_msg($GLOBALS['_LANG']['invalid_type']);
+                        return sys_msg($GLOBALS['_LANG']['invalid_type']);
                     }
                     //有上传
                     $name = date('Ymd');
@@ -191,14 +191,14 @@ class FlashplayController extends InitController
                 } elseif (!empty($_POST['img_src'])) {
                     $src = $_POST['img_src'];
                     if (!get_file_suffix($_POST['img_src'], $allow_suffix)) {
-                        sys_msg($GLOBALS['_LANG']['invalid_type']);
+                        return sys_msg($GLOBALS['_LANG']['invalid_type']);
                     }
                     if (strstr($src, 'http') && !strstr($src, $_SERVER['SERVER_NAME'])) {
                         $src = $this->get_url_image($src);
                     }
                 } else {
                     $links[] = ['text' => $GLOBALS['_LANG']['return_edit'], 'href' => 'flashplay.php?act=edit&id=' . $id];
-                    sys_msg($GLOBALS['_LANG']['src_empty'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['src_empty'], 0, $links);
                 }
 
                 if (strpos($rt['src'], 'http') === false && $rt['src'] != $src) {
@@ -221,7 +221,7 @@ class FlashplayController extends InitController
                 $this->put_flash_xml($_flashdb);
                 $this->set_flash_data($GLOBALS['_CFG']['flash_theme'], $error_msg = '');
                 $links[] = ['text' => $GLOBALS['_LANG']['go_url'], 'href' => 'flashplay.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         if ($_REQUEST['act'] == 'install') {
@@ -332,7 +332,7 @@ class FlashplayController extends InitController
 
             if (empty($_POST['ad']) || empty($_POST['content']) || empty($_POST['ad']['ad_name'])) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'flashplay.php?act=custom_list'];
-                sys_msg($GLOBALS['_LANG']['form_none'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['form_none'], 0, $links);
             }
 
             $filter = [];
@@ -354,7 +354,7 @@ class FlashplayController extends InitController
             if ($ad_img['ad_img']['name'] && $ad_img['ad_img']['size'] > 0) {
                 /* 检查文件合法性 */
                 if (!get_file_suffix($ad_img['ad_img']['name'], $allow_suffix)) {
-                    sys_msg($GLOBALS['_LANG']['invalid_type']);
+                    return sys_msg($GLOBALS['_LANG']['invalid_type']);
                 }
 
                 /* 处理 */
@@ -374,7 +374,7 @@ class FlashplayController extends InitController
                     /* 取互联网图片至本地 */
                     $src = $this->get_url_image($filter['content']['url']);
                 } else {
-                    sys_msg($GLOBALS['_LANG']['web_url_no']);
+                    return sys_msg($GLOBALS['_LANG']['web_url_no']);
                 }
             }
 
@@ -411,7 +411,7 @@ class FlashplayController extends InitController
             }
 
             $links[] = ['text' => $GLOBALS['_LANG']['back_custom_set'], 'href' => 'flashplay.php?act=custom_list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         }
 
         /*------------------------------------------------------ */
@@ -424,7 +424,7 @@ class FlashplayController extends InitController
             $id = empty($_GET['id']) ? 0 : intval(trim($_GET['id']));
             if (!$id) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_custom_set'], 'href' => 'flashplay.php?act=custom_list'];
-                sys_msg($GLOBALS['_LANG']['form_none'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['form_none'], 0, $links);
             }
 
             /* 修改状态 */
@@ -437,9 +437,9 @@ class FlashplayController extends InitController
 
             $links[] = ['text' => $GLOBALS['_LANG']['back_custom_set'], 'href' => 'flashplay.php?act=custom_list'];
             if ($query) {
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             } else {
-                sys_msg($GLOBALS['_LANG']['edit_no'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_no'], 0, $links);
             }
         }
 
@@ -528,7 +528,7 @@ class FlashplayController extends InitController
 
             if (empty($_POST['ad']) || empty($_POST['content']) || empty($_POST['ad']['ad_name']) || empty($_POST['ad']['id'])) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'flashplay.php?act=custom_list'];
-                sys_msg($GLOBALS['_LANG']['form_none'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['form_none'], 0, $links);
             }
 
             $filter = [];
@@ -554,7 +554,7 @@ class FlashplayController extends InitController
             if ($ad_img['ad_img']['name'] && $ad_img['ad_img']['size'] > 0) {
                 /* 检查文件合法性 */
                 if (!get_file_suffix($ad_img['ad_img']['name'], $allow_suffix)) {
-                    sys_msg($GLOBALS['_LANG']['invalid_type']);
+                    return sys_msg($GLOBALS['_LANG']['invalid_type']);
                 }
 
                 /* 处理 */
@@ -574,7 +574,7 @@ class FlashplayController extends InitController
                     /* 取互联网图片至本地 */
                     $src = $this->get_url_image($filter['content']['url']);
                 } else {
-                    sys_msg($GLOBALS['_LANG']['web_url_no']);
+                    return sys_msg($GLOBALS['_LANG']['web_url_no']);
                 }
             }
 
@@ -609,7 +609,7 @@ class FlashplayController extends InitController
             }
 
             $links[] = ['text' => $GLOBALS['_LANG']['back_custom_set'], 'href' => 'flashplay.php?act=custom_list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         }
     }
 

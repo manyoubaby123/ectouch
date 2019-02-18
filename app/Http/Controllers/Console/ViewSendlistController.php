@@ -36,7 +36,7 @@ class ViewSendlistController extends InitController
             $sql = "DELETE FROM " . $GLOBALS['ecs']->table('email_sendlist') . " WHERE id = '$id' LIMIT 1";
             $GLOBALS['db']->query($sql);
             $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['del_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['del_ok'], 0, $links);
         }
 
         /*------------------------------------------------------ */
@@ -50,10 +50,10 @@ class ViewSendlistController extends InitController
                 $GLOBALS['db']->query($sql);
 
                 $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['del_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['del_ok'], 0, $links);
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['no_select'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['no_select'], 0, $links);
             }
         }
 
@@ -70,7 +70,7 @@ class ViewSendlistController extends InitController
                 //发送列表为空
                 if (empty($row['id'])) {
                     $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-                    sys_msg($GLOBALS['_LANG']['mailsend_null'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['mailsend_null'], 0, $links);
                 }
 
                 $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_sendlist') . "WHERE id " . db_create_in($_POST['checkboxes']) . " ORDER BY pri DESC, last_send ASC";
@@ -120,10 +120,10 @@ class ViewSendlistController extends InitController
                 }
 
                 $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['mailsend_finished'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['mailsend_finished'], 0, $links);
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['no_select'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['no_select'], 0, $links);
             }
         }
 
@@ -138,7 +138,7 @@ class ViewSendlistController extends InitController
             //发送列表为空
             if (empty($row['id'])) {
                 $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['mailsend_null'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['mailsend_null'], 0, $links);
             }
 
             $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('email_sendlist') . " ORDER BY pri DESC, last_send ASC";
@@ -188,7 +188,7 @@ class ViewSendlistController extends InitController
             }
 
             $links[] = ['text' => $GLOBALS['_LANG']['view_sendlist'], 'href' => 'view_sendlist.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['mailsend_finished'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['mailsend_finished'], 0, $links);
         }
     }
 

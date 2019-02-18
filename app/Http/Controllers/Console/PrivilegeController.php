@@ -52,12 +52,11 @@ class PrivilegeController extends InitController
         //-- 验证登陆信息
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'signin') {
-
             if (intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_ADMIN) {
                 /* 检查验证码是否正确 */
                 $validator = new Captcha();
                 if (!empty($_POST['captcha']) && !$validator->check_word($_POST['captcha'])) {
-                    sys_msg($GLOBALS['_LANG']['captcha_error'], 1);
+                    return sys_msg($GLOBALS['_LANG']['captcha_error'], 1);
                 }
             }
 
@@ -84,7 +83,7 @@ class PrivilegeController extends InitController
                 if (!empty($row['suppliers_id'])) {
                     $supplier_is_check = suppliers_list_info(' is_check = 1 AND suppliers_id = ' . $row['suppliers_id']);
                     if (empty($supplier_is_check)) {
-                        sys_msg($GLOBALS['_LANG']['login_disable'], 1);
+                        return sys_msg($GLOBALS['_LANG']['login_disable'], 1);
                     }
                 }
 
@@ -117,9 +116,11 @@ class PrivilegeController extends InitController
                 // 清除购物车中过期的数据
                 $this->clear_cart();
 
-                return $this->redirect(['default/index']);
+                dd(session()->all());
+
+                return redirect()->route('dashboard');
             } else {
-                sys_msg($GLOBALS['_LANG']['login_faild'], 1);
+                return sys_msg($GLOBALS['_LANG']['login_faild'], 1);
             }
         }
 
@@ -172,14 +173,14 @@ class PrivilegeController extends InitController
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('admin_manage');
             if ($_POST['token'] != $GLOBALS['_CFG']['token']) {
-                sys_msg('add_error', 1);
+                return sys_msg('add_error', 1);
             }
             /* 判断管理员是否已经存在 */
             if (!empty($_POST['user_name'])) {
                 $is_only = $exc->is_only('user_name', $_POST['user_name']);
 
                 if (!$is_only) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['user_name_exist'], stripslashes($_POST['user_name'])), 1);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['user_name_exist'], stripslashes($_POST['user_name'])), 1);
                 }
             }
 
@@ -188,7 +189,7 @@ class PrivilegeController extends InitController
                 $is_only = $exc->is_only('email', $_POST['email']);
 
                 if (!$is_only) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['email_exist'], stripslashes($_POST['email'])), 1);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['email_exist'], stripslashes($_POST['email'])), 1);
                 }
             }
 
@@ -222,7 +223,7 @@ class PrivilegeController extends InitController
             $link[1]['text'] = $GLOBALS['_LANG']['continue_add'];
             $link[1]['href'] = 'privilege.php?act=add';
 
-            sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['user_name'] . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['user_name'] . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
 
             /* 记录管理员操作 */
             admin_log($_POST['user_name'], 'add', 'privilege');
@@ -235,7 +236,7 @@ class PrivilegeController extends InitController
             /* 不能编辑demo这个管理员 */
             if (session('admin_name') == 'demo') {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'privilege.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
             }
 
             $_REQUEST['id'] = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
@@ -286,7 +287,7 @@ class PrivilegeController extends InitController
             $ec_salt = rand(1, 9999);
             $password = !empty($_POST['new_password']) ? ", password = '" . md5(md5($_POST['new_password']) . $ec_salt) . "'" : '';
             if ($_POST['token'] != $GLOBALS['_CFG']['token']) {
-                sys_msg('update_error', 1);
+                return sys_msg('update_error', 1);
             }
             if ($_REQUEST['act'] == 'update') {
                 /* 查看是否有权限编辑其他管理员的信息 */
@@ -304,7 +305,7 @@ class PrivilegeController extends InitController
             if (!empty($admin_name)) {
                 $is_only = $exc->num('user_name', $admin_name, $admin_id);
                 if ($is_only == 1) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['user_name_exist'], stripslashes($admin_name)), 1);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['user_name_exist'], stripslashes($admin_name)), 1);
                 }
             }
 
@@ -313,7 +314,7 @@ class PrivilegeController extends InitController
                 $is_only = $exc->num('email', $admin_email, $admin_id);
 
                 if ($is_only == 1) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['email_exist'], stripslashes($admin_email)), 1);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['email_exist'], stripslashes($admin_email)), 1);
                 }
             }
 
@@ -333,13 +334,13 @@ class PrivilegeController extends InitController
                 }
                 if ($old_password <> $old_ec_password) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                    sys_msg($GLOBALS['_LANG']['pwd_error'], 0, $link);
+                    return sys_msg($GLOBALS['_LANG']['pwd_error'], 0, $link);
                 }
 
                 /* 比较新密码和确认密码是否相同 */
                 if ($_POST['new_password'] <> $_POST['pwd_confirm']) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                    sys_msg($GLOBALS['_LANG']['js_languages']['password_error'], 0, $link);
+                    return sys_msg($GLOBALS['_LANG']['js_languages']['password_error'], 0, $link);
                 } else {
                     $pwd_modified = true;
                 }
@@ -389,7 +390,7 @@ class PrivilegeController extends InitController
 
             /* 提示信息 */
             $link[] = ['text' => strpos($g_link, 'list') ? $GLOBALS['_LANG']['back_admin_list'] : $GLOBALS['_LANG']['modif_info'], 'href' => $g_link];
-            sys_msg("$msg<script>parent.document.getElementById('header-frame').contentWindow.document.location.reload();</script>", 0, $link);
+            return sys_msg("$msg<script>parent.document.getElementById('header-frame').contentWindow.document.location.reload();</script>", 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -399,7 +400,7 @@ class PrivilegeController extends InitController
             /* 不能编辑demo这个管理员 */
             if (session('admin_name') == 'demo') {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'privilege.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
             }
 
             load_helper(['menu', 'priv'], 'admin');
@@ -488,7 +489,7 @@ class PrivilegeController extends InitController
             /* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
             if ($priv_str == 'all') {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'privilege.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['edit_admininfo_cannot'], 0, $link);
             }
 
             /* 获取权限的分组数据 */
@@ -535,7 +536,7 @@ class PrivilegeController extends InitController
         if ($_REQUEST['act'] == 'update_allot') {
             admin_priv('admin_manage');
             if ($_POST['token'] != $GLOBALS['_CFG']['token']) {
-                sys_msg('update_allot_error', 1);
+                return sys_msg('update_allot_error', 1);
             }
             /* 取得当前管理员用户名 */
             $admin_name = $GLOBALS['db']->getOne("SELECT user_name FROM " . $GLOBALS['ecs']->table('admin_user') . " WHERE user_id = '$_POST[id]'");
@@ -556,7 +557,7 @@ class PrivilegeController extends InitController
 
             /* 提示信息 */
             $link[] = ['text' => $GLOBALS['_LANG']['back_admin_list'], 'href' => 'privilege.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit'] . "&nbsp;" . $admin_name . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['edit'] . "&nbsp;" . $admin_name . "&nbsp;" . $GLOBALS['_LANG']['action_succeed'], 0, $link);
         }
 
         /*------------------------------------------------------ */

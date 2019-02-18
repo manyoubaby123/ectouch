@@ -1452,7 +1452,7 @@ class FlowController extends InitController
             if ($order['order_amount'] > 0) {
                 $payment = payment_info($order['pay_id']);
 
-                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment['pay_code'], true);
+                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($payment['pay_code'], true);
                 $pay_obj = new $plugin;
 
                 $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));

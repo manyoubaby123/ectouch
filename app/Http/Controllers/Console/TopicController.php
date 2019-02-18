@@ -120,7 +120,7 @@ class TopicController extends InitController
                     if ($_FILES['topic_img']['name'] && $_FILES['topic_img']['size'] > 0) {
                         /* 检查文件合法性 */
                         if (!get_file_suffix($_FILES['topic_img']['name'], $allow_suffix)) {
-                            sys_msg($GLOBALS['_LANG']['invalid_type']);
+                            return sys_msg($GLOBALS['_LANG']['invalid_type']);
                         }
 
                         /* 处理 */
@@ -140,7 +140,7 @@ class TopicController extends InitController
                             /* 取互联网图片至本地 */
                             $topic_img = $this->get_url_image($_REQUEST['url']);
                         } else {
-                            sys_msg($GLOBALS['_LANG']['web_url_no']);
+                            return sys_msg($GLOBALS['_LANG']['web_url_no']);
                         }
                     }
                     unset($name, $target);
@@ -163,7 +163,7 @@ class TopicController extends InitController
             if ($_FILES['title_pic']['name'] && $_FILES['title_pic']['size'] > 0) {
                 /* 检查文件合法性 */
                 if (!get_file_suffix($_FILES['title_pic']['name'], $allow_suffix)) {
-                    sys_msg($GLOBALS['_LANG']['invalid_type']);
+                    return sys_msg($GLOBALS['_LANG']['invalid_type']);
                 }
 
                 /* 处理 */
@@ -183,7 +183,7 @@ class TopicController extends InitController
                     /* 取互联网图片至本地 */
                     $title_pic = $this->get_url_image($_REQUEST['title_url']);
                 } else {
-                    sys_msg($GLOBALS['_LANG']['web_url_no']);
+                    return sys_msg($GLOBALS['_LANG']['web_url_no']);
                 }
             }
             unset($name, $target);
@@ -213,7 +213,7 @@ class TopicController extends InitController
             clear_cache_files();
 
             $links[] = ['href' => 'topic.php', 'text' => $GLOBALS['_LANG']['back_list']];
-            sys_msg($GLOBALS['_LANG']['succed'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['succed'], 0, $links);
         }
         if ($_REQUEST['act'] == 'get_goods_list') {
             $filters = json_decode($_GET['JSON']);
@@ -250,7 +250,7 @@ class TopicController extends InitController
             }
 
             $links[] = ['href' => 'topic.php', 'text' => $GLOBALS['_LANG']['back_list']];
-            sys_msg($GLOBALS['_LANG']['succed'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['succed'], 0, $links);
         } elseif ($_REQUEST["act"] == "query") {
             $topic_list = $this->get_topic_list();
             $GLOBALS['smarty']->assign('topic_list', $topic_list['item']);

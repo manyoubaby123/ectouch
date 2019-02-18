@@ -18,12 +18,12 @@ class VirtualCardController extends InitController
             /* 验证goods_id是否合法 */
             if (empty($_REQUEST['goods_id'])) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['replenish_no_goods_id'], 1, $link);
+                return sys_msg($GLOBALS['_LANG']['replenish_no_goods_id'], 1, $link);
             } else {
                 $goods_name = $GLOBALS['db']->getOne("SELECT goods_name From " . $GLOBALS['ecs']->table('goods') . " WHERE goods_id='" . $_REQUEST['goods_id'] . "' AND is_real = 0 AND extension_code='virtual_card' ");
                 if (empty($goods_name)) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=list'];
-                    sys_msg($GLOBALS['_LANG']['replenish_no_get_goods_name'], 1, $link);
+                    return sys_msg($GLOBALS['_LANG']['replenish_no_get_goods_name'], 1, $link);
                 }
             }
 
@@ -79,7 +79,7 @@ class VirtualCardController extends InitController
 
                 if ($GLOBALS['db']->getOne($sql) > 0) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=replenish&goods_id=' . $_POST['goods_id']];
-                    sys_msg(sprintf($GLOBALS['_LANG']['card_sn_exist'], $_POST['card_sn']), 1, $link);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['card_sn_exist'], $_POST['card_sn']), 1, $link);
                 }
             }
 
@@ -100,7 +100,7 @@ class VirtualCardController extends InitController
 
                 $link[] = ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'virtual_card.php?act=card&goods_id=' . $_POST['goods_id']];
                 $link[] = ['text' => $GLOBALS['_LANG']['continue_add'], 'href' => 'virtual_card.php?act=replenish&goods_id=' . $_POST['goods_id']];
-                sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
             } else {
                 /* 更新数据 */
                 $end_date = strtotime($_POST['end_dateYear'] . "-" . $_POST['end_dateMonth'] . "-" . $_POST['end_dateDay']);
@@ -110,7 +110,7 @@ class VirtualCardController extends InitController
 
                 $link[] = ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'virtual_card.php?act=card&goods_id=' . $_POST['goods_id']];
                 $link[] = ['text' => $GLOBALS['_LANG']['continue_add'], 'href' => 'virtual_card.php?act=replenish&goods_id=' . $_POST['goods_id']];
-                sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
             }
         }
         /*------------------------------------------------------ */
@@ -123,12 +123,12 @@ class VirtualCardController extends InitController
             /* 验证goods_id是否合法 */
             if (empty($_REQUEST['goods_id'])) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['replenish_no_goods_id'], 1, $link);
+                return sys_msg($GLOBALS['_LANG']['replenish_no_goods_id'], 1, $link);
             } else {
                 $goods_name = $GLOBALS['db']->getOne("SELECT goods_name From " . $GLOBALS['ecs']->table('goods') . " WHERE goods_id='" . $_REQUEST['goods_id'] . "' AND is_real = 0 AND extension_code='virtual_card' ");
                 if (empty($goods_name)) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'virtual_card.php?act=list'];
-                    sys_msg($GLOBALS['_LANG']['replenish_no_get_goods_name'], 1, $link);
+                    return sys_msg($GLOBALS['_LANG']['replenish_no_get_goods_name'], 1, $link);
                 }
             }
 
@@ -188,7 +188,7 @@ class VirtualCardController extends InitController
                 /* 商品数量减$num */
                 $this->update_goods_number(intval($_REQUEST['goods_id']));
                 $link[] = ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'virtual_card.php?act=card&goods_id=' . $_REQUEST['goods_id']];
-                sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['action_success'], 0, $link);
             }
         } /* 批量上传页面 */
 
@@ -204,7 +204,7 @@ class VirtualCardController extends InitController
         if ($_REQUEST['act'] == 'batch_confirm') {
             /* 检查上传是否成功 */
             if ($_FILES['uploadfile']['tmp_name'] == '' || $_FILES['uploadfile']['tmp_name'] == 'none') {
-                sys_msg($GLOBALS['_LANG']['uploadfile_fail'], 1);
+                return sys_msg($GLOBALS['_LANG']['uploadfile_fail'], 1);
             }
 
             $data = file($_FILES['uploadfile']['tmp_name']);
@@ -257,7 +257,7 @@ class VirtualCardController extends InitController
             /* 更新商品库存 */
             $this->update_goods_number(intval($_REQUEST['goods_id']));
             $link[] = ['text' => $GLOBALS['_LANG']['card'], 'href' => 'virtual_card.php?act=card&goods_id=' . $_POST['goods_id']];
-            sys_msg(sprintf($GLOBALS['_LANG']['batch_card_add_ok'], $i), 0, $link);
+            return sys_msg(sprintf($GLOBALS['_LANG']['batch_card_add_ok'], $i), 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -284,17 +284,17 @@ class VirtualCardController extends InitController
             if (isset($_POST['old_string']) && isset($_POST['new_string'])) {
                 // 检查原加密串是否正确
                 if ($_POST['old_string'] != OLD_AUTH_KEY) {
-                    sys_msg($GLOBALS['_LANG']['invalid_old_string'], 1);
+                    return sys_msg($GLOBALS['_LANG']['invalid_old_string'], 1);
                 }
 
                 // 检查新加密串是否正确
                 if ($_POST['new_string'] != AUTH_KEY) {
-                    sys_msg($GLOBALS['_LANG']['invalid_new_string'], 1);
+                    return sys_msg($GLOBALS['_LANG']['invalid_new_string'], 1);
                 }
 
                 // 检查原加密串和新加密串是否相同
                 if ($_POST['old_string'] == $_POST['new_string'] || crc32($_POST['old_string']) == crc32($_POST['new_string'])) {
-                    sys_msg($GLOBALS['_LANG']['same_string'], 1);
+                    return sys_msg($GLOBALS['_LANG']['same_string'], 1);
                 }
 
                 // 重新加密卡号和密码
@@ -313,7 +313,7 @@ class VirtualCardController extends InitController
                 //admin_log();
 
                 // 返回
-                sys_msg($GLOBALS['_LANG']['change_key_ok'], 0, [['href' => 'virtual_card.php?act=list', 'text' => $GLOBALS['_LANG']['virtual_card_list']]]);
+                return sys_msg($GLOBALS['_LANG']['change_key_ok'], 0, [['href' => 'virtual_card.php?act=list', 'text' => $GLOBALS['_LANG']['virtual_card_list']]]);
             }
         }
 

@@ -135,10 +135,10 @@ class FriendLinkController extends InitController
                 $link[1]['text'] = $GLOBALS['_LANG']['back_list'];
                 $link[1]['href'] = 'friend_link.php?act=list';
 
-                sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . stripcslashes($_POST['link_name']) . " " . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . stripcslashes($_POST['link_name']) . " " . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
             } else {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                sys_msg($GLOBALS['_LANG']['link_name_exist'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['link_name_exist'], 0, $link);
             }
         }
 
@@ -233,7 +233,7 @@ class FriendLinkController extends InitController
             $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
             $link[0]['href'] = 'friend_link.php?act=list&' . list_link_postfix();
 
-            sys_msg($GLOBALS['_LANG']['edit'] . "&nbsp;" . stripcslashes($_POST['link_name']) . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['edit'] . "&nbsp;" . stripcslashes($_POST['link_name']) . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
 
         /*------------------------------------------------------ */

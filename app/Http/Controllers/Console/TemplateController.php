@@ -379,9 +379,9 @@ class TemplateController extends InitController
                 //clear_tpl_files(false, '.dwt.php'); // 清除对应的编译文件
                 clear_cache_files();
                 $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'template.php?act=setup&template_file=' . $_POST['template_file']];
-                sys_msg($GLOBALS['_LANG']['setup_success'], 0, $lnk);
+                return sys_msg($GLOBALS['_LANG']['setup_success'], 0, $lnk);
             } else {
-                sys_msg(sprintf($GLOBALS['_LANG']['modify_dwt_failed'], 'themes/' . $curr_template . '/' . $_POST['template_file'] . '.dwt'), 1, null, false);
+                return sys_msg(sprintf($GLOBALS['_LANG']['modify_dwt_failed'], 'themes/' . $curr_template . '/' . $_POST['template_file'] . '.dwt'), 1, null, false);
             }
         }
 
@@ -571,7 +571,7 @@ class TemplateController extends InitController
 
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('template') . " WHERE remarks='$remarks' AND theme = '" . $GLOBALS['_CFG']['template'] . "'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
-                sys_msg(sprintf($GLOBALS['_LANG']['remarks_exist'], $remarks), 1);
+                return sys_msg(sprintf($GLOBALS['_LANG']['remarks_exist'], $remarks), 1);
             }
 
             $sql = "INSERT INTO " . $GLOBALS['ecs']->table('template') .
@@ -582,7 +582,7 @@ class TemplateController extends InitController
                 " AND " . db_create_in($files, 'filename');
 
             $GLOBALS['db']->query($sql);
-            sys_msg($GLOBALS['_LANG']['backup_template_ok'], 0, [['text' => $GLOBALS['_LANG']['backup_setting'], 'href' => 'template.php?act=backup_setting']]);
+            return sys_msg($GLOBALS['_LANG']['backup_template_ok'], 0, [['text' => $GLOBALS['_LANG']['backup_setting'], 'href' => 'template.php?act=backup_setting']]);
         }
 
         if ($_REQUEST['act'] == 'del_backup') {
@@ -591,7 +591,7 @@ class TemplateController extends InitController
                 $sql = "DELETE FROM " . $GLOBALS['ecs']->table('template') . " WHERE remarks='$remarks' AND theme = '" . $GLOBALS['_CFG']['template'] . "'";
                 $GLOBALS['db']->query($sql);
             }
-            sys_msg($GLOBALS['_LANG']['del_backup_ok'], 0, [['text' => $GLOBALS['_LANG']['backup_setting'], 'href' => 'template.php?act=backup_setting']]);
+            return sys_msg($GLOBALS['_LANG']['del_backup_ok'], 0, [['text' => $GLOBALS['_LANG']['backup_setting'], 'href' => 'template.php?act=backup_setting']]);
         }
 
         if ($_REQUEST['act'] == 'restore_backup') {
@@ -641,7 +641,7 @@ class TemplateController extends InitController
                     $GLOBALS['db']->query($sql);
                 }
             }
-            sys_msg($GLOBALS['_LANG']['restore_backup_ok'], 0, [['text' => $GLOBALS['_LANG']['backup_setting'], 'href' => 'template.php?act=backup_setting']]);
+            return sys_msg($GLOBALS['_LANG']['restore_backup_ok'], 0, [['text' => $GLOBALS['_LANG']['backup_setting'], 'href' => 'template.php?act=backup_setting']]);
         }
     }
 

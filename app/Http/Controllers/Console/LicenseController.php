@@ -44,7 +44,7 @@ class LicenseController extends InitController
 
             if ($license['certificate_id'] == '' || $license['token'] == '') {
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
-                sys_msg($GLOBALS['_LANG']['no_license_down'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['no_license_down'], 0, $links);
             }
             /* 文件下载 */
             return ecs_header("Content-Type:text/plain");
@@ -81,7 +81,7 @@ class LicenseController extends InitController
             /* 恢复证书 */
             if (count($license_arr) != 2 || $license_arr[0] == '' || $license_arr[1] == '') {
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
-                sys_msg($GLOBALS['_LANG']['fail_license'], 1, $links);
+                return sys_msg($GLOBALS['_LANG']['fail_license'], 1, $links);
             } else {
                 load_helper('main');
                 load_helper('license');
@@ -90,7 +90,7 @@ class LicenseController extends InitController
                 $login_result = license_login();
                 if ($login_result['flag'] != 'login_succ') {
                     $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
-                    sys_msg($GLOBALS['_LANG']['fail_license_login'], 1, $links);
+                    return sys_msg($GLOBALS['_LANG']['fail_license_login'], 1, $links);
                 }
 
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') . "
@@ -103,7 +103,7 @@ class LicenseController extends InitController
                 $GLOBALS['db']->query($sql);
 
                 $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
-                sys_msg($GLOBALS['_LANG']['recover_license'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['recover_license'], 0, $links);
             }
         }
 
@@ -121,7 +121,7 @@ class LicenseController extends InitController
             $GLOBALS['db']->query($sql);
 
             $links[] = ['text' => $GLOBALS['_LANG']['back'], 'href' => 'license.php?act=list_edit'];
-            sys_msg($GLOBALS['_LANG']['delete_license'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['delete_license'], 0, $links);
         }
     }
 }

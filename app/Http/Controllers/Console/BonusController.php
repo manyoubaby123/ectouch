@@ -182,7 +182,7 @@ class BonusController extends InitController
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('bonus_type') . " WHERE type_name='$type_name'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                sys_msg($GLOBALS['_LANG']['type_name_exist'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['type_name_exist'], 0, $link);
             }
 
             /* 获得日期信息 */
@@ -216,7 +216,7 @@ class BonusController extends InitController
             $link[1]['text'] = $GLOBALS['_LANG']['back_list'];
             $link[1]['href'] = 'bonus.php?act=list';
 
-            sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['type_name'] . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['type_name'] . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -279,7 +279,7 @@ class BonusController extends InitController
 
             /* 提示信息 */
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'bonus.php?act=list&' . list_link_postfix()];
-            sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['type_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['type_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -381,7 +381,7 @@ class BonusController extends InitController
                 /* 按会员列表发放红包 */
                 /* 如果是空数组，直接返回 */
                 if (empty($_REQUEST['user'])) {
-                    sys_msg($GLOBALS['_LANG']['send_user_empty'], 1);
+                    return sys_msg($GLOBALS['_LANG']['send_user_empty'], 1);
                 }
 
                 $user_array = (is_array($_REQUEST['user'])) ? $_REQUEST['user'] : explode(',', $_REQUEST['user']);
@@ -453,7 +453,7 @@ class BonusController extends InitController
 
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'bonus.php?act=list'];
 
-            sys_msg(sprintf($GLOBALS['_LANG']['sendbonus_count'], $count), 0, $link);
+            return sys_msg(sprintf($GLOBALS['_LANG']['sendbonus_count'], $count), 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -471,7 +471,7 @@ class BonusController extends InitController
             load_helper('order');
             $bonus = bonus_info($bonus_id);
             if (empty($bonus)) {
-                sys_msg($GLOBALS['_LANG']['bonus_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['bonus_not_exist']);
             }
 
             /* 发邮件 */
@@ -480,7 +480,7 @@ class BonusController extends InitController
             $link[0]['text'] = $GLOBALS['_LANG']['back_bonus_list'];
             $link[0]['href'] = 'bonus.php?act=bonus_list&bonus_type=' . $bonus['bonus_type_id'];
 
-            sys_msg(sprintf($GLOBALS['_LANG']['success_send_mail'], $count), 0, $link);
+            return sys_msg(sprintf($GLOBALS['_LANG']['success_send_mail'], $count), 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -515,7 +515,7 @@ class BonusController extends InitController
             $link[0]['text'] = $GLOBALS['_LANG']['back_bonus_list'];
             $link[0]['href'] = 'bonus.php?act=bonus_list&bonus_type=' . $bonus_typeid;
 
-            sys_msg($GLOBALS['_LANG']['creat_bonus'] . $j . $GLOBALS['_LANG']['creat_bonus_num'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['creat_bonus'] . $j . $GLOBALS['_LANG']['creat_bonus_num'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -765,16 +765,16 @@ class BonusController extends InitController
 
                     $link[] = ['text' => $GLOBALS['_LANG']['back_bonus_list'],
                         'href' => 'bonus.php?act=bonus_list&bonus_type=' . $bonus_type_id];
-                    sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], count($bonus_id_list)), 0, $link);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], count($bonus_id_list)), 0, $link);
                 } /* 发邮件 */
                 elseif (isset($_POST['mail'])) {
                     $count = $this->send_bonus_mail($bonus_type_id, $bonus_id_list);
                     $link[] = ['text' => $GLOBALS['_LANG']['back_bonus_list'],
                         'href' => 'bonus.php?act=bonus_list&bonus_type=' . $bonus_type_id];
-                    sys_msg(sprintf($GLOBALS['_LANG']['success_send_mail'], $count), 0, $link);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['success_send_mail'], $count), 0, $link);
                 }
             } else {
-                sys_msg($GLOBALS['_LANG']['no_select_bonus'], 1);
+                return sys_msg($GLOBALS['_LANG']['no_select_bonus'], 1);
             }
         }
     }

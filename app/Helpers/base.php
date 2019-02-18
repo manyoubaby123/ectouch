@@ -925,11 +925,11 @@ function get_file_suffix($file_name, $allow_type = array())
  */
 function read_static_cache($cache_name)
 {
-    if (YII_DEBUG) {
+    if (config('app.debug')) {
         return false;
     }
 
-    return Yii::$app->cache->get($cache_name);
+    return \Illuminate\Support\Facades\Cache::get($cache_name);
 }
 
 /**
@@ -940,9 +940,9 @@ function read_static_cache($cache_name)
  */
 function write_static_cache($cache_name, $caches)
 {
-    if (YII_DEBUG) {
+    if (config('app.debug')) {
         return false;
     }
 
-    Yii::$app->cache->set($cache_name, $caches);
+    \Illuminate\Support\Facades\Cache::forever($cache_name, $caches);
 }

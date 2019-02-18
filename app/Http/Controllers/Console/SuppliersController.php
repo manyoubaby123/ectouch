@@ -175,7 +175,7 @@ class SuppliersController extends InitController
         if ($_REQUEST['act'] == 'batch') {
             /* 取得要操作的记录编号 */
             if (empty($_POST['checkboxes'])) {
-                sys_msg($GLOBALS['_LANG']['no_record_selected']);
+                return sys_msg($GLOBALS['_LANG']['no_record_selected']);
             } else {
                 /* 检查权限 */
                 admin_priv('suppliers_manage');
@@ -210,7 +210,7 @@ class SuppliersController extends InitController
                         }
                     }
                     if (empty($suppliers)) {
-                        sys_msg($GLOBALS['_LANG']['batch_drop_no']);
+                        return sys_msg($GLOBALS['_LANG']['batch_drop_no']);
                     }
 
                     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('suppliers') . "
@@ -234,7 +234,7 @@ class SuppliersController extends InitController
                     /* 清除缓存 */
                     clear_cache_files();
 
-                    sys_msg($GLOBALS['_LANG']['batch_drop_ok']);
+                    return sys_msg($GLOBALS['_LANG']['batch_drop_ok']);
                 }
             }
         }
@@ -276,7 +276,7 @@ class SuppliersController extends InitController
                 $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('suppliers') . " WHERE suppliers_id = '$id'";
                 $suppliers = $GLOBALS['db']->getRow($sql);
                 if (count($suppliers) <= 0) {
-                    sys_msg('suppliers does not exist');
+                    return sys_msg('suppliers does not exist');
                 }
 
                 /* 取得所有管理员，*/
@@ -320,7 +320,7 @@ class SuppliersController extends InitController
                 FROM " . $GLOBALS['ecs']->table('suppliers') . "
                 WHERE suppliers_name = '" . $suppliers['suppliers_name'] . "' ";
                 if ($GLOBALS['db']->getOne($sql)) {
-                    sys_msg($GLOBALS['_LANG']['suppliers_name_exist']);
+                    return sys_msg($GLOBALS['_LANG']['suppliers_name_exist']);
                 }
 
                 $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('suppliers'), $suppliers, 'INSERT');
@@ -341,7 +341,7 @@ class SuppliersController extends InitController
                 $links = [['href' => 'suppliers.php?act=add', 'text' => $GLOBALS['_LANG']['continue_add_suppliers']],
                     ['href' => 'suppliers.php?act=list', 'text' => $GLOBALS['_LANG']['back_suppliers_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['add_suppliers_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['add_suppliers_ok'], 0, $links);
             }
 
             if ($_REQUEST['act'] == 'update') {
@@ -356,7 +356,7 @@ class SuppliersController extends InitController
                 $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('suppliers') . " WHERE suppliers_id = '" . $suppliers['id'] . "'";
                 $suppliers['old'] = $GLOBALS['db']->getRow($sql);
                 if (empty($suppliers['old']['suppliers_id'])) {
-                    sys_msg('suppliers does not exist');
+                    return sys_msg('suppliers does not exist');
                 }
 
                 /* 判断名称是否重复 */
@@ -365,7 +365,7 @@ class SuppliersController extends InitController
                 WHERE suppliers_name = '" . $suppliers['new']['suppliers_name'] . "'
                 AND suppliers_id <> '" . $suppliers['id'] . "'";
                 if ($GLOBALS['db']->getOne($sql)) {
-                    sys_msg($GLOBALS['_LANG']['suppliers_name_exist']);
+                    return sys_msg($GLOBALS['_LANG']['suppliers_name_exist']);
                 }
 
                 /* 保存供货商信息 */
@@ -389,7 +389,7 @@ class SuppliersController extends InitController
 
                 /* 提示信息 */
                 $links[] = ['href' => 'suppliers.php?act=list', 'text' => $GLOBALS['_LANG']['back_suppliers_list']];
-                sys_msg($GLOBALS['_LANG']['edit_suppliers_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_suppliers_ok'], 0, $links);
             }
         }
     }

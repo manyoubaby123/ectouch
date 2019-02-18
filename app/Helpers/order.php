@@ -117,7 +117,7 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $shipping = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+    $shipping = '\\App\\Plugins\\Shipping\\' . parse_name($shipping_code, true);
     if (class_exists($shipping)) {
         $obj = new $shipping($shipping_config);
 
@@ -142,7 +142,7 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
         /* 如果保价费用不是百分比则直接返回该数值 */
         return floatval($insure);
     } else {
-        $shipping = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+        $shipping = '\\App\\Plugins\\Shipping\\' . parse_name($shipping_code, true);
         if (class_exists($shipping)) {
             $shipping = new $shipping_code;
             $insure = floatval($insure) / 100;

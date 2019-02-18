@@ -59,7 +59,7 @@ class AffiliateCkController extends InitController
                 $GLOBALS['db']->query($sql);
             }
             $links[] = ['text' => $GLOBALS['_LANG']['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         } /*
     撤销某次分成，将已分成的收回来
 */
@@ -81,7 +81,7 @@ class AffiliateCkController extends InitController
                 $GLOBALS['db']->query($sql);
             }
             $links[] = ['text' => $GLOBALS['_LANG']['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         } /*
     分成
 */
@@ -155,7 +155,7 @@ class AffiliateCkController extends InitController
                         $this->write_affiliate_log($oid, $up_uid, $row['user_name'], $money, $point, $separate_by);
                     } else {
                         $links[] = ['text' => $GLOBALS['_LANG']['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list'];
-                        sys_msg($GLOBALS['_LANG']['edit_fail'], 1, $links);
+                        return sys_msg($GLOBALS['_LANG']['edit_fail'], 1, $links);
                     }
                 }
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('order_info') .
@@ -164,7 +164,7 @@ class AffiliateCkController extends InitController
                 $GLOBALS['db']->query($sql);
             }
             $links[] = ['text' => $GLOBALS['_LANG']['affiliate_ck'], 'href' => 'affiliate_ck.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         }
     }
 

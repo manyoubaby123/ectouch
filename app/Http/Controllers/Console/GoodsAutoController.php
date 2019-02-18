@@ -40,7 +40,7 @@ class GoodsAutoController extends InitController
             $sql = "DELETE FROM " . $GLOBALS['ecs']->table('auto_manage') . " WHERE item_id = '$goods_id' AND type = 'goods'";
             $GLOBALS['db']->query($sql);
             $links[] = ['text' => $GLOBALS['_LANG']['goods_auto'], 'href' => 'goods_auto.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         }
         if ($_REQUEST['act'] == 'edit_starttime') {
             return check_authz_json('goods_auto');
@@ -84,7 +84,7 @@ class GoodsAutoController extends InitController
             admin_priv('goods_auto');
 
             if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
-                sys_msg($GLOBALS['_LANG']['no_select_goods'], 1);
+                return sys_msg($GLOBALS['_LANG']['no_select_goods'], 1);
             }
 
             if ($_POST['date'] == '0000-00-00') {
@@ -99,13 +99,13 @@ class GoodsAutoController extends InitController
             }
 
             $lnk[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'goods_auto.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['batch_start_succeed'], 0, $lnk);
+            return sys_msg($GLOBALS['_LANG']['batch_start_succeed'], 0, $lnk);
         } //批量下架
         if ($_REQUEST['act'] == 'batch_end') {
             admin_priv('goods_auto');
 
             if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
-                sys_msg($GLOBALS['_LANG']['no_select_goods'], 1);
+                return sys_msg($GLOBALS['_LANG']['no_select_goods'], 1);
             }
 
             if ($_POST['date'] == '0000-00-00') {
@@ -120,7 +120,7 @@ class GoodsAutoController extends InitController
             }
 
             $lnk[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'goods_auto.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['batch_end_succeed'], 0, $lnk);
+            return sys_msg($GLOBALS['_LANG']['batch_end_succeed'], 0, $lnk);
         }
     }
 

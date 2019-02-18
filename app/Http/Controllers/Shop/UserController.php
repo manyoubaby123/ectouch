@@ -1185,7 +1185,7 @@ class UserController extends InitController
                 $order['log_id'] = insert_pay_log($surplus['rec_id'], $order['order_amount'], $type = PAY_SURPLUS, 0);
 
                 /* 调用相应的支付方式文件 */
-                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment_info['pay_code'], true);
+                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($payment_info['pay_code'], true);
 
                 /* 取得在线支付方式的支付按钮 */
                 $pay_obj = new $plugin;
@@ -1266,7 +1266,7 @@ class UserController extends InitController
                 }
 
                 /* 调用相应的支付方式文件 */
-                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment_info['pay_code'], true);
+                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($payment_info['pay_code'], true);
 
                 /* 取得在线支付方式的支付按钮 */
                 $pay_obj = new $plugin;
@@ -1961,7 +1961,7 @@ class UserController extends InitController
             if ($row['invoice_no'] && $row['shipping_id'] > 0) {
                 $sql = "SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id = '$row[shipping_id]'";
                 $shipping_code = $GLOBALS['db']->getOne($sql);
-                $plugin = '\\app\\plugins\\payment\\' . parse_name($shipping_code, true);
+                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($shipping_code, true);
                 if (class_exists($plugin)) {
                     $shipping = new $plugin;
                     $order_query['invoice_no'] = $shipping->query((string)$row['invoice_no']);

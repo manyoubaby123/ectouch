@@ -88,7 +88,7 @@ class NavigatorController extends InitController
                 clear_cache_files();
                 $links[] = ['text' => $GLOBALS['_LANG']['navigator'], 'href' => 'navigator.php?act=list'];
                 $links[] = ['text' => $GLOBALS['_LANG']['add_new'], 'href' => 'navigator.php?act=add'];
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         /*------------------------------------------------------ */
@@ -163,7 +163,7 @@ class NavigatorController extends InitController
                 $GLOBALS['db']->query($sql);
                 clear_cache_files();
                 $links[] = ['text' => $GLOBALS['_LANG']['navigator'], 'href' => 'navigator.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         /*------------------------------------------------------ */

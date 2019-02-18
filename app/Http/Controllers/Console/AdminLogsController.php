@@ -111,7 +111,7 @@ class AdminLogsController extends InitController
                         admin_log('', 'remove', 'adminlog');
 
                         $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'admin_logs.php?act=list'];
-                        sys_msg($GLOBALS['_LANG']['drop_sueeccud'], 1, $link);
+                        return sys_msg($GLOBALS['_LANG']['drop_sueeccud'], 1, $link);
                     }
                 }
             } /* 如果不是按日期来删除, 就按ID删除日志 */
@@ -127,7 +127,7 @@ class AdminLogsController extends InitController
                     admin_log('', 'remove', 'adminlog');
 
                     $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'admin_logs.php?act=list'];
-                    sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], $count), 0, $link);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['batch_drop_success'], $count), 0, $link);
                 }
             }
         }

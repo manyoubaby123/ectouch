@@ -93,7 +93,7 @@ class WholesaleController extends InitController
         if ($_REQUEST['act'] == 'batch') {
             /* 取得要操作的记录编号 */
             if (empty($_POST['checkboxes'])) {
-                sys_msg($GLOBALS['_LANG']['no_record_selected']);
+                return sys_msg($GLOBALS['_LANG']['no_record_selected']);
             } else {
                 /* 检查权限 */
                 admin_priv('whole_sale');
@@ -113,7 +113,7 @@ class WholesaleController extends InitController
                     clear_cache_files();
 
                     $links[] = ['text' => $GLOBALS['_LANG']['back_wholesale_list'], 'href' => 'wholesale.php?act=list&' . list_link_postfix()];
-                    sys_msg($GLOBALS['_LANG']['batch_drop_ok'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['batch_drop_ok'], 0, $links);
                 }
             }
         }
@@ -211,7 +211,7 @@ class WholesaleController extends InitController
             } elseif (!empty($_POST['dst_goods_lists'])) {
                 $_POST['dst_goods_lists'] = [intval($_POST['dst_goods_lists'])];
             } else {
-                sys_msg($GLOBALS['_LANG']['pls_search_goods']);
+                return sys_msg($GLOBALS['_LANG']['pls_search_goods']);
             }
             $dst_goods = implode(',', $_POST['dst_goods_lists']);
 
@@ -225,12 +225,12 @@ class WholesaleController extends InitController
                 }
             }
             if (empty($goods_rebulid)) {
-                sys_msg('invalid goods id: All');
+                return sys_msg('invalid goods id: All');
             }
 
             /* 会员等级 */
             if (!isset($_POST['rank_id'])) {
-                sys_msg($GLOBALS['_LANG']['pls_set_user_rank']);
+                return sys_msg($GLOBALS['_LANG']['pls_set_user_rank']);
             }
 
             /* 同一个商品，会员等级不能重叠 */
@@ -253,7 +253,7 @@ class WholesaleController extends InitController
                 }
             }
             if (empty($_POST['dst_goods_lists'])) {
-                sys_msg($GLOBALS['_LANG']['pls_search_goods']);
+                return sys_msg($GLOBALS['_LANG']['pls_search_goods']);
             }
 
             /* 提交值 */
@@ -283,7 +283,7 @@ class WholesaleController extends InitController
                 ['href' => 'wholesale.php?act=list', 'text' => $GLOBALS['_LANG']['back_wholesale_list']],
                 ['href' => 'wholesale.php?act=add', 'text' => $GLOBALS['_LANG']['continue_add_wholesale']]
             ];
-            sys_msg($GLOBALS['_LANG']['add_wholesale_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['add_wholesale_ok'], 0, $links);
         }
 
         /*------------------------------------------------------ */
@@ -309,12 +309,12 @@ class WholesaleController extends InitController
                 ];
             } else {
                 if (empty($_GET['id'])) {
-                    sys_msg('invalid param');
+                    return sys_msg('invalid param');
                 }
                 $id = intval($_GET['id']);
                 $wholesale = wholesale_info($id);
                 if (empty($wholesale)) {
-                    sys_msg($GLOBALS['_LANG']['wholesale_not_exist']);
+                    return sys_msg($GLOBALS['_LANG']['wholesale_not_exist']);
                 }
 
                 /* 取得商品属性 */
@@ -377,19 +377,19 @@ class WholesaleController extends InitController
             /* 取得goods */
             $goods_id = intval($_POST['goods_id']);
             if ($goods_id <= 0) {
-                sys_msg($GLOBALS['_LANG']['pls_search_goods']);
+                return sys_msg($GLOBALS['_LANG']['pls_search_goods']);
             }
             $sql = "SELECT goods_name FROM " . $GLOBALS['ecs']->table('goods') .
                 " WHERE goods_id = '$goods_id'";
             $goods_name = $GLOBALS['db']->getOne($sql);
             $goods_name = addslashes($goods_name);
             if (is_null($goods_name)) {
-                sys_msg('invalid goods id: ' . $goods_id);
+                return sys_msg('invalid goods id: ' . $goods_id);
             }
 
             /* 会员等级 */
             if (!isset($_POST['rank_id'])) {
-                sys_msg($GLOBALS['_LANG']['pls_set_user_rank']);
+                return sys_msg($GLOBALS['_LANG']['pls_set_user_rank']);
             }
 
             /* 同一个商品，会员等级不能重叠 */
@@ -402,7 +402,7 @@ class WholesaleController extends InitController
                         $sql .= " AND act_id <> '$_POST[id]'";
                     }
                     if ($GLOBALS['db']->getOne($sql) > 0) {
-                        sys_msg($GLOBALS['_LANG']['user_rank_exist']);
+                        return sys_msg($GLOBALS['_LANG']['user_rank_exist']);
                     }
                 }
             }
@@ -498,7 +498,7 @@ class WholesaleController extends InitController
                 $links = [
                     ['href' => 'wholesale.php?act=list', 'text' => $GLOBALS['_LANG']['back_wholesale_list']]
                 ];
-                sys_msg(sprintf($GLOBALS['_LANG']['save_wholesale_falid'], $wholesale['goods_name']), 1, $links);
+                return sys_msg(sprintf($GLOBALS['_LANG']['save_wholesale_falid'], $wholesale['goods_name']), 1, $links);
             }
 
             if ($is_add) {
@@ -506,12 +506,12 @@ class WholesaleController extends InitController
                     ['href' => 'wholesale.php?act=add', 'text' => $GLOBALS['_LANG']['continue_add_wholesale']],
                     ['href' => 'wholesale.php?act=list', 'text' => $GLOBALS['_LANG']['back_wholesale_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['add_wholesale_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['add_wholesale_ok'], 0, $links);
             } else {
                 $links = [
                     ['href' => 'wholesale.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['back_wholesale_list']]
                 ];
-                sys_msg($GLOBALS['_LANG']['edit_wholesale_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_wholesale_ok'], 0, $links);
             }
         }
 

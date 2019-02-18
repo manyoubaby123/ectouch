@@ -38,10 +38,10 @@ class IntegrateController extends InitController
             if ($_GET['code'] == 'ucenter') {
                 $uc_client_dir = file_mode_info(ROOT_PATH . 'uc_client/data');
                 if ($uc_client_dir === false) {
-                    sys_msg($GLOBALS['_LANG']['uc_client_not_exists'], 0);
+                    return sys_msg($GLOBALS['_LANG']['uc_client_not_exists'], 0);
                 }
                 if ($uc_client_dir < 7) {
-                    sys_msg($GLOBALS['_LANG']['uc_client_not_write'], 0);
+                    return sys_msg($GLOBALS['_LANG']['uc_client_not_write'], 0);
                 }
             }
             if ($_GET['code'] == 'ectouch') {
@@ -55,7 +55,7 @@ class IntegrateController extends InitController
 
                 $links[0]['text'] = $GLOBALS['_LANG']['go_back'];
                 $links[0]['href'] = 'integrate.php?act=list';
-                sys_msg($GLOBALS['_LANG']['update_success'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['update_success'], 0, $links);
             } else {
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('users') .
                     " SET flag = 0, alias=''" .
@@ -89,7 +89,7 @@ class IntegrateController extends InitController
         if ($_REQUEST['act'] == 'view_install_log') {
             $code = empty($_GET['code']) ? '' : trim($_GET['code']);
             if (empty($code) || file_exists(ROOT_PATH . DATA_DIR . '/integrate_' . $code . '_log.php')) {
-                sys_msg($GLOBALS['_LANG']['lost_intall_log'], 1);
+                return sys_msg($GLOBALS['_LANG']['lost_intall_log'], 1);
             }
 
             include(ROOT_PATH . DATA_DIR . '/integrate_' . $code . '_log.php');
@@ -104,7 +104,7 @@ class IntegrateController extends InitController
                     var_dump($ignore_list);
                 }
             } else {
-                sys_msg($GLOBALS['_LANG']['empty_intall_log'], 1);
+                return sys_msg($GLOBALS['_LANG']['empty_intall_log'], 1);
             }
         }
 
@@ -116,7 +116,7 @@ class IntegrateController extends InitController
             admin_priv('integrate_users', '');
 
             if ($_GET['code'] == 'ectouch') {
-                sys_msg($GLOBALS['_LANG']['need_not_setup']);
+                return sys_msg($GLOBALS['_LANG']['need_not_setup']);
             } else {
                 $cfg = unserialize($GLOBALS['_CFG']['integrate_config']);
 
@@ -133,20 +133,20 @@ class IntegrateController extends InitController
         //-- 检查用户填写资料
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'check_config') {
-            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
+            $code = '\\App\\Plugins\\Integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
             if ($cls_user->error) {
                 /* 出错提示 */
                 if ($cls_user->error == 1) {
-                    sys_msg($GLOBALS['_LANG']['error_db_msg']);
+                    return sys_msg($GLOBALS['_LANG']['error_db_msg']);
                 } elseif ($cls_user->error == 2) {
-                    sys_msg($GLOBALS['_LANG']['error_table_exist']);
+                    return sys_msg($GLOBALS['_LANG']['error_table_exist']);
                 } elseif ($cls_user->error == 1049) {
-                    sys_msg($GLOBALS['_LANG']['error_db_exist']);
+                    return sys_msg($GLOBALS['_LANG']['error_db_exist']);
                 } else {
-                    sys_msg($cls_user->db->error());
+                    return sys_msg($cls_user->db->error());
                 }
             }
 
@@ -158,15 +158,15 @@ class IntegrateController extends InitController
 
                 if ($db_charset == 'latin1') {
                     if (empty($_POST['cfg']['is_latin1'])) {
-                        sys_msg($GLOBALS['_LANG']['error_is_latin1'], null, null, false);
+                        return sys_msg($GLOBALS['_LANG']['error_is_latin1'], null, null, false);
                     }
                 } else {
                     $user_db_charset = $_POST['cfg']['db_charset'] == 'GB2312' ? 'GBK' : $_POST['cfg']['db_charset'];
                     if (!empty($_POST['cfg']['is_latin1'])) {
-                        sys_msg($GLOBALS['_LANG']['error_not_latin1'], null, null, false);
+                        return sys_msg($GLOBALS['_LANG']['error_not_latin1'], null, null, false);
                     }
                     if ($user_db_charset != strtoupper($db_charset)) {
-                        sys_msg(sprintf($GLOBALS['_LANG']['invalid_db_charset'], strtoupper($db_charset), $user_db_charset), null, null, false);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['invalid_db_charset'], strtoupper($db_charset), $user_db_charset), null, null, false);
                     }
                 }
             }
@@ -183,15 +183,15 @@ class IntegrateController extends InitController
             $test = $cls_user->db->query($sql, 'SILENT');
 
             if (!$test) {
-                sys_msg($GLOBALS['_LANG']['error_latin1'], null, null, false);
+                return sys_msg($GLOBALS['_LANG']['error_latin1'], null, null, false);
             }
 
             if (!empty($_POST['save'])) {
                 /* 直接保存修改 */
                 if ($this->save_integrate_config($code, $_POST['cfg'])) {
-                    sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                    return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
                 } else {
-                    sys_msg($GLOBALS['_LANG']['save_error'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                    return sys_msg($GLOBALS['_LANG']['save_error'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
                 }
             }
 
@@ -223,20 +223,20 @@ class IntegrateController extends InitController
         if ($_REQUEST['act'] == 'save_uc_config') {
             $cfg = unserialize($GLOBALS['_CFG']['integrate_config']);
 
-            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
+            $code = '\\App\\Plugins\\Integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
             if ($cls_user->error) {
                 /* 出错提示 */
                 if ($cls_user->error == 1) {
-                    sys_msg($GLOBALS['_LANG']['error_db_msg']);
+                    return sys_msg($GLOBALS['_LANG']['error_db_msg']);
                 } elseif ($cls_user->error == 2) {
-                    sys_msg($GLOBALS['_LANG']['error_table_exist']);
+                    return sys_msg($GLOBALS['_LANG']['error_table_exist']);
                 } elseif ($cls_user->error == 1049) {
-                    sys_msg($GLOBALS['_LANG']['error_db_exist']);
+                    return sys_msg($GLOBALS['_LANG']['error_db_exist']);
                 } else {
-                    sys_msg($cls_user->db->error());
+                    return sys_msg($cls_user->db->error());
                 }
             }
 
@@ -245,9 +245,9 @@ class IntegrateController extends InitController
 
             /* 直接保存修改 */
             if ($this->save_integrate_config($code, $cfg)) {
-                sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
             } else {
-                sys_msg($GLOBALS['_LANG']['save_error'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                return sys_msg($GLOBALS['_LANG']['save_error'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
             }
         }
 
@@ -255,20 +255,20 @@ class IntegrateController extends InitController
         //-- 第一次保存UCenter安装的资料
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'save_uc_config_first') {
-            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
+            $code = '\\App\\Plugins\\Integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
             if ($cls_user->error) {
                 /* 出错提示 */
                 if ($cls_user->error == 1) {
-                    sys_msg($GLOBALS['_LANG']['error_db_msg']);
+                    return sys_msg($GLOBALS['_LANG']['error_db_msg']);
                 } elseif ($cls_user->error == 2) {
-                    sys_msg($GLOBALS['_LANG']['error_table_exist']);
+                    return sys_msg($GLOBALS['_LANG']['error_table_exist']);
                 } elseif ($cls_user->error == 1049) {
-                    sys_msg($GLOBALS['_LANG']['error_db_exist']);
+                    return sys_msg($GLOBALS['_LANG']['error_db_exist']);
                 } else {
-                    sys_msg($cls_user->db->error());
+                    return sys_msg($cls_user->db->error());
                 }
             }
             list($appauthkey, $appid, $ucdbhost, $ucdbname, $ucdbuser, $ucdbpw, $ucdbcharset, $uctablepre, $uccharset, $ucapi, $ucip) = explode('|', $_POST['ucconfig']);
@@ -298,9 +298,9 @@ class IntegrateController extends InitController
             /* 直接保存修改 */
             if (!empty($_POST['save'])) {
                 if ($this->save_integrate_config($code, $cfg)) {
-                    sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                    return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
                 } else {
-                    sys_msg($GLOBALS['_LANG']['save_error'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                    return sys_msg($GLOBALS['_LANG']['save_error'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
                 }
             }
 
@@ -326,7 +326,7 @@ class IntegrateController extends InitController
         if ($_REQUEST['act'] == 'check_user') {
             $code = session('code');
 
-            $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
+            $code = '\\App\\Plugins\\Integrates\\' . parse_name($code, true);
             $cls_user = new $code(session('cfg'));
 
             $start = empty($_GET['start']) ? 0 : intval($_GET['start']);
@@ -545,7 +545,7 @@ class IntegrateController extends InitController
 
                 /* 检查和商城是否有重名 */
                 $code = session('code');
-                $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
+                $code = '\\App\\Plugins\\Integrates\\' . parse_name($code, true);
                 $cls_user = new $code(session('cfg'));
 
                 $bbs_error_list = $cls_user->test_conflict($alias);
@@ -699,7 +699,7 @@ class IntegrateController extends InitController
                 return json_encode($result);
             } elseif (session('task.sync.start') < session('task.sync.total')) {
                 $code = session('code');
-                $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
+                $code = '\\App\\Plugins\\Integrates\\' . parse_name($code, true);
                 $cls_user = new $code(session('cfg'));
                 $cls_user->need_sync = false;
 
@@ -812,7 +812,7 @@ class IntegrateController extends InitController
 
         /* 显示整合成功信息 */
         if ($_REQUEST['act'] == 'complete') {
-            sys_msg($GLOBALS['_LANG']['sync_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+            return sys_msg($GLOBALS['_LANG']['sync_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
         }
 
         if ($_REQUEST['act'] == 'points_set') {
@@ -822,9 +822,9 @@ class IntegrateController extends InitController
             $points = $GLOBALS['user']->get_points_name(); //获取商城可用积分
 
             if (empty($points)) {
-                sys_msg($GLOBALS['_LANG']['no_points'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+                return sys_msg($GLOBALS['_LANG']['no_points'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
             } elseif ($points == 'ucenter') {
-                sys_msg($GLOBALS['_LANG']['uc_points'], 0, [['text' => $GLOBALS['_LANG']['uc_set_credits'], 'href' => UC_API, 'target' => '_blank']], false);
+                return sys_msg($GLOBALS['_LANG']['uc_points'], 0, [['text' => $GLOBALS['_LANG']['uc_set_credits'], 'href' => UC_API, 'target' => '_blank']], false);
             }
 
             $rule = []; //取得一样规则
@@ -954,7 +954,7 @@ class IntegrateController extends InitController
             }
             $GLOBALS['db']->query($sql);
             clear_cache_files();
-            sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
+            return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['text' => $GLOBALS['_LANG']['06_list_integrate'], 'href' => 'integrate.php?act=list']]);
         }
     }
 

@@ -11,19 +11,21 @@ use App\Services\ConfigService;
 
 class InitController extends Controller
 {
-    public function init()
+    protected function initialize()
     {
         define('ECS_ADMIN', true);
-        define('PHP_SELF', basename(app('request')->getPathInfo()));
+
+        $PHP_SELF = request()->getPathInfo();
+        define('PHP_SELF', empty($PHP_SELF) ? 'index.php' : $PHP_SELF);
 
         load_helper(['time', 'base', 'common']);
         load_helper('main', 'admin');
 
         /* 对用户传入的变量进行转义操作。*/
-        $_GET = app('request')->get();
-        $_POST = app('request')->post();
+        $_GET = request()->query();
+        $_POST = request()->post();
         $_REQUEST = $_GET + $_POST;
-        $_REQUEST['act'] = isset($_REQUEST['act']) ? $_REQUEST['act'] : '';
+        $_REQUEST['act'] = request()->get('act');
 
         $GLOBALS['ecs'] = new Shop();
         define('DATA_DIR', $GLOBALS['ecs']->data_dir());
@@ -44,9 +46,9 @@ class InitController extends Controller
         /* 创建 Smarty 对象。*/
         $GLOBALS['smarty'] = new Template();
 
-        $GLOBALS['smarty']->template_dir = dirname(__DIR__) . '/views/';
+        $GLOBALS['smarty']->template_dir = resource_path('views/admin');
         $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled/admin');
-        if (YII_DEBUG) {
+        if (config('app.debug')) {
             $GLOBALS['smarty']->force_compile = true;
         }
 

@@ -113,7 +113,7 @@ class ShopConfigController extends InitController
                 if ((isset($file['error']) && $file['error'] == 0) || (!isset($file['error']) && $file['tmp_name'] != 'none')) {
                     /* 检查上传的文件类型是否合法 */
                     if (!check_file_type($file['tmp_name'], $file['name'], $allow_file_types)) {
-                        sys_msg(sprintf($GLOBALS['_LANG']['msg_invalid_file'], $file['name']));
+                        return sys_msg(sprintf($GLOBALS['_LANG']['msg_invalid_file'], $file['name']));
                     } else {
                         if ($code == 'shop_logo') {
                             load_helper('template', 'admin');
@@ -141,7 +141,7 @@ class ShopConfigController extends InitController
                             $sql = "UPDATE " . $GLOBALS['ecs']->table('shop_config') . " SET value = '$file_name' WHERE code = '$code'";
                             $GLOBALS['db']->query($sql);
                         } else {
-                            sys_msg(sprintf($GLOBALS['_LANG']['msg_upload_failed'], $file['name'], $file_var_list[$code]['store_dir']));
+                            return sys_msg(sprintf($GLOBALS['_LANG']['msg_upload_failed'], $file['name'], $file_var_list[$code]['store_dir']));
                         }
                     }
                 }
@@ -192,10 +192,10 @@ class ShopConfigController extends InitController
 
             if ($type == 'mail_setting') {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_mail_settings'], 'href' => 'shop_config.php?act=mail_settings'];
-                sys_msg($GLOBALS['_LANG']['mail_save_success'] . $spt, 0, $links);
+                return sys_msg($GLOBALS['_LANG']['mail_save_success'] . $spt, 0, $links);
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_shop_config'], 'href' => 'shop_config.php?act=list_edit'];
-                sys_msg($GLOBALS['_LANG']['save_success'] . $spt, 0, $links);
+                return sys_msg($GLOBALS['_LANG']['save_success'] . $spt, 0, $links);
             }
         }
 
@@ -249,7 +249,7 @@ class ShopConfigController extends InitController
             /* 清除缓存 */
             clear_all_files();
 
-            sys_msg($GLOBALS['_LANG']['save_success'], 0);
+            return sys_msg($GLOBALS['_LANG']['save_success'], 0);
         }
     }
 

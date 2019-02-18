@@ -103,7 +103,7 @@ class ShippingService
             $shipping_config = unserialize($shipping_config);
         }
 
-        $plugin = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+        $plugin = '\\App\\Plugins\\Shipping\\' . parse_name($shipping_code, true);
         if (class_exists($plugin)) {
             $obj = new $plugin($shipping_config);
 
@@ -128,7 +128,7 @@ class ShippingService
             /* 如果保价费用不是百分比则直接返回该数值 */
             return floatval($insure);
         } else {
-            $plugin = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
+            $plugin = '\\App\\Plugins\\Shipping\\' . parse_name($shipping_code, true);
             if (class_exists($plugin)) {
                 $shipping = new $plugin;
                 $insure = floatval($insure) / 100;
@@ -157,7 +157,7 @@ class ShippingService
             return $object;
         }
 
-        $plugin = '\\app\\plugins\\shipping\\' . parse_name($shipping['shipping_code'], true);
+        $plugin = '\\App\\Plugins\\Shipping\\' . parse_name($shipping['shipping_code'], true);
         $object = new $plugin;
         return $object;
     }

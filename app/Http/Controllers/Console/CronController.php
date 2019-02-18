@@ -93,12 +93,12 @@ class CronController extends InitController
             } elseif ($_POST['step'] == 2) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
                 if (empty($_POST['cron_name'])) {
-                    sys_msg($GLOBALS['_LANG']['cron_name'] . $GLOBALS['_LANG']['empty']);
+                    return sys_msg($GLOBALS['_LANG']['cron_name'] . $GLOBALS['_LANG']['empty']);
                 }
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('crons') .
                     " WHERE  cron_code = '$_POST[cron_code]'";
                 if ($GLOBALS['db']->getOne($sql) > 0) {
-                    sys_msg($GLOBALS['_LANG']['cron_code'] . $GLOBALS['_LANG']['repeat'], 1);
+                    return sys_msg($GLOBALS['_LANG']['cron_code'] . $GLOBALS['_LANG']['repeat'], 1);
                 }
 
                 /* 取得配置信息 */
@@ -136,7 +136,7 @@ class CronController extends InitController
                 $sql = "INSERT INTO " . $GLOBALS['ecs']->table('crons') . " (cron_code, cron_name, cron_desc, cron_config, nextime, day, week, hour, minute, run_once, allow_ip, alow_files)" .
                     "VALUES ('$_POST[cron_code]', '$_POST[cron_name]', '$_POST[cron_desc]', '$cron_config', '$next', '$cron_day', '$cron_week', '$cron_hour', '$cron_minute', '$_POST[cron_run_once]', '$_POST[allow_ip]', '$_POST[alow_files]')";
                 $GLOBALS['db']->query($sql);
-                sys_msg($GLOBALS['_LANG']['install_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['install_ok'], 0, $links);
             }
         }
         if ($_REQUEST['act'] == 'edit') {
@@ -151,7 +151,7 @@ class CronController extends InitController
                 $cron = $GLOBALS['db']->getRow($sql);
                 if (empty($cron)) {
                     $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
-                    sys_msg($GLOBALS['_LANG']['cron_not_available'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['cron_not_available'], 0, $links);
                 }
                 /* 取相应插件信息 */
                 $set_modules = true;
@@ -208,7 +208,7 @@ class CronController extends InitController
             } elseif ($_POST['step'] == 2) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
                 if (empty($_POST['cron_id'])) {
-                    sys_msg($GLOBALS['_LANG']['cron_not_available'], 0, $links);
+                    return sys_msg($GLOBALS['_LANG']['cron_not_available'], 0, $links);
                 }
                 $cron_config = [];
                 if (isset($_POST['cfg_value']) && is_array($_POST['cfg_value'])) {
@@ -246,7 +246,7 @@ class CronController extends InitController
                     "SET cron_name = '$_POST[cron_name]', cron_desc = '$_POST[cron_desc]', cron_config = '$cron_config', nextime='$next', day = '$cron_day', week = '$cron_week', hour = '$cron_hour', minute = '$cron_minute', run_once = '$_POST[cron_run_once]', allow_ip = '$_POST[allow_ip]', alow_files = '$_POST[alow_files]'" .
                     "WHERE cron_id = '$_POST[cron_id]' LIMIT 1";
                 $GLOBALS['db']->query($sql);
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         if ($_REQUEST['act'] == 'uninstall') {
@@ -254,7 +254,7 @@ class CronController extends InitController
                 "WHERE cron_code = '$_REQUEST[code]' LIMIT 1";
             $GLOBALS['db']->query($sql);
             $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['uninstall_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['uninstall_ok'], 0, $links);
         }
         if ($_REQUEST['act'] == 'toggle_show') {
             $id = trim($_POST['id']);
@@ -290,7 +290,7 @@ class CronController extends InitController
             }
 
             $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['do_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['do_ok'], 0, $links);
         }
     }
 

@@ -387,7 +387,7 @@ class SuppliersGoodsController extends InitController
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('goods') .
                     " WHERE goods_sn = '$_POST[goods_sn]' AND is_delete = 0 AND goods_id <> '$_POST[goods_id]'";
                 if ($GLOBALS['db']->getOne($sql) > 0) {
-                    sys_msg($GLOBALS['_LANG']['goods_sn_exists'], 1, [], false);
+                    return sys_msg($GLOBALS['_LANG']['goods_sn_exists'], 1, [], false);
                 }
             }
 
@@ -400,24 +400,24 @@ class SuppliersGoodsController extends InitController
                 // 商品图片
                 if ($_FILES['goods_img']['error'] == 0) {
                     if (!$image->check_img_type($_FILES['goods_img']['type'])) {
-                        sys_msg($GLOBALS['_LANG']['invalid_goods_img'], 1, [], false);
+                        return sys_msg($GLOBALS['_LANG']['invalid_goods_img'], 1, [], false);
                     }
                 } elseif ($_FILES['goods_img']['error'] == 1) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['goods_img_too_big'], $php_maxsize), 1, [], false);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['goods_img_too_big'], $php_maxsize), 1, [], false);
                 } elseif ($_FILES['goods_img']['error'] == 2) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['goods_img_too_big'], $htm_maxsize), 1, [], false);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['goods_img_too_big'], $htm_maxsize), 1, [], false);
                 }
 
                 // 商品缩略图
                 if (isset($_FILES['goods_thumb'])) {
                     if ($_FILES['goods_thumb']['error'] == 0) {
                         if (!$image->check_img_type($_FILES['goods_thumb']['type'])) {
-                            sys_msg($GLOBALS['_LANG']['invalid_goods_thumb'], 1, [], false);
+                            return sys_msg($GLOBALS['_LANG']['invalid_goods_thumb'], 1, [], false);
                         }
                     } elseif ($_FILES['goods_thumb']['error'] == 1) {
-                        sys_msg(sprintf($GLOBALS['_LANG']['goods_thumb_too_big'], $php_maxsize), 1, [], false);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['goods_thumb_too_big'], $php_maxsize), 1, [], false);
                     } elseif ($_FILES['goods_thumb']['error'] == 2) {
-                        sys_msg(sprintf($GLOBALS['_LANG']['goods_thumb_too_big'], $htm_maxsize), 1, [], false);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['goods_thumb_too_big'], $htm_maxsize), 1, [], false);
                     }
                 }
 
@@ -425,12 +425,12 @@ class SuppliersGoodsController extends InitController
                 foreach ($_FILES['img_url']['error'] as $key => $value) {
                     if ($value == 0) {
                         if (!$image->check_img_type($_FILES['img_url']['type'][$key])) {
-                            sys_msg(sprintf($GLOBALS['_LANG']['invalid_img_url'], $key + 1), 1, [], false);
+                            return sys_msg(sprintf($GLOBALS['_LANG']['invalid_img_url'], $key + 1), 1, [], false);
                         }
                     } elseif ($value == 1) {
-                        sys_msg(sprintf($GLOBALS['_LANG']['img_url_too_big'], $key + 1, $php_maxsize), 1, [], false);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['img_url_too_big'], $key + 1, $php_maxsize), 1, [], false);
                     } elseif ($_FILES['img_url']['error'] == 2) {
-                        sys_msg(sprintf($GLOBALS['_LANG']['img_url_too_big'], $key + 1, $htm_maxsize), 1, [], false);
+                        return sys_msg(sprintf($GLOBALS['_LANG']['img_url_too_big'], $key + 1, $htm_maxsize), 1, [], false);
                     }
                 }
             } /* 4.1版本 */
@@ -438,7 +438,7 @@ class SuppliersGoodsController extends InitController
                 // 商品图片
                 if ($_FILES['goods_img']['tmp_name'] != 'none') {
                     if (!$image->check_img_type($_FILES['goods_img']['type'])) {
-                        sys_msg($GLOBALS['_LANG']['invalid_goods_img'], 1, [], false);
+                        return sys_msg($GLOBALS['_LANG']['invalid_goods_img'], 1, [], false);
                     }
                 }
 
@@ -446,7 +446,7 @@ class SuppliersGoodsController extends InitController
                 if (isset($_FILES['goods_thumb'])) {
                     if ($_FILES['goods_thumb']['tmp_name'] != 'none') {
                         if (!$image->check_img_type($_FILES['goods_thumb']['type'])) {
-                            sys_msg($GLOBALS['_LANG']['invalid_goods_thumb'], 1, [], false);
+                            return sys_msg($GLOBALS['_LANG']['invalid_goods_thumb'], 1, [], false);
                         }
                     }
                 }
@@ -455,7 +455,7 @@ class SuppliersGoodsController extends InitController
                 foreach ($_FILES['img_url']['tmp_name'] as $key => $value) {
                     if ($value != 'none') {
                         if (!$image->check_img_type($_FILES['img_url']['type'][$key])) {
-                            sys_msg(sprintf($GLOBALS['_LANG']['invalid_img_url'], $key + 1), 1, [], false);
+                            return sys_msg(sprintf($GLOBALS['_LANG']['invalid_img_url'], $key + 1), 1, [], false);
                         }
                     }
                 }
@@ -497,7 +497,7 @@ class SuppliersGoodsController extends InitController
 
                 $original_img = $image->upload_image($_FILES['goods_img']); // 原始图片
                 if ($original_img === false) {
-                    sys_msg($image->error_msg(), 1, [], false);
+                    return sys_msg($image->error_msg(), 1, [], false);
                 }
                 $goods_img = $original_img;   // 商品图片
 
@@ -508,7 +508,7 @@ class SuppliersGoodsController extends InitController
                     $pos = strpos(basename($img), '.');
                     $newname = dirname($img) . '/' . $image->random_filename() . substr(basename($img), $pos);
                     if (!copy('../' . $img, '../' . $newname)) {
-                        sys_msg('fail to copy file: ' . realpath('../' . $img), 1, [], false);
+                        return sys_msg('fail to copy file: ' . realpath('../' . $img), 1, [], false);
                     }
                     $img = $newname;
 
@@ -522,7 +522,7 @@ class SuppliersGoodsController extends InitController
                     if ($GLOBALS['_CFG']['image_width'] != 0 || $GLOBALS['_CFG']['image_height'] != 0) {
                         $goods_img = $image->make_thumb('../' . $goods_img, $GLOBALS['_CFG']['image_width'], $GLOBALS['_CFG']['image_height']);
                         if ($goods_img === false) {
-                            sys_msg($image->error_msg(), 1, [], false);
+                            return sys_msg($image->error_msg(), 1, [], false);
                         }
                     }
 
@@ -530,7 +530,7 @@ class SuppliersGoodsController extends InitController
                     if ($GLOBALS['_CFG']['auto_generate_gallery']) {
                         $newname = dirname($img) . '/' . $image->random_filename() . substr(basename($img), $pos);
                         if (!copy('../' . $img, '../' . $newname)) {
-                            sys_msg('fail to copy file: ' . realpath('../' . $img), 1, [], false);
+                            return sys_msg('fail to copy file: ' . realpath('../' . $img), 1, [], false);
                         }
                         $gallery_img = $newname;
                     }
@@ -538,12 +538,12 @@ class SuppliersGoodsController extends InitController
                     // 加水印
                     if (intval($GLOBALS['_CFG']['watermark_place']) > 0 && !empty($GLOBALS['_CFG']['watermark'])) {
                         if ($image->add_watermark('../' . $goods_img, '', $GLOBALS['_CFG']['watermark'], $GLOBALS['_CFG']['watermark_place'], $GLOBALS['_CFG']['watermark_alpha']) === false) {
-                            sys_msg($image->error_msg(), 1, [], false);
+                            return sys_msg($image->error_msg(), 1, [], false);
                         }
                         /* 添加判断是否自动生成相册图片 */
                         if ($GLOBALS['_CFG']['auto_generate_gallery']) {
                             if ($image->add_watermark('../' . $gallery_img, '', $GLOBALS['_CFG']['watermark'], $GLOBALS['_CFG']['watermark_place'], $GLOBALS['_CFG']['watermark_alpha']) === false) {
-                                sys_msg($image->error_msg(), 1, [], false);
+                                return sys_msg($image->error_msg(), 1, [], false);
                             }
                         }
                     }
@@ -554,7 +554,7 @@ class SuppliersGoodsController extends InitController
                         if ($GLOBALS['_CFG']['thumb_width'] != 0 || $GLOBALS['_CFG']['thumb_height'] != 0) {
                             $gallery_thumb = $image->make_thumb('../' . $img, $GLOBALS['_CFG']['thumb_width'], $GLOBALS['_CFG']['thumb_height']);
                             if ($gallery_thumb === false) {
-                                sys_msg($image->error_msg(), 1, [], false);
+                                return sys_msg($image->error_msg(), 1, [], false);
                             }
                         }
                     }
@@ -567,7 +567,7 @@ class SuppliersGoodsController extends InitController
                 //     $gallery_img = dirname($img) . '/' . $image->random_filename() . // substr(basename($img), $pos);
                 //     if (!copy('../' . $img, '../' . $gallery_img))
                 //     {
-                //         sys_msg('fail to copy file: ' . realpath('../' . $img), 1, array(), false);
+                //         return sys_msg('fail to copy file: ' . realpath('../' . $img), 1, array(), false);
                 //     }
                 //     $gallery_thumb = '';
                 // }
@@ -579,7 +579,7 @@ class SuppliersGoodsController extends InitController
                 // 上传了，直接使用，原始大小
                 $goods_thumb = $image->upload_image($_FILES['goods_thumb']);
                 if ($goods_thumb === false) {
-                    sys_msg($image->error_msg(), 1, [], false);
+                    return sys_msg($image->error_msg(), 1, [], false);
                 }
             } else {
                 // 未上传，如果自动选择生成，且上传了商品图片，生成所略图
@@ -588,7 +588,7 @@ class SuppliersGoodsController extends InitController
                     if ($GLOBALS['_CFG']['thumb_width'] != 0 || $GLOBALS['_CFG']['thumb_height'] != 0) {
                         $goods_thumb = $image->make_thumb('../' . $original_img, $GLOBALS['_CFG']['thumb_width'], $GLOBALS['_CFG']['thumb_height']);
                         if ($goods_thumb === false) {
-                            sys_msg($image->error_msg(), 1, [], false);
+                            return sys_msg($image->error_msg(), 1, [], false);
                         }
                     } else {
                         $goods_thumb = $original_img;
@@ -813,7 +813,7 @@ class SuppliersGoodsController extends InitController
                 $temp_num = array_count_values($_POST['volume_number']);
                 foreach ($temp_num as $v) {
                     if ($v > 1) {
-                        sys_msg($GLOBALS['_LANG']['volume_number_continuous'], 1, [], false);
+                        return sys_msg($GLOBALS['_LANG']['volume_number_continuous'], 1, [], false);
                         break;
                     }
                 }
@@ -897,7 +897,7 @@ class SuppliersGoodsController extends InitController
             }
             $link[] = $this->list_link($is_insert, $code);
 
-            sys_msg($is_insert ? $GLOBALS['_LANG']['add_goods_ok'] : $GLOBALS['_LANG']['edit_goods_ok'], 0, $link);
+            return sys_msg($is_insert ? $GLOBALS['_LANG']['add_goods_ok'] : $GLOBALS['_LANG']['edit_goods_ok'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -994,7 +994,7 @@ class SuppliersGoodsController extends InitController
             } else {
                 $link[] = $this->list_link(true, $code);
             }
-            sys_msg($GLOBALS['_LANG']['batch_handle_ok'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['batch_handle_ok'], 0, $link);
         }
 
         /*------------------------------------------------------ */

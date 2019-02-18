@@ -70,14 +70,14 @@ class PackController extends InitController
             $is_only = $exc->is_only('pack_name', $_POST['pack_name']);
 
             if (!$is_only) {
-                sys_msg(sprintf($GLOBALS['_LANG']['packname_exist'], stripslashes($_POST['pack_name'])), 1);
+                return sys_msg(sprintf($GLOBALS['_LANG']['packname_exist'], stripslashes($_POST['pack_name'])), 1);
             }
 
             /* 处理图片 */
             if (!empty($_FILES['pack_img'])) {
                 $upload_img = $image->upload_image($_FILES['pack_img'], "packimg", $_POST['old_packimg']);
                 if ($upload_img == false) {
-                    sys_msg($image->error_msg);
+                    return sys_msg($image->error_msg);
                 }
                 $img_name = basename($upload_img);
             } else {
@@ -94,7 +94,7 @@ class PackController extends InitController
             $link[0]['href'] = 'pack.php?act=list';
             $link[1]['text'] = $GLOBALS['_LANG']['continue_add'];
             $link[1]['href'] = 'pack.php?act=add';
-            sys_msg($_POST['pack_name'] . $GLOBALS['_LANG']['packadd_succed'], 0, $link);
+            return sys_msg($_POST['pack_name'] . $GLOBALS['_LANG']['packadd_succed'], 0, $link);
             admin_log($_POST['pack_name'], 'add', 'pack');
         }
 
@@ -121,7 +121,7 @@ class PackController extends InitController
                 $is_only = $exc->is_only('pack_name', $_POST['pack_name'], $_POST['id']);
 
                 if (!$is_only) {
-                    sys_msg(sprintf($GLOBALS['_LANG']['packname_exist'], stripslashes($_POST['pack_name'])), 1);
+                    return sys_msg(sprintf($GLOBALS['_LANG']['packname_exist'], stripslashes($_POST['pack_name'])), 1);
                 }
             }
 
@@ -130,7 +130,7 @@ class PackController extends InitController
             if (!empty($_FILES['pack_img']['name'])) {
                 $upload_img = $image->upload_image($_FILES['pack_img'], "packimg", $_POST['old_packimg']);
                 if ($upload_img == false) {
-                    sys_msg($image->error_msg);
+                    return sys_msg($image->error_msg);
                 }
                 $img_name = basename($upload_img);
             } else {
@@ -145,7 +145,7 @@ class PackController extends InitController
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
                 $link[0]['href'] = 'pack.php?act=list&' . list_link_postfix();
                 $note = sprintf($GLOBALS['_LANG']['packedit_succed'], $_POST['pack_name']);
-                sys_msg($note, 0, $link);
+                return sys_msg($note, 0, $link);
                 admin_log($_POST['pack_name'], 'edit', 'pack');
             } else {
                 return $GLOBALS['db']->error();
@@ -168,7 +168,7 @@ class PackController extends InitController
                 $GLOBALS['db']->query($sql);
             }
             $link = [['text' => $GLOBALS['_LANG']['pack_edit_lnk'], 'href' => 'pack.php?act=edit&id=' . $pack_id], ['text' => $GLOBALS['_LANG']['pack_list_lnk'], 'href' => 'pack.php?act=list']];
-            sys_msg($GLOBALS['_LANG']['drop_pack_img_success'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['drop_pack_img_success'], 0, $link);
         }
 
         /*------------------------------------------------------ */

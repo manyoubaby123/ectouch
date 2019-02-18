@@ -15,7 +15,7 @@ class CaptchaManageController extends InitController
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'main') {
             if (gd_version() == 0) {
-                sys_msg($GLOBALS['_LANG']['captcha_note'], 1);
+                return sys_msg($GLOBALS['_LANG']['captcha_note'], 1);
             }
 
             $captcha = intval($GLOBALS['_CFG']['captcha']);
@@ -74,7 +74,7 @@ class CaptchaManageController extends InitController
 
             clear_cache_files();
 
-            sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['href' => 'captcha_manage.php?act=main', 'text' => $GLOBALS['_LANG']['captcha_manage']]]);
+            return sys_msg($GLOBALS['_LANG']['save_ok'], 0, [['href' => 'captcha_manage.php?act=main', 'text' => $GLOBALS['_LANG']['captcha_manage']]]);
         }
     }
 }

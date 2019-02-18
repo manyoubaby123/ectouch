@@ -2,17 +2,36 @@
 
 namespace App\Libraries;
 
-use Yii;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Mysql
 {
+    /**
+     * @param $sql
+     * @return array|bool|int
+     */
     public function query($sql)
     {
         $m = strtolower(substr(ltrim(trim($sql), '('), 0, 6));
+        $res = [];
         if ($m == 'select' || substr($m, 0, 4) == 'desc' || substr($m, 0, 4) == 'show') {
-            $res = Yii::$app->db->createCommand($sql)->queryAll();
+            $result = DB::select($sql);
+            if (empty($result)) {
+                $res = $result;
+            } else {
+                foreach ($result as $vo) {
+                    $res[] = get_object_vars($vo);
+                }
+            }
+        } elseif ($m == 'update') {
+            $res = DB::update($sql);
+        } elseif ($m == 'insert') {
+            $res = DB::insert($sql);
+        } elseif ($m == 'delete') {
+            $res = DB::delete($sql);
         } else {
-            $res = Yii::$app->db->createCommand($sql)->execute();
+            $res = DB::statement($sql);
         }
 
         return $res;
@@ -30,7 +49,7 @@ class Mysql
 
     public function insert_id()
     {
-        return Yii::$app->db->getLastInsertID();
+        return $this->getOne('SELECT LAST_INSERT_ID()');
     }
 
     public function version()

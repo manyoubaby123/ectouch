@@ -9,8 +9,6 @@
  */
 function read_modules($directory = '.')
 {
-    global $_LANG;
-
     $dir = @opendir($directory);
     $set_modules = true;
     $modules = array();
@@ -39,7 +37,7 @@ function read_modules($directory = '.')
  * @param       int         msg_type        消息类型， 0消息，1错误，2询问
  * @param       array       links           可选的链接
  * @param       boolen $auto_redirect 是否需要自动跳转
- * @return      void
+ * @return      string
  */
 function sys_msg($msg_detail, $msg_type = 0, $links = array(), $auto_redirect = true)
 {
@@ -48,8 +46,6 @@ function sys_msg($msg_detail, $msg_type = 0, $links = array(), $auto_redirect = 
         $links[0]['href'] = 'javascript:history.go(-1)';
     }
 
-    assign_query_info();
-
     $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['system_message']);
     $GLOBALS['smarty']->assign('msg_detail', $msg_detail);
     $GLOBALS['smarty']->assign('msg_type', $msg_type);
@@ -57,9 +53,7 @@ function sys_msg($msg_detail, $msg_type = 0, $links = array(), $auto_redirect = 
     $GLOBALS['smarty']->assign('default_url', $links[0]['href']);
     $GLOBALS['smarty']->assign('auto_redirect', $auto_redirect);
 
-    $GLOBALS['smarty']->display('message.htm');
-
-    exit;
+    return $GLOBALS['smarty']->display('message.htm');
 }
 
 /**
@@ -156,7 +150,7 @@ function admin_priv($priv_str, $msg_type = '', $msg_output = true)
     if (strpos(',' . session('action_list') . ',', ',' . $priv_str . ',') === false) {
         $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
         if ($msg_output) {
-            sys_msg($_LANG['priv_error'], 0, $link);
+            return sys_msg($_LANG['priv_error'], 0, $link);
         }
         return false;
     } else {

@@ -114,10 +114,10 @@ class VoteController extends InitController
                 $link[2]['text'] = $GLOBALS['_LANG']['back_list'];
                 $link[2]['href'] = 'vote.php?act=list';
 
-                sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['vote_name'] . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['vote_name'] . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
             } else {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                sys_msg($GLOBALS['_LANG']['vote_name_exist'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['vote_name_exist'], 0, $link);
             }
         }
         /*------------------------------------------------------ */
@@ -161,7 +161,7 @@ class VoteController extends InitController
 
             /* 提示信息 */
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'vote.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['vote_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['vote_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
         /*------------------------------------------------------ */
         //-- 调查选项列表页面

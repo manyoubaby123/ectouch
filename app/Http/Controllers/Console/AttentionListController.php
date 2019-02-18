@@ -71,10 +71,10 @@ class AttentionListController extends InitController
                     $start = $start + $i;
                 }
                 $links[] = ['text' => sprintf($GLOBALS['_LANG']['finish_list'], $start), 'href' => "attention_list.php?act=addtolist&id=$id&pri=$pri&start=$start"];
-                sys_msg($GLOBALS['_LANG']['finishing'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['finishing'], 0, $links);
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['attention_list'], 'href' => 'attention_list.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         if ($_REQUEST['act'] == 'batch_addtolist') {
@@ -121,10 +121,10 @@ class AttentionListController extends InitController
                     $start = $start + $i;
                 }
                 $links[] = ['text' => sprintf($GLOBALS['_LANG']['finish_list'], $start), 'href' => "attention_list.php?act=batch_addtolist&date=$olddate&pri=$pri&start=$start"];
-                sys_msg($GLOBALS['_LANG']['finishing'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['finishing'], 0, $links);
             } else {
                 $links[] = ['text' => $GLOBALS['_LANG']['attention_list'], 'href' => 'attention_list.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
             }
         }
         function get_attention()

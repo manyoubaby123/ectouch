@@ -1,12 +1,12 @@
 <?php
 
-namespace app\repositories;
+namespace App\Repositories;
 
 use App\Models\User;
 
 /**
  * Class UserRepository
- * @package app\repositories
+ * @package App\Repositories
  */
 class UserRepository
 {
@@ -19,9 +19,9 @@ class UserRepository
      * UserRepository constructor.
      * @param User $user
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        $this->user = new User();
+        $this->user = $user;
     }
 
     /**

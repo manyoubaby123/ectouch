@@ -15,11 +15,11 @@ class AccountLogController extends InitController
             /* 检查参数 */
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
-                sys_msg('invalid param');
+                return sys_msg('invalid param');
             }
             $user = user_info($user_id);
             if (empty($user)) {
-                sys_msg($GLOBALS['_LANG']['user_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['user_not_exist']);
             }
             $GLOBALS['smarty']->assign('user', $user);
 
@@ -53,11 +53,11 @@ class AccountLogController extends InitController
             /* 检查参数 */
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
-                sys_msg('invalid param');
+                return sys_msg('invalid param');
             }
             $user = user_info($user_id);
             if (empty($user)) {
-                sys_msg($GLOBALS['_LANG']['user_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['user_not_exist']);
             }
             $GLOBALS['smarty']->assign('user', $user);
 
@@ -93,11 +93,11 @@ class AccountLogController extends InitController
             /* 检查参数 */
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
-                sys_msg('invalid param');
+                return sys_msg('invalid param');
             }
             $user = user_info($user_id);
             if (empty($user)) {
-                sys_msg($GLOBALS['_LANG']['user_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['user_not_exist']);
             }
             $GLOBALS['smarty']->assign('user', $user);
 
@@ -116,17 +116,17 @@ class AccountLogController extends InitController
             admin_priv('account_manage');
             $token = trim($_POST['token']);
             if ($token != $GLOBALS['_CFG']['token']) {
-                sys_msg($GLOBALS['_LANG']['no_account_change'], 1);
+                return sys_msg($GLOBALS['_LANG']['no_account_change'], 1);
             }
 
             /* 检查参数 */
             $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
             if ($user_id <= 0) {
-                sys_msg('invalid param');
+                return sys_msg('invalid param');
             }
             $user = user_info($user_id);
             if (empty($user)) {
-                sys_msg($GLOBALS['_LANG']['user_not_exist']);
+                return sys_msg($GLOBALS['_LANG']['user_not_exist']);
             }
 
             /* 提交值 */
@@ -137,7 +137,7 @@ class AccountLogController extends InitController
             $pay_points = floatval($_POST['add_sub_pay_points']) * abs(floatval($_POST['pay_points']));
 
             if ($user_money == 0 && $frozen_money == 0 && $rank_points == 0 && $pay_points == 0) {
-                sys_msg($GLOBALS['_LANG']['no_account_change']);
+                return sys_msg($GLOBALS['_LANG']['no_account_change']);
             }
 
             /* 保存 */
@@ -147,7 +147,7 @@ class AccountLogController extends InitController
             $links = [
                 ['href' => 'account_log.php?act=list&user_id=' . $user_id, 'text' => $GLOBALS['_LANG']['account_list']]
             ];
-            sys_msg($GLOBALS['_LANG']['log_account_change_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['log_account_change_ok'], 0, $links);
         }
     }
 

@@ -93,7 +93,7 @@ class AffiliateController extends InitController
             $temp['on'] = 1;
             $this->put_affiliate($temp);
             $links[] = ['text' => $GLOBALS['_LANG']['affiliate'], 'href' => 'affiliate.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         }
         /*------------------------------------------------------ */
         //-- 推荐开关
@@ -104,7 +104,7 @@ class AffiliateController extends InitController
             $config['on'] = $on;
             $this->put_affiliate($config);
             $links[] = ['text' => $GLOBALS['_LANG']['affiliate'], 'href' => 'affiliate.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $links);
         }
         /*------------------------------------------------------ */
         //-- Ajax修改设置

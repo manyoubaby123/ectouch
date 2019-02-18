@@ -156,7 +156,7 @@ class PaymentController extends InitController
             $pay = $GLOBALS['db']->getRow($sql);
             if (empty($pay)) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'payment.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['payment_not_available'], 0, $links);
+                return sys_msg($GLOBALS['_LANG']['payment_not_available'], 0, $links);
             }
 
             /* 取相应插件信息 */
@@ -217,13 +217,13 @@ class PaymentController extends InitController
 
             /* 检查输入 */
             if (empty($_POST['pay_name'])) {
-                sys_msg($GLOBALS['_LANG']['payment_name'] . $GLOBALS['_LANG']['empty']);
+                return sys_msg($GLOBALS['_LANG']['payment_name'] . $GLOBALS['_LANG']['empty']);
             }
 
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('payment') .
                 " WHERE pay_name = '$_POST[pay_name]' AND pay_code <> '$_POST[pay_code]'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
-                sys_msg($GLOBALS['_LANG']['payment_name'] . $GLOBALS['_LANG']['repeat'], 1);
+                return sys_msg($GLOBALS['_LANG']['payment_name'] . $GLOBALS['_LANG']['repeat'], 1);
             }
 
             /* 取得配置信息 */
@@ -255,7 +255,7 @@ class PaymentController extends InitController
                 /* 记录日志 */
                 admin_log($_POST['pay_name'], 'edit', 'payment');
 
-                sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['edit_ok'], 0, $link);
             } else {
                 /* 安装，检查该支付方式是否曾经安装过 */
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('payment') . " WHERE pay_code = '$_REQUEST[pay_code]'";
@@ -279,7 +279,7 @@ class PaymentController extends InitController
                 /* 记录日志 */
                 admin_log($_POST['pay_name'], 'install', 'payment');
 
-                sys_msg($GLOBALS['_LANG']['install_ok'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['install_ok'], 0, $link);
             }
         }
 
@@ -299,7 +299,7 @@ class PaymentController extends InitController
             admin_log($_REQUEST['code'], 'uninstall', 'payment');
 
             $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'payment.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['uninstall_ok'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['uninstall_ok'], 0, $link);
         }
 
         /*------------------------------------------------------ */

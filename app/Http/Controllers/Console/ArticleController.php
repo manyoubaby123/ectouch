@@ -108,7 +108,7 @@ class ArticleController extends InitController
             $is_only = $exc->is_only('title', $_POST['title'], 0, " cat_id ='$_POST[article_cat]'");
 
             if (!$is_only) {
-                sys_msg(sprintf($GLOBALS['_LANG']['title_exist'], stripslashes($_POST['title'])), 1);
+                return sys_msg(sprintf($GLOBALS['_LANG']['title_exist'], stripslashes($_POST['title'])), 1);
             }
 
             /* 取得文件地址 */
@@ -116,7 +116,7 @@ class ArticleController extends InitController
             if ((isset($_FILES['file']['error']) && $_FILES['file']['error'] == 0) || (!isset($_FILES['file']['error']) && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] != 'none')) {
                 // 检查文件格式
                 if (!check_file_type($_FILES['file']['tmp_name'], $_FILES['file']['name'], $allow_file_types)) {
-                    sys_msg($GLOBALS['_LANG']['invalid_file']);
+                    return sys_msg($GLOBALS['_LANG']['invalid_file']);
                 }
 
                 // 复制文件
@@ -164,7 +164,7 @@ class ArticleController extends InitController
 
             clear_cache_files(); // 清除相关的缓存文件
 
-            sys_msg($GLOBALS['_LANG']['articleadd_succeed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['articleadd_succeed'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -206,7 +206,7 @@ class ArticleController extends InitController
             $is_only = $exc->is_only('title', $_POST['title'], $_POST['id'], "cat_id = '$_POST[article_cat]'");
 
             if (!$is_only) {
-                sys_msg(sprintf($GLOBALS['_LANG']['title_exist'], stripslashes($_POST['title'])), 1);
+                return sys_msg(sprintf($GLOBALS['_LANG']['title_exist'], stripslashes($_POST['title'])), 1);
             }
 
             if (empty($_POST['cat_id'])) {
@@ -218,7 +218,7 @@ class ArticleController extends InitController
             if (empty($_FILES['file']['error']) || (!isset($_FILES['file']['error']) && isset($_FILES['file']['tmp_name']) && $_FILES['file']['tmp_name'] != 'none')) {
                 // 检查文件格式
                 if (!check_file_type($_FILES['file']['tmp_name'], $_FILES['file']['name'], $allow_file_types)) {
-                    sys_msg($GLOBALS['_LANG']['invalid_file']);
+                    return sys_msg($GLOBALS['_LANG']['invalid_file']);
                 }
 
                 // 复制文件
@@ -255,7 +255,7 @@ class ArticleController extends InitController
 
                 clear_cache_files();
 
-                sys_msg($note, 0, $link);
+                return sys_msg($note, 0, $link);
             } else {
                 return $GLOBALS['db']->error();
             }
@@ -434,7 +434,7 @@ class ArticleController extends InitController
                     admin_priv('article_manage');
 
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
-                        sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
+                        return sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
                     }
 
                     /* 删除原来的文件 */
@@ -462,7 +462,7 @@ class ArticleController extends InitController
                 if ($_POST['type'] == 'button_hide') {
                     return check_authz_json('article_manage');
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
-                        sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
+                        return sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
                     }
 
                     foreach ($_POST['checkboxes'] as $key => $id) {
@@ -474,7 +474,7 @@ class ArticleController extends InitController
                 if ($_POST['type'] == 'button_show') {
                     return check_authz_json('article_manage');
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
-                        sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
+                        return sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
                     }
 
                     foreach ($_POST['checkboxes'] as $key => $id) {
@@ -486,11 +486,11 @@ class ArticleController extends InitController
                 if ($_POST['type'] == 'move_to') {
                     return check_authz_json('article_manage');
                     if (!isset($_POST['checkboxes']) || !is_array($_POST['checkboxes'])) {
-                        sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
+                        return sys_msg($GLOBALS['_LANG']['no_select_article'], 1);
                     }
 
                     if (!$_POST['target_cat']) {
-                        sys_msg($GLOBALS['_LANG']['no_select_act'], 1);
+                        return sys_msg($GLOBALS['_LANG']['no_select_act'], 1);
                     }
 
                     foreach ($_POST['checkboxes'] as $key => $id) {
@@ -502,7 +502,7 @@ class ArticleController extends InitController
             /* 清除缓存 */
             clear_cache_files();
             $lnk[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'article.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['batch_handle_ok'], 0, $lnk);
+            return sys_msg($GLOBALS['_LANG']['batch_handle_ok'], 0, $lnk);
         }
     }
 

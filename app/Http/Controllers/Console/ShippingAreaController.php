@@ -78,14 +78,14 @@ class ShippingAreaController extends InitController
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table("shipping_area") .
                 " WHERE shipping_id='$_POST[shipping]' AND shipping_area_name='$_POST[shipping_area_name]'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
-                sys_msg($GLOBALS['_LANG']['repeat_area_name'], 1);
+                return sys_msg($GLOBALS['_LANG']['repeat_area_name'], 1);
             } else {
                 $shipping_code = $GLOBALS['db']->getOne("SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') .
                     " WHERE shipping_id='$_POST[shipping]'");
                 $plugin = '../includes/modules/shipping/' . $shipping_code . ".php";
 
                 if (!file_exists($plugin)) {
-                    sys_msg($GLOBALS['_LANG']['not_find_plugin'], 1);
+                    return sys_msg($GLOBALS['_LANG']['not_find_plugin'], 1);
                 } else {
                     $set_modules = 1;
                     include_once($plugin);
@@ -132,7 +132,7 @@ class ShippingAreaController extends InitController
                 //$lnk[] = array('text' => $GLOBALS['_LANG']['add_area_region'], 'href'=>'shipping_area.php?act=region&id='.$new_id);
                 $lnk[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'shipping_area.php?act=list&shipping=' . $_POST['shipping']];
                 $lnk[] = ['text' => $GLOBALS['_LANG']['add_continue'], 'href' => 'shipping_area.php?act=add&shipping=' . $_POST['shipping']];
-                sys_msg($GLOBALS['_LANG']['add_area_success'], 0, $lnk);
+                return sys_msg($GLOBALS['_LANG']['add_area_success'], 0, $lnk);
             }
         }
 
@@ -218,13 +218,13 @@ class ShippingAreaController extends InitController
                 "shipping_area_name='$_POST[shipping_area_name]' AND " .
                 "shipping_area_id<>'$_POST[id]'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
-                sys_msg($GLOBALS['_LANG']['repeat_area_name'], 1);
+                return sys_msg($GLOBALS['_LANG']['repeat_area_name'], 1);
             } else {
                 $shipping_code = $GLOBALS['db']->getOne("SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id='$_POST[shipping]'");
                 $plugin = '../includes/modules/shipping/' . $shipping_code . ".php";
 
                 if (!file_exists($plugin)) {
-                    sys_msg($GLOBALS['_LANG']['not_find_plugin'], 1);
+                    return sys_msg($GLOBALS['_LANG']['not_find_plugin'], 1);
                 } else {
                     $set_modules = 1;
                     include_once($plugin);
@@ -295,7 +295,7 @@ class ShippingAreaController extends InitController
 
                 $lnk[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'shipping_area.php?act=list&shipping=' . $_POST['shipping']];
 
-                sys_msg($GLOBALS['_LANG']['edit_area_success'], 0, $lnk);
+                return sys_msg($GLOBALS['_LANG']['edit_area_success'], 0, $lnk);
             }
         }
 
@@ -317,7 +317,7 @@ class ShippingAreaController extends InitController
             }
             /* 返回 */
             $links[0] = ['href' => 'shipping_area.php?act=list&shipping=' . intval($_REQUEST['shipping']), 'text' => $GLOBALS['_LANG']['go_back']];
-            sys_msg($GLOBALS['_LANG']['remove_success'], 0, $links);
+            return sys_msg($GLOBALS['_LANG']['remove_success'], 0, $links);
         }
 
         /*------------------------------------------------------ */

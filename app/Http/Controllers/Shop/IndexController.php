@@ -23,25 +23,11 @@ class IndexController extends InitController
      */
     protected $goodsService;
 
-    public function init()
+    public function __construct(CategoryService $categoryService, GoodsService $goodsService, ArticleService $articleService)
     {
-        parent::init();
-        $this->articleService = new ArticleService();
-        $this->categoryService = new CategoryService();
-        $this->goodsService = new GoodsService();
-    }
-
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
+        $this->categoryService = $categoryService;
+        $this->goodsService = $goodsService;
+        $this->articleService = $articleService;
     }
 
     public function actionIndex()
@@ -145,7 +131,7 @@ class IndexController extends InitController
         $all = $GLOBALS['db']->getAll($sql);
 
         foreach ($all as $key => $row) {
-            $plugin = '\\app\\plugins\\shipping\\' . parse_name($row['shipping_code'], true);
+            $plugin = '\\App\\Plugins\\Shipping\\' . parse_name($row['shipping_code'], true);
 
             if (class_exists($plugin)) {
                 $shipping = new $plugin;

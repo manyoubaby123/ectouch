@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use app\repositories\UserRepository;
+use App\Repositories\UserRepository;
 
 /**
  * Class UserService
@@ -19,9 +19,9 @@ class UserService
      * UserService constructor.
      * @param UserRepository $userRepository
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        $this->userRepository = new UserRepository();
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -105,26 +105,26 @@ class UserService
     public function get_profile($user_id)
     {
 
-    /* 会员帐号信息 */
+        /* 会员帐号信息 */
         $info = [];
         $infos = [];
         $sql = "SELECT user_name, birthday, sex, question, answer, rank_points, pay_points,user_money, user_rank," .
-        " msn, qq, office_phone, home_phone, mobile_phone, passwd_question, passwd_answer " .
-        "FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$user_id'";
+            " msn, qq, office_phone, home_phone, mobile_phone, passwd_question, passwd_answer " .
+            "FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '$user_id'";
         $infos = $GLOBALS['db']->getRow($sql);
         $infos['user_name'] = addslashes($infos['user_name']);
 
         $row = $GLOBALS['user']->get_profile_by_name($infos['user_name']); //获取用户帐号信息
-    session('email', $row['email']);    //注册SESSION
+        session('email', $row['email']);    //注册SESSION
 
-    /* 会员等级 */
+        /* 会员等级 */
         if ($infos['user_rank'] > 0) {
             $sql = "SELECT rank_id, rank_name, discount FROM " . $GLOBALS['ecs']->table('user_rank') .
-            " WHERE rank_id = '$infos[user_rank]'";
+                " WHERE rank_id = '$infos[user_rank]'";
         } else {
             $sql = "SELECT rank_id, rank_name, discount, min_points" .
-            " FROM " . $GLOBALS['ecs']->table('user_rank') .
-            " WHERE min_points<= " . intval($infos['rank_points']) . " ORDER BY min_points DESC";
+                " FROM " . $GLOBALS['ecs']->table('user_rank') .
+                " WHERE min_points<= " . intval($infos['rank_points']) . " ORDER BY min_points DESC";
         }
 
         if ($row = $GLOBALS['db']->getRow($sql)) {
@@ -138,9 +138,9 @@ class UserService
         /* 会员红包 */
         $bonus = [];
         $sql = "SELECT type_name, type_money " .
-        "FROM " . $GLOBALS['ecs']->table('bonus_type') . " AS t1, " . $GLOBALS['ecs']->table('user_bonus') . " AS t2 " .
-        "WHERE t1.type_id = t2.bonus_type_id AND t2.user_id = '$user_id' AND t1.use_start_date <= '$cur_date' " .
-        "AND t1.use_end_date > '$cur_date' AND t2.order_id = 0";
+            "FROM " . $GLOBALS['ecs']->table('bonus_type') . " AS t1, " . $GLOBALS['ecs']->table('user_bonus') . " AS t2 " .
+            "WHERE t1.type_id = t2.bonus_type_id AND t2.user_id = '$user_id' AND t1.use_start_date <= '$cur_date' " .
+            "AND t1.use_end_date > '$cur_date' AND t2.order_id = 0";
         $bonus = $GLOBALS['db']->getAll($sql);
         if ($bonus) {
             for ($i = 0, $count = count($bonus); $i < $count; $i++) {
@@ -292,9 +292,9 @@ class UserService
             $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('users'), $update_data, 'UPDATE', 'user_id = ' . session('user_id'));
 
             update_user_info();      // 更新用户信息
-        recalculate_price();     // 重新计算购物车中的商品价格
+            recalculate_price();     // 重新计算购物车中的商品价格
 
-        return true;
+            return true;
         }
     }
 
@@ -444,8 +444,8 @@ class UserService
         if ($operation == 'encode') {
             $user_id = intval($key);
             $sql = "SELECT reg_time " .
-            " FROM " . $GLOBALS['ecs']->table('users') .
-            " WHERE user_id = '$user_id' LIMIT 1";
+                " FROM " . $GLOBALS['ecs']->table('users') .
+                " WHERE user_id = '$user_id' LIMIT 1";
             $reg_time = $GLOBALS['db']->getOne($sql);
 
             $hash = substr(md5($user_id . $GLOBALS['_CFG']['hash_code'] . $reg_time), 16, 4);
@@ -465,8 +465,8 @@ class UserService
             }
 
             $sql = "SELECT reg_time " .
-            " FROM " . $GLOBALS['ecs']->table('users') .
-            " WHERE user_id = '$user_id' LIMIT 1";
+                " FROM " . $GLOBALS['ecs']->table('users') .
+                " WHERE user_id = '$user_id' LIMIT 1";
             $reg_time = $GLOBALS['db']->getOne($sql);
 
             $pre_salt = substr(md5($user_id . $GLOBALS['_CFG']['hash_code'] . $reg_time), 16, 4);
@@ -487,7 +487,7 @@ class UserService
     public function user_info($user_id)
     {
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('users') .
-        " WHERE user_id = '$user_id'";
+            " WHERE user_id = '$user_id'";
         $user = $GLOBALS['db']->getRow($sql);
 
         unset($user['question']);
@@ -515,11 +515,11 @@ class UserService
     public function update_user($user_id, $user)
     {
         return $GLOBALS['db']->autoExecute(
-        $GLOBALS['ecs']->table('users'),
-        $user,
-        'UPDATE',
-        "user_id = '$user_id'"
-    );
+            $GLOBALS['ecs']->table('users'),
+            $user,
+            'UPDATE',
+            "user_id = '$user_id'"
+        );
     }
 
     /**
@@ -537,13 +537,13 @@ class UserService
         /* 查询会员信息 */
         $time = date('Y-m-d');
         $sql = 'SELECT u.user_money,u.email, u.pay_points, u.user_rank, u.rank_points, ' .
-        ' IFNULL(b.type_money, 0) AS user_bonus, u.last_login, u.last_ip' .
-        ' FROM ' . $GLOBALS['ecs']->table('users') . ' AS u ' .
-        ' LEFT JOIN ' . $GLOBALS['ecs']->table('user_bonus') . ' AS ub' .
-        ' ON ub.user_id = u.user_id AND ub.used_time = 0 ' .
-        ' LEFT JOIN ' . $GLOBALS['ecs']->table('bonus_type') . ' AS b' .
-        " ON b.type_id = ub.bonus_type_id AND b.use_start_date <= '$time' AND b.use_end_date >= '$time' " .
-        " WHERE u.user_id = '". session('user_id') ."'";
+            ' IFNULL(b.type_money, 0) AS user_bonus, u.last_login, u.last_ip' .
+            ' FROM ' . $GLOBALS['ecs']->table('users') . ' AS u ' .
+            ' LEFT JOIN ' . $GLOBALS['ecs']->table('user_bonus') . ' AS ub' .
+            ' ON ub.user_id = u.user_id AND ub.used_time = 0 ' .
+            ' LEFT JOIN ' . $GLOBALS['ecs']->table('bonus_type') . ' AS b' .
+            " ON b.type_id = ub.bonus_type_id AND b.use_start_date <= '$time' AND b.use_end_date >= '$time' " .
+            " WHERE u.user_id = '" . session('user_id') . "'";
         if ($row = $GLOBALS['db']->getRow($sql)) {
             /* 更新SESSION */
             session('last_time', $row['last_login']);
@@ -555,7 +555,7 @@ class UserService
             if ($row['user_rank'] > 0) {
                 $sql = "SELECT special_rank from " . $GLOBALS['ecs']->table('user_rank') . "where rank_id='$row[user_rank]'";
                 if ($GLOBALS['db']->getOne($sql) === '0' || $GLOBALS['db']->getOne($sql) === null) {
-                    $sql = "update " . $GLOBALS['ecs']->table('users') . "set user_rank='0' where user_id='". session('user_id') ."'";
+                    $sql = "update " . $GLOBALS['ecs']->table('users') . "set user_rank='0' where user_id='" . session('user_id') . "'";
                     $GLOBALS['db']->query($sql);
                     $row['user_rank'] = 0;
                 }
@@ -587,10 +587,10 @@ class UserService
 
         /* 更新登录时间，登录次数及登录ip */
         $sql = "UPDATE " . $GLOBALS['ecs']->table('users') . " SET" .
-        " visit_count = visit_count + 1, " .
-        " last_ip = '" . real_ip() . "'," .
-        " last_login = '" . gmtime() . "'" .
-        " WHERE user_id = '" . session('user_id') . "'";
+            " visit_count = visit_count + 1, " .
+            " last_ip = '" . real_ip() . "'," .
+            " last_login = '" . gmtime() . "'" .
+            " WHERE user_id = '" . session('user_id') . "'";
         $GLOBALS['db']->query($sql);
     }
 
@@ -609,8 +609,8 @@ class UserService
         }
         $time = date('Y-m-d');
         $sql = 'SELECT u.user_id, u.email, u.user_name, u.user_money, u.pay_points' .
-        ' FROM ' . $GLOBALS['ecs']->table('users') . ' AS u ' .
-        " WHERE u.user_id = '$id'";
+            ' FROM ' . $GLOBALS['ecs']->table('users') . ' AS u ' .
+            " WHERE u.user_id = '$id'";
         $user = $GLOBALS['db']->getRow($sql);
         $bonus = get_user_bonus($id);
 
@@ -711,13 +711,13 @@ class UserService
         $info['bonus'] = sprintf($GLOBALS['_LANG']['user_bonus_info'], $user_bonus['bonus_count'], price_format($user_bonus['bonus_value'], false));
 
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('order_info') .
-        " WHERE user_id = '" . $user_id . "' AND add_time > '" . local_strtotime('-1 months') . "'";
+            " WHERE user_id = '" . $user_id . "' AND add_time > '" . local_strtotime('-1 months') . "'";
         $info['order_count'] = $GLOBALS['db']->getOne($sql);
 
         load_helper('order');
         $sql = "SELECT order_id, order_sn " .
-        " FROM " . $GLOBALS['ecs']->table('order_info') .
-        " WHERE user_id = '" . $user_id . "' AND shipping_time > '" . $last_time . "'" . order_query_sql('shipped');
+            " FROM " . $GLOBALS['ecs']->table('order_info') .
+            " WHERE user_id = '" . $user_id . "' AND shipping_time > '" . $last_time . "'" . order_query_sql('shipped');
         $info['shipped_order'] = $GLOBALS['db']->getAll($sql);
 
         return $info;
@@ -733,7 +733,7 @@ class UserService
     public function get_rank_info()
     {
         if (!empty(session('user_rank'))) {
-            $sql = "SELECT rank_name, special_rank FROM " . $GLOBALS['ecs']->table('user_rank') . " WHERE rank_id = '". session('user_rank') ."'";
+            $sql = "SELECT rank_name, special_rank FROM " . $GLOBALS['ecs']->table('user_rank') . " WHERE rank_id = '" . session('user_rank') . "'";
             $row = $GLOBALS['db']->getRow($sql);
             if (empty($row)) {
                 return [];
@@ -742,7 +742,7 @@ class UserService
             if ($row['special_rank']) {
                 return ['rank_name' => $rank_name];
             } else {
-                $user_rank = $GLOBALS['db']->getOne("SELECT rank_points FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '". session('user_id') ."'");
+                $user_rank = $GLOBALS['db']->getOne("SELECT rank_points FROM " . $GLOBALS['ecs']->table('users') . " WHERE user_id = '" . session('user_id') . "'");
                 $sql = "SELECT rank_name,min_points FROM " . $GLOBALS['ecs']->table('user_rank') . " WHERE min_points > '$user_rank' ORDER BY min_points ASC LIMIT 1";
                 $rt = $GLOBALS['db']->getRow($sql);
                 $next_rank_name = $rt['rank_name'];
@@ -768,42 +768,42 @@ class UserService
         $now = gmtime();
         /* 夺宝奇兵 */
         $sql = "SELECT act_id, goods_name, end_time " .
-        "FROM " . $GLOBALS['ecs']->table('goods_activity') .
-        " WHERE act_type = '" . GAT_SNATCH . "'" .
-        " AND (is_finished = 1 OR (is_finished = 0 AND end_time <= '$now'))";
+            "FROM " . $GLOBALS['ecs']->table('goods_activity') .
+            " WHERE act_type = '" . GAT_SNATCH . "'" .
+            " AND (is_finished = 1 OR (is_finished = 0 AND end_time <= '$now'))";
         $res = $GLOBALS['db']->query($sql);
         foreach ($res as $row) {
             $act_id = $row['act_id'];
             $result = get_snatch_result($act_id);
             if (isset($result['order_count']) && $result['order_count'] == 0 && $result['user_id'] == $user_id) {
                 $prompt[] = [
-                'text' => sprintf($GLOBALS['_LANG']['your_snatch'], $row['goods_name'], $row['act_id']),
-                'add_time' => $row['end_time']
-            ];
+                    'text' => sprintf($GLOBALS['_LANG']['your_snatch'], $row['goods_name'], $row['act_id']),
+                    'add_time' => $row['end_time']
+                ];
             }
             if (isset($auction['last_bid']) && $auction['last_bid']['bid_user'] == $user_id && $auction['order_count'] == 0) {
                 $prompt[] = [
-                'text' => sprintf($GLOBALS['_LANG']['your_auction'], $row['goods_name'], $row['act_id']),
-                'add_time' => $row['end_time']
-            ];
+                    'text' => sprintf($GLOBALS['_LANG']['your_auction'], $row['goods_name'], $row['act_id']),
+                    'add_time' => $row['end_time']
+                ];
             }
         }
 
         /* 竞拍 */
 
         $sql = "SELECT act_id, goods_name, end_time " .
-        "FROM " . $GLOBALS['ecs']->table('goods_activity') .
-        " WHERE act_type = '" . GAT_AUCTION . "'" .
-        " AND (is_finished = 1 OR (is_finished = 0 AND end_time <= '$now'))";
+            "FROM " . $GLOBALS['ecs']->table('goods_activity') .
+            " WHERE act_type = '" . GAT_AUCTION . "'" .
+            " AND (is_finished = 1 OR (is_finished = 0 AND end_time <= '$now'))";
         $res = $GLOBALS['db']->query($sql);
         foreach ($res as $row) {
             $act_id = $row['act_id'];
             $auction = auction_info($act_id);
             if (isset($auction['last_bid']) && $auction['last_bid']['bid_user'] == $user_id && $auction['order_count'] == 0) {
                 $prompt[] = [
-                'text' => sprintf($GLOBALS['_LANG']['your_auction'], $row['goods_name'], $row['act_id']),
-                'add_time' => $row['end_time']
-            ];
+                    'text' => sprintf($GLOBALS['_LANG']['your_auction'], $row['goods_name'], $row['act_id']),
+                    'add_time' => $row['end_time']
+                ];
             }
         }
 
@@ -830,7 +830,7 @@ class UserService
     public function get_user_rank_list()
     {
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('user_rank') .
-        " ORDER BY min_points";
+            " ORDER BY min_points";
 
         return $GLOBALS['db']->getAll($sql);
     }
@@ -867,7 +867,7 @@ class UserService
     {
         $user_list = [];
         $sql = 'SELECT user_id, user_name FROM ' . $GLOBALS['ecs']->table('users') . $where .
-        ' ORDER BY user_id DESC';
+            ' ORDER BY user_id DESC';
         $res = $GLOBALS['db']->query($sql);
 
         foreach ($res as $row) {
@@ -891,7 +891,7 @@ class UserService
             return $cls;
         }
 
-        $integrate = '\\app\\plugins\\integrates\\' . ucfirst($GLOBALS['_CFG']['integrate_code']);
+        $integrate = '\\App\\Plugins\\Integrates\\' . ucfirst($GLOBALS['_CFG']['integrate_code']);
         $cfg = unserialize($GLOBALS['_CFG']['integrate_config']);
         $cls = new $integrate($cfg);
 

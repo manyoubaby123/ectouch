@@ -118,7 +118,7 @@ class AdsController extends InitController
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('ad') . " WHERE ad_name = '$ad_name'";
             if ($GLOBALS['db']->getOne($sql) > 0) {
                 $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                sys_msg($GLOBALS['_LANG']['ad_name_exist'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['ad_name_exist'], 0, $link);
             }
 
             /* 添加图片类型的广告 */
@@ -131,7 +131,7 @@ class AdsController extends InitController
                 }
                 if (((isset($_FILES['ad_img']['error']) && $_FILES['ad_img']['error'] > 0) || (!isset($_FILES['ad_img']['error']) && isset($_FILES['ad_img']['tmp_name']) && $_FILES['ad_img']['tmp_name'] == 'none')) && empty($_POST['img_url'])) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                    sys_msg($GLOBALS['_LANG']['js_languages']['ad_photo_empty'], 0, $link);
+                    return sys_msg($GLOBALS['_LANG']['js_languages']['ad_photo_empty'], 0, $link);
                 }
             } /* 如果添加的广告是Flash广告 */
             elseif ($_POST['media_type'] == '1') {
@@ -139,7 +139,7 @@ class AdsController extends InitController
                     /* 检查文件类型 */
                     if ($_FILES['upfile_flash']['type'] != "application/x-shockwave-flash") {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                        sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
+                        return sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
                     }
 
                     /* 生成文件名 */
@@ -154,21 +154,21 @@ class AdsController extends InitController
 
                     if (!move_upload_file($source_file, $target . $file_name)) {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                        sys_msg($GLOBALS['_LANG']['upfile_error'], 0, $link);
+                        return sys_msg($GLOBALS['_LANG']['upfile_error'], 0, $link);
                     } else {
                         $ad_code = $file_name;
                     }
                 } elseif (!empty($_POST['flash_url'])) {
                     if (substr(strtolower($_POST['flash_url']), strlen($_POST['flash_url']) - 4) != '.swf') {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                        sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
+                        return sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
                     }
                     $ad_code = $_POST['flash_url'];
                 }
 
                 if (((isset($_FILES['upfile_flash']['error']) && $_FILES['upfile_flash']['error'] > 0) || (!isset($_FILES['upfile_flash']['error']) && isset($_FILES['upfile_flash']['tmp_name']) && $_FILES['upfile_flash']['tmp_name'] == 'none')) && empty($_POST['flash_url'])) {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                    sys_msg($GLOBALS['_LANG']['js_languages']['ad_flash_empty'], 0, $link);
+                    return sys_msg($GLOBALS['_LANG']['js_languages']['ad_flash_empty'], 0, $link);
                 }
             } /* 如果广告类型为代码广告 */
             elseif ($_POST['media_type'] == '2') {
@@ -176,7 +176,7 @@ class AdsController extends InitController
                     $ad_code = $_POST['ad_code'];
                 } else {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                    sys_msg($GLOBALS['_LANG']['js_languages']['ad_code_empty'], 0, $link);
+                    return sys_msg($GLOBALS['_LANG']['js_languages']['ad_code_empty'], 0, $link);
                 }
             } /* 广告类型为文本广告 */
             elseif ($_POST['media_type'] == '3') {
@@ -184,7 +184,7 @@ class AdsController extends InitController
                     $ad_code = $_POST['ad_text'];
                 } else {
                     $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                    sys_msg($GLOBALS['_LANG']['js_languages']['ad_text_empty'], 0, $link);
+                    return sys_msg($GLOBALS['_LANG']['js_languages']['ad_text_empty'], 0, $link);
                 }
             }
 
@@ -219,7 +219,7 @@ class AdsController extends InitController
 
             $link[2]['text'] = $GLOBALS['_LANG']['continue_add_ad'];
             $link[2]['href'] = 'ads.php?act=add';
-            sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['ad_name'] . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
+            return sys_msg($GLOBALS['_LANG']['add'] . "&nbsp;" . $_POST['ad_name'] . "&nbsp;" . $GLOBALS['_LANG']['attradd_succed'], 0, $link);
         }
 
         /*------------------------------------------------------ */
@@ -313,7 +313,7 @@ class AdsController extends InitController
                     /* 检查文件类型 */
                     if ($_FILES['upfile_flash']['type'] != "application/x-shockwave-flash") {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                        sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
+                        return sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
                     }
                     /* 生成文件名 */
                     $urlstr = date('Ymd');
@@ -327,14 +327,14 @@ class AdsController extends InitController
 
                     if (!move_upload_file($source_file, $target . $file_name)) {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                        sys_msg($GLOBALS['_LANG']['upfile_error'], 0, $link);
+                        return sys_msg($GLOBALS['_LANG']['upfile_error'], 0, $link);
                     } else {
                         $ad_code = "ad_code = '$file_name', ";
                     }
                 } elseif (!empty($_POST['flash_url'])) {
                     if (substr(strtolower($_POST['flash_url']), strlen($_POST['flash_url']) - 4) != '.swf') {
                         $link[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'javascript:history.back(-1)'];
-                        sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
+                        return sys_msg($GLOBALS['_LANG']['upfile_flash_type'], 0, $link);
                     }
                     $ad_code = "ad_code = '" . $_POST['flash_url'] . "', ";
                 } else {
@@ -373,7 +373,7 @@ class AdsController extends InitController
 
             /* 提示信息 */
             $href[] = ['text' => $GLOBALS['_LANG']['back_ads_list'], 'href' => 'ads.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['ad_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $href);
+            return sys_msg($GLOBALS['_LANG']['edit'] . ' ' . $_POST['ad_name'] . ' ' . $GLOBALS['_LANG']['attradd_succed'], 0, $href);
         }
 
         /*------------------------------------------------------ */

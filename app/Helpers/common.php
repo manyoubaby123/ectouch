@@ -69,37 +69,6 @@ function is_time($time)
 }
 
 /**
- * 获得查询时间和次数，并赋值给smarty
- *
- * @access  public
- * @return  void
- */
-function assign_query_info()
-{
-    if ($GLOBALS['db']->queryTime == '') {
-        $query_time = 0;
-    } else {
-        if (PHP_VERSION >= '5.0.0') {
-            $query_time = number_format(microtime(true) - $GLOBALS['db']->queryTime, 6);
-        } else {
-            list($now_usec, $now_sec) = explode(' ', microtime());
-            list($start_usec, $start_sec) = explode(' ', $GLOBALS['db']->queryTime);
-            $query_time = number_format(($now_sec - $start_sec) + ($now_usec - $start_usec), 6);
-        }
-    }
-    $GLOBALS['smarty']->assign('query_info', sprintf($GLOBALS['_LANG']['query_info'], $GLOBALS['db']->queryCount, $query_time));
-
-    /* 内存占用情况 */
-    if ($GLOBALS['_LANG']['memory_info'] && function_exists('memory_get_usage')) {
-        $GLOBALS['smarty']->assign('memory_info', sprintf($GLOBALS['_LANG']['memory_info'], memory_get_usage() / 1048576));
-    }
-
-    /* 是否启用了 gzip */
-    $gzip_enabled = gzip_enabled() ? $GLOBALS['_LANG']['gzip_enabled'] : $GLOBALS['_LANG']['gzip_disabled'];
-    $GLOBALS['smarty']->assign('gzip_enabled', $gzip_enabled);
-}
-
-/**
  * 创建地区的返回信息
  *
  * @access  public

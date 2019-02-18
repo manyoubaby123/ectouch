@@ -87,7 +87,8 @@ class Template
             $out = implode('', $k);
         }
 
-        $out = preg_replace('/<head>/i', "<head>\n\r" . csrf_meta(), $out);
+        $csrf_token = '<meta name="csrf-token" content="' . csrf_token() . '">';
+        $out = preg_replace('/<head>/i', "<head>\n\r" . $csrf_token, $out);
 
         error_reporting($this->_errorlevel);
         $this->_seterror--;

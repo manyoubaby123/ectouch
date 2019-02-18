@@ -89,7 +89,7 @@ class ShippingController extends InitController
             /* 提示信息 */
             $lnk[] = ['text' => $GLOBALS['_LANG']['add_shipping_area'], 'href' => 'shipping_area.php?act=add&shipping=' . $id];
             $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'shipping.php?act=list'];
-            sys_msg(sprintf($GLOBALS['_LANG']['install_succeess'], $GLOBALS['_LANG'][$modules[0]['code']]), 0, $lnk);
+            return sys_msg(sprintf($GLOBALS['_LANG']['install_succeess'], $GLOBALS['_LANG'][$modules[0]['code']]), 0, $lnk);
         }
 
         /*------------------------------------------------------ */
@@ -122,7 +122,7 @@ class ShippingController extends InitController
                 admin_log(addslashes($shipping_name), 'uninstall', 'shipping');
 
                 $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'shipping.php?act=list'];
-                sys_msg(sprintf($GLOBALS['_LANG']['uninstall_success'], $shipping_name), 0, $lnk);
+                return sys_msg(sprintf($GLOBALS['_LANG']['uninstall_success'], $shipping_name), 0, $lnk);
             }
         }
 
@@ -265,7 +265,7 @@ class ShippingController extends InitController
                 $GLOBALS['smarty']->assign('shipping', $row);
             } else {
                 $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'shipping.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['no_shipping_install'], 0, $lnk);
+                return sys_msg($GLOBALS['_LANG']['no_shipping_install'], 0, $lnk);
             }
 
             $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['03_shipping_list'] . ' - ' . $row['shipping_name'] . ' - ' . $GLOBALS['_LANG']['shipping_print_template']);
@@ -302,7 +302,7 @@ class ShippingController extends InitController
             admin_log(addslashes($_POST['shipping_name']), 'edit', 'shipping');
 
             $lnk[] = ['text' => $GLOBALS['_LANG']['go_back'], 'href' => 'shipping.php?act=list'];
-            sys_msg($GLOBALS['_LANG']['edit_template_success'], 0, $lnk);
+            return sys_msg($GLOBALS['_LANG']['edit_template_success'], 0, $lnk);
         }
 
         /*------------------------------------------------------ */

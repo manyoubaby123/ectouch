@@ -123,7 +123,7 @@ class AttributeController extends InitController
             /* 检查名称是否重复 */
             $exclude = empty($_POST['attr_id']) ? 0 : intval($_POST['attr_id']);
             if (!$exc->is_only('attr_name', $_POST['attr_name'], $exclude, " cat_id = '$_POST[cat_id]'")) {
-                sys_msg($GLOBALS['_LANG']['name_exist'], 1);
+                return sys_msg($GLOBALS['_LANG']['name_exist'], 1);
             }
 
             $cat_id = $_REQUEST['cat_id'];
@@ -148,14 +148,14 @@ class AttributeController extends InitController
                     ['text' => $GLOBALS['_LANG']['add_next'], 'href' => '?act=add&goods_type=' . $_POST['cat_id']],
                     ['text' => $GLOBALS['_LANG']['back_list'], 'href' => '?act=list'],
                 ];
-                sys_msg(sprintf($GLOBALS['_LANG']['add_ok'], $attr['attr_name']), 0, $links);
+                return sys_msg(sprintf($GLOBALS['_LANG']['add_ok'], $attr['attr_name']), 0, $links);
             } else {
                 $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('attribute'), $attr, 'UPDATE', "attr_id = '$_POST[attr_id]'");
                 admin_log($_POST['attr_name'], 'edit', 'attribute');
                 $links = [
                     ['text' => $GLOBALS['_LANG']['back_list'], 'href' => '?act=list&amp;goods_type=' . $_POST['cat_id'] . ''],
                 ];
-                sys_msg(sprintf($GLOBALS['_LANG']['edit_ok'], $attr['attr_name']), 0, $links);
+                return sys_msg(sprintf($GLOBALS['_LANG']['edit_ok'], $attr['attr_name']), 0, $links);
             }
         }
 
@@ -182,10 +182,10 @@ class AttributeController extends InitController
                 clear_cache_files();
 
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'attribute.php?act=list'];
-                sys_msg(sprintf($GLOBALS['_LANG']['drop_ok'], $count), 0, $link);
+                return sys_msg(sprintf($GLOBALS['_LANG']['drop_ok'], $count), 0, $link);
             } else {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'attribute.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['no_select_arrt'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['no_select_arrt'], 0, $link);
             }
         }
 

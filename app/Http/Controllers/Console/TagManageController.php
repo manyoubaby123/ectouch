@@ -81,11 +81,11 @@ class TagManageController extends InitController
             $id = intval($_POST['id']);
             $goods_id = intval($_POST['goods_id']);
             if ($goods_id <= 0) {
-                sys_msg($GLOBALS['_LANG']['pls_select_goods']);
+                return sys_msg($GLOBALS['_LANG']['pls_select_goods']);
             }
 
             if (!$this->tag_is_only($tag_words, $id, $goods_id)) {
-                sys_msg(sprintf($GLOBALS['_LANG']['tagword_exist'], $tag_words));
+                return sys_msg(sprintf($GLOBALS['_LANG']['tagword_exist'], $tag_words));
             }
 
             if ($is_insert) {
@@ -101,7 +101,7 @@ class TagManageController extends InitController
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
                 $link[0]['href'] = 'tag_manage.php?act=list';
 
-                sys_msg($GLOBALS['_LANG']['tag_add_success'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['tag_add_success'], 0, $link);
             } else {
                 $this->edit_tag($tag_words, $id, $goods_id);
 
@@ -111,7 +111,7 @@ class TagManageController extends InitController
                 $link[0]['text'] = $GLOBALS['_LANG']['back_list'];
                 $link[0]['href'] = 'tag_manage.php?act=list';
 
-                sys_msg($GLOBALS['_LANG']['tag_edit_success'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['tag_edit_success'], 0, $link);
             }
         }
 
@@ -176,10 +176,10 @@ class TagManageController extends InitController
                 clear_cache_files();
 
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'tag_manage.php?act=list'];
-                sys_msg(sprintf($GLOBALS['_LANG']['drop_success'], $count), 0, $link);
+                return sys_msg(sprintf($GLOBALS['_LANG']['drop_success'], $count), 0, $link);
             } else {
                 $link[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'tag_manage.php?act=list'];
-                sys_msg($GLOBALS['_LANG']['no_select_tag'], 0, $link);
+                return sys_msg($GLOBALS['_LANG']['no_select_tag'], 0, $link);
             }
         }
 

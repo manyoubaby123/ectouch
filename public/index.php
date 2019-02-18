@@ -7,7 +7,7 @@
  * @homepage https://www.ectouch.cn
  */
 
-define('LARAVEL_START', microtime(true));
+// define('APP_DEBUG', true);
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +37,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-require __DIR__ . '/../bootstrap/cache.php';
-
 /*
 |--------------------------------------------------------------------------
 | Run The Application
@@ -51,12 +49,4 @@ require __DIR__ . '/../bootstrap/cache.php';
 |
 */
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
-
-$response->send();
-
-$kernel->terminate($request, $response);
+$app->name('shop')->autoMulti([ADMIN_PATH => 'console'])->run()->send();

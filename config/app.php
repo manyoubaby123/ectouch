@@ -226,4 +226,45 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Protection In Debug
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+            'MIX_PUSHER_APP_KEY',
+            'OSS_ACCESS_ID',
+            'OSS_ACCESS_KEY',
+            'UC_KEY',
+        ],
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+            'MIX_PUSHER_APP_KEY',
+            'OSS_ACCESS_ID',
+            'OSS_ACCESS_KEY',
+            'UC_KEY',
+        ],
+        '_POST' => [
+            'password',
+        ],
+    ],
+
 ];

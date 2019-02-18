@@ -39,9 +39,6 @@
         "psr-4": {
             "app\\": "app/"
         },
-        "psr-0":{
-            "": "extend/"
-        },
         "files": [
             "app/support/helpers.php"
         ]

@@ -27,7 +27,7 @@
         "overtrue/wechat": "^4.1",
         "phpoffice/phpspreadsheet": "^1.6",
         "ramsey/uuid": "^3.8",
-        "topthink/framework": "5.2.*-dev",
+        "topthink/framework": "5.1.*",
         "workerman/phpsocket.io": "^1.1"
     },
     "config": {
@@ -35,13 +35,13 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "extra": {
+        "think-path": "bootstrap"
+    },
     "autoload": {
         "psr-4": {
             "app\\": "app/"
-        },
-        "files": [
-            "app/support/helpers.php"
-        ]
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

@@ -2,7 +2,7 @@
 
 namespace app\libraries;
 
-use think\facade\Db;
+use think\Db;
 
 class Mysql
 {

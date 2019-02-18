@@ -4,6 +4,8 @@
  * 设置自定义后台入口路由
  */
 
+defined('ADMIN_PATH') or define('ADMIN_PATH', 'admin');
+
 Route::group(ADMIN_PATH, function () {
     Route::any('/', function () {
         return redirect(ADMIN_PATH . '/index.php');

@@ -2,37 +2,26 @@
 
 namespace app\rules;
 
-class PhoneNumber
+use think\Validate;
+
+/**
+ * preg_match('/^1(3[0-9]|4[0-9]|5[0-35-9]|6[6]|7[01345678]|8[0-9]|9[89])\d{8}$/', $value)
+ */
+class PhoneNumber extends Validate
 {
     /**
-     * Create a new rule instance.
+     * 定义验证规则
+     * 格式：'字段名'	=>	['规则1','规则2'...]
      *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
+     * @var array
+     */	
+	protected $rule = [];
+    
     /**
-     * Determine if the validation rule passes.
+     * 定义错误信息
+     * 格式：'字段名.规则名'	=>	'错误信息'
      *
-     * @param  string $attribute
-     * @param  mixed $value
-     * @return bool
-     */
-    public function passes($attribute, $value)
-    {
-        return preg_match('/^1(3[0-9]|4[0-9]|5[0-35-9]|6[6]|7[01345678]|8[0-9]|9[89])\d{8}$/', $value) ? true : false;
-    }
-
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
-    public function message()
-    {
-        return trans('validation.custom.mobile');
-    }
+     * @var array
+     */	
+    protected $message = [];
 }

@@ -881,7 +881,7 @@ class Template
                 break;
 
             case 'session':
-                $compiled_ref = '$_SESSION';
+                $compiled_ref = 'session()->all()';
                 break;
 
             default:

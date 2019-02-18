@@ -83,7 +83,7 @@ class InitController extends Controller
                     $GLOBALS['user'] = &init_users();
                 }
             }
-            $_SESSION = [];
+
             session(['user_id' => 0]);
             session(['user_name' => '']);
             session(['email' => '']);

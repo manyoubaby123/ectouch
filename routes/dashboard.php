@@ -8,7 +8,7 @@ defined('ADMIN_PATH') or define('ADMIN_PATH', 'admin');
 
 Route::group(ADMIN_PATH, function () {
     Route::any('/', function () {
-        return redirect(ADMIN_PATH . '/index.php');
+        return redirect('/' . ADMIN_PATH . '/index.php');
     });
     Route::any('index.php', 'console/Index/index');
     Route::any('account_log.php', 'console/AccountLog/index');

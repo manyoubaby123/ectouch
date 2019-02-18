@@ -107,7 +107,7 @@ function load_helper($files = [], $module = '', $sub = 'common')
         $base_path = app_path('helpers/');
     } else {
         $module = ($module == 'admin') ? 'console' : $module; // 兼容模块名称
-        $base_path = app_path('Modules/' . parse_name($module, true) . '/' . parse_name($sub, true) . '/');
+        $base_path = app_path(parse_name($module, true) . '/' . parse_name($sub, true) . '/');
     }
 
     foreach ($files as $vo) {

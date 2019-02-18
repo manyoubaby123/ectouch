@@ -116,7 +116,7 @@ class Privilege extends Init
                 // 清除购物车中过期的数据
                 $this->clear_cart();
 
-                return redirect()->route('dashboard');
+                return redirect('/' . ADMIN_PATH . '/index.php');
             } else {
                 return sys_msg($GLOBALS['_LANG']['login_faild'], 1);
             }

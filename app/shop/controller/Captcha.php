@@ -2,13 +2,13 @@
 
 namespace app\shop\controller;
 
-use app\libraries\Captcha;
+use app\libraries\Captcha as BaseCaptcha;
 
 class Captcha extends Init
 {
     public function index()
     {
-        $img = new Captcha(public_path('data/captcha'), $GLOBALS['_CFG']['captcha_width'], $GLOBALS['_CFG']['captcha_height']);
+        $img = new BaseCaptcha(public_path('data/captcha'), $GLOBALS['_CFG']['captcha_width'], $GLOBALS['_CFG']['captcha_height']);
 
         if (isset($_REQUEST['is_login'])) {
             $img->session_word = 'captcha_login';

@@ -38,7 +38,7 @@ class Init extends Controller
         $_GET = $this->request->get();
         $_POST = $this->request->post();
         $_REQUEST = $_GET + $_POST;
-        $_REQUEST['act'] = request()->get('act');
+        $_REQUEST['act'] = $this->request->request('act');
 
         $GLOBALS['ecs'] = new Shop();
         define('DATA_DIR', $GLOBALS['ecs']->data_dir());

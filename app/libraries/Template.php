@@ -356,7 +356,8 @@ class Template
                     break;
             }
         } else {
-            $tag_sel = array_shift(explode(' ', $tag));
+            $tags = explode(' ', $tag);
+            $tag_sel = array_shift($tags);
             switch ($tag_sel) {
                 case 'if':
 

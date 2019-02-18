@@ -132,7 +132,7 @@ class InitController extends Controller
             /* 会员信息 */
             $GLOBALS['user'] = $this->userService->init_users();
 
-            if (!session('?user_id')) {
+            if (!session()->has('user_id')) {
                 /* 获取投放站点的名称 */
                 $site_name = isset($_GET['from']) ? htmlspecialchars($_GET['from']) : addslashes($GLOBALS['_LANG']['self_site']);
                 $from_ad = !empty($_GET['ad_id']) ? intval($_GET['ad_id']) : 0;
@@ -160,7 +160,7 @@ class InitController extends Controller
                     session(['email' => '']);
                     session(['user_rank' => 0]);
                     session(['discount' => 1.00]);
-                    if (!session('?login_fail')) {
+                    if (!session()->has('login_fail')) {
                         session(['login_fail' => 0]);
                     }
                 }

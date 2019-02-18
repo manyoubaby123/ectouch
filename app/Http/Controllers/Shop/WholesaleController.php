@@ -167,7 +167,7 @@ class WholesaleController extends InitController
             $wholesale = wholesale_info($act_id);
 
             /* 检查session中该商品，该属性是否存在 */
-            if (session('?wholesale_goods')) {
+            if (session()->has('wholesale_goods')) {
                 foreach (session('wholesale_goods') as $goods) {
                     if ($goods['goods_id'] == $wholesale['goods_id']) {
                         if (empty($goods_attr)) {

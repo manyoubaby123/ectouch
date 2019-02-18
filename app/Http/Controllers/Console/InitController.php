@@ -62,7 +62,7 @@ class InitController extends Controller
         }
 
         /* 验证管理员身份 */
-        if ((!session('?admin_id') || intval(session('admin_id')) <= 0) &&
+        if ((!session()->has('admin_id') || intval(session('admin_id')) <= 0) &&
             $_REQUEST['act'] != 'login' && $_REQUEST['act'] != 'signin' &&
             $_REQUEST['act'] != 'forget_pwd' && $_REQUEST['act'] != 'reset_pwd' && $_REQUEST['act'] != 'check_order') {
             /* session 不存在，检查cookie */

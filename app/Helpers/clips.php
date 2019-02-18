@@ -527,7 +527,7 @@ function get_user_default($user_id)
     $info['formated_credit_line'] = price_format($info['credit_line'], false);
 
     //如果$_SESSION中时间无效说明用户是第一次登录。取当前登录时间。
-    $last_time = !session('?last_time') ? $row['last_login'] : session('last_time');
+    $last_time = !session()->has('last_time') ? $row['last_login'] : session('last_time');
 
     if ($last_time == 0) {
         $last_time = gmtime();

@@ -1134,7 +1134,7 @@ class OrderService
         }
 
         /* 扩展信息 */
-        if (session('?flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
+        if (session()->has('flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
             $order['extension_code'] = session('extension_code');
             $order['extension_id'] = session('extension_id');
         }

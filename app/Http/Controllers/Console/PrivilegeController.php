@@ -116,8 +116,6 @@ class PrivilegeController extends InitController
                 // 清除购物车中过期的数据
                 $this->clear_cart();
 
-                dd(session()->all());
-
                 return redirect()->route('dashboard');
             } else {
                 return sys_msg($GLOBALS['_LANG']['login_faild'], 1);

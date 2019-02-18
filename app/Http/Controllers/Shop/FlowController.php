@@ -249,7 +249,7 @@ class FlowController extends InitController
                         $consignee_list[] = ['country' => $GLOBALS['_CFG']['shop_country'], 'email' => session('email', '')];
                     }
                 } else {
-                    if (session('?flow_consignee')) {
+                    if (session()->has('flow_consignee')) {
                         $consignee_list = [session('flow_consignee')];
                     } else {
                         $consignee_list[] = ['country' => $GLOBALS['_CFG']['shop_country']];
@@ -1142,7 +1142,7 @@ class FlowController extends InitController
             ];
 
             /* 扩展信息 */
-            if (session('?flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
+            if (session()->has('flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
                 $order['extension_code'] = session('extension_code');
                 $order['extension_id'] = session('extension_id');
             } else {

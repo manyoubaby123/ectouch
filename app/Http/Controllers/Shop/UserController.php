@@ -1318,7 +1318,7 @@ class UserController extends InitController
             $result = ['error' => 0, 'message' => ''];
             $goods_id = $_GET['id'];
 
-            if (!session('?user_id') || session('user_id') == 0) {
+            if (!session()->has('user_id') || session('user_id') == 0) {
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['login_please'];
                 return json_encode($result);
@@ -1787,7 +1787,7 @@ class UserController extends InitController
             $job = $_GET['job'];
 
             if ($job == 'add' || $job == 'del') {
-                if (session('?last_email_query')) {
+                if (session()->has('last_email_query')) {
                     if (time() - session('last_email_query') <= 30) {
                         return $GLOBALS['_LANG']['order_query_toofast'];
                     }
@@ -1926,7 +1926,7 @@ class UserController extends InitController
 
             $result = ['error' => 0, 'message' => '', 'content' => ''];
 
-            if (session('?last_order_query')) {
+            if (session()->has('last_order_query')) {
                 if (time() - session('last_order_query') <= 10) {
                     $result['error'] = 1;
                     $result['message'] = $GLOBALS['_LANG']['order_query_toofast'];

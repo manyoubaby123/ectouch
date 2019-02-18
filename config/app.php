@@ -4,13 +4,13 @@ use think\facade\Env;
 
 return [
     // 应用名称
-    'app_name' => '',
+    'app_name' => 'ECTouch',
     // 应用地址
     'app_host' => '',
     // 应用调试模式
-    'app_debug' => false,
+    'app_debug' => APP_DEBUG,
     // 应用Trace
-    'app_trace' => false,
+    'app_trace' => APP_DEBUG,
     // 默认输出类型
     'default_return_type' => 'html',
     // 默认AJAX 数据返回格式,可选json xml ...

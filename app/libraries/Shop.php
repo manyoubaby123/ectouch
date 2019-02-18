@@ -90,7 +90,7 @@ class Shop
      */
     public function url()
     {
-        $root = app('request')->getBaseUrl();
+        $root = request()->rootUrl();
 
         if (substr($root, -1) != '/') {
             $root .= '/';

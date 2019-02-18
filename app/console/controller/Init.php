@@ -9,21 +9,19 @@ use app\libraries\Shop;
 use app\libraries\Template;
 use app\services\ConfigService;
 
-class InitController extends Controller
+class Init extends Controller
 {
     protected function initialize()
     {
         define('ECS_ADMIN', true);
-
-        $PHP_SELF = request()->getPathInfo();
-        define('PHP_SELF', empty($PHP_SELF) ? 'index.php' : $PHP_SELF);
+        define('PHP_SELF', parse_name($this->request->controller()));
 
         load_helper(['time', 'base', 'common']);
         load_helper('main', 'admin');
 
         /* 对用户传入的变量进行转义操作。*/
-        $_GET = request()->query();
-        $_POST = request()->post();
+        $_GET = $this->request->get();
+        $_POST = $this->request->post();
         $_REQUEST = $_GET + $_POST;
         $_REQUEST['act'] = request()->get('act');
 
@@ -46,7 +44,7 @@ class InitController extends Controller
         /* 创建 Smarty 对象。*/
         $GLOBALS['smarty'] = new Template();
 
-        $GLOBALS['smarty']->template_dir = resource_path('views/admin');
+        $GLOBALS['smarty']->template_dir = dirname(__DIR__) . '/view';
         $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled/admin');
         if (config('app_debug')) {
             $GLOBALS['smarty']->force_compile = true;

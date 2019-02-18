@@ -2,6 +2,8 @@
 
 namespace app\libraries;
 
+use think\facade\Request;
+
 class Template
 {
     public $template_dir = '';
@@ -87,7 +89,7 @@ class Template
             $out = implode('', $k);
         }
 
-        $csrf_token = '<meta name="csrf-token" content="' . csrf_token() . '">';
+        $csrf_token = '<meta name="csrf-token" content="' . Request::token() . '">';
         $out = preg_replace('/<head>/i', "<head>\n\r" . $csrf_token, $out);
 
         error_reporting($this->_errorlevel);
@@ -156,7 +158,7 @@ class Template
             }
         }
 
-        $out = preg_replace('/<\/form>/i', csrf_field() . "</form>", $out);
+        $out = preg_replace('/<\/form>/i', token() . "</form>", $out);
 
         $this->_seterror--;
         if (!$this->_seterror) {
@@ -881,7 +883,7 @@ class Template
                 break;
 
             case 'session':
-                $compiled_ref = 'session()->all()';
+                $compiled_ref = '$_SESSION';
                 break;
 
             default:

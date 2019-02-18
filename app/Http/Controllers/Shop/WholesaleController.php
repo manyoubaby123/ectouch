@@ -245,7 +245,7 @@ class WholesaleController extends InitController
                     'goods_url' => build_uri('goods', ['gid' => $wholesale['goods_id']], $wholesale['goods_name']),
                 ]);
 
-                session('wholesale_goods', $wholesale_goods);
+                session(['wholesale_goods' => $wholesale_goods]);
             }
 
             unset($goods_attr, $attr_id, $goods_list, $wholesale, $goods_attr_name);
@@ -361,7 +361,7 @@ class WholesaleController extends InitController
             }
 
             /* 清空购物车 */
-            session('wholesale_goods', null);
+            session(['wholesale_goods' => null]);
 
             /* 提示 */
             return show_message(sprintf($GLOBALS['_LANG']['ws_order_submitted'], $order['order_sn']), $GLOBALS['_LANG']['ws_return_home'], 'index.php');

@@ -89,7 +89,7 @@ class PrivilegeController extends InitController
 
                 // 登录成功
                 set_admin_session($row['user_id'], $row['user_name'], $row['action_list'], $row['last_login']);
-                session('suppliers_id', $row['suppliers_id']);
+                session(['suppliers_id' => $row['suppliers_id']]);
                 if (empty($row['ec_salt'])) {
                     $ec_salt = rand(1, 9999);
                     $new_possword = md5(md5($_POST['password']) . $ec_salt);
@@ -99,7 +99,7 @@ class PrivilegeController extends InitController
                 }
 
                 if ($row['action_list'] == 'all' && empty($row['last_login'])) {
-                    session('shop_guide', true);
+                    session(['shop_guide' => true]);
                 }
 
                 // 更新最后登录时间和IP

@@ -24,10 +24,10 @@ function update_user_info()
         " WHERE u.user_id = '" . session('user_id') . "'";
     if ($row = $GLOBALS['db']->getRow($sql)) {
         /* 更新SESSION */
-        session('last_time', $row['last_login']);
-        session('last_ip', $row['last_ip']);
-        session('login_fail', 0);
-        session('email', $row['email']);
+        session(['last_time' => $row['last_login']]);
+        session(['last_ip' => $row['last_ip']]);
+        session(['login_fail' => 0]);
+        session(['email' => $row['email']]);
 
         /*判断是否是特殊等级，可能后台把特殊会员组更改普通会员组*/
         if ($row['user_rank'] > 0) {
@@ -44,21 +44,21 @@ function update_user_info()
             // 非特殊等级，根据等级积分计算用户等级（注意：不包括特殊等级）
             $sql = 'SELECT rank_id, discount FROM ' . $GLOBALS['ecs']->table('user_rank') . " WHERE special_rank = '0' AND min_points <= " . intval($row['rank_points']) . ' AND max_points > ' . intval($row['rank_points']);
             if ($row = $GLOBALS['db']->getRow($sql)) {
-                session('user_rank', $row['rank_id']);
-                session('discount', $row['discount'] / 100.00);
+                session(['user_rank' => $row['rank_id']]);
+                session(['discount' => $row['discount'] / 100.00]);
             } else {
-                session('user_rank', 0);
-                session('discount', 1);
+                session(['user_rank' => 0]);
+                session(['discount' => 1]);
             }
         } else {
             // 特殊等级
             $sql = 'SELECT rank_id, discount FROM ' . $GLOBALS['ecs']->table('user_rank') . " WHERE rank_id = '$row[user_rank]'";
             if ($row = $GLOBALS['db']->getRow($sql)) {
-                session('user_rank', $row['rank_id']);
-                session('discount', $row['discount'] / 100.00);
+                session(['user_rank' => $row['rank_id']]);
+                session(['discount' => $row['discount'] / 100.00]);
             } else {
-                session('user_rank', 0);
-                session('discount', 1);
+                session(['user_rank' => 0]);
+                session(['discount' => 1]);
             }
         }
     }

@@ -84,11 +84,11 @@ class InitController extends Controller
                 }
             }
             $_SESSION = [];
-            session('user_id', 0);
-            session('user_name', '');
-            session('email', '');
-            session('user_rank', 0);
-            session('discount', 1.00);
+            session(['user_id' => 0]);
+            session(['user_name' => '']);
+            session(['email' => '']);
+            session(['user_rank' => 0]);
+            session(['discount' => 1.00]);
         }
 
         if (!defined('INIT_NO_USERS')) {
@@ -137,8 +137,8 @@ class InitController extends Controller
                 $site_name = isset($_GET['from']) ? htmlspecialchars($_GET['from']) : addslashes($GLOBALS['_LANG']['self_site']);
                 $from_ad = !empty($_GET['ad_id']) ? intval($_GET['ad_id']) : 0;
 
-                session('from_ad', $from_ad); // 用户点击的广告ID
-                session('referer', stripslashes($site_name)); // 用户来源
+                session(['from_ad' => $from_ad]); // 用户点击的广告ID
+                session(['referer' => stripslashes($site_name)]); // 用户来源
 
                 unset($site_name);
 
@@ -155,13 +155,13 @@ class InitController extends Controller
                         update_user_info();
                     }
                 } else {
-                    session('user_id', 0);
-                    session('user_name', '');
-                    session('email', '');
-                    session('user_rank', 0);
-                    session('discount', 1.00);
+                    session(['user_id' => 0]);
+                    session(['user_name' => '']);
+                    session(['email' => '']);
+                    session(['user_rank' => 0]);
+                    session(['discount' => 1.00]);
                     if (!session('?login_fail')) {
-                        session('login_fail', 0);
+                        session(['login_fail' => 0]);
                     }
                 }
             }
@@ -186,8 +186,8 @@ class InitController extends Controller
                     setcookie("ECS[user_id]", '', $time, '/');
                     setcookie("ECS[password]", '', $time, '/');
                 } else {
-                    session('user_id', $row['user_id']);
-                    session('user_name', $row['user_name']);
+                    session(['user_id' => $row['user_id']]);
+                    session(['user_name' => $row['user_name']]);
                     update_user_info();
                 }
             }

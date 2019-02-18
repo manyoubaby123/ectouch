@@ -128,7 +128,7 @@ class IndexController extends InitController
         if ($_REQUEST['act'] == 'main') {
             //开店向导第一步
             if (session('?shop_guide') && session('shop_guide') === true) {
-                session('shop_guide', null);//销毁session
+                session(['shop_guide' => null]);//销毁session
 
                 return ecs_header("Location: ./index.php?act=first\n");
             }
@@ -890,7 +890,7 @@ class IndexController extends InitController
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'check_order') {
             if (empty(session('last_check'))) {
-                session('last_check', gmtime());
+                session(['last_check' => gmtime()]);
 
                 return make_json_result('', '', ['new_orders' => 0, 'new_paid' => 0]);
             }
@@ -905,7 +905,7 @@ class IndexController extends InitController
                 ' WHERE pay_time >= ' . session('last_check');
             $arr['new_paid'] = $GLOBALS['db']->getOne($sql);
 
-            session('last_check', gmtime());
+            session(['last_check' => gmtime()]);
 
             if (!(is_numeric($arr['new_orders']) && is_numeric($arr['new_paid']))) {
                 return make_json_error($GLOBALS['db']->error());

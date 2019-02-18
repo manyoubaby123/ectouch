@@ -191,7 +191,7 @@ class FlowController extends InitController
                             return ecs_header("Location:index.php\n");
                         }
                     } else {
-                        session('login_fail', session('login_fail') + 1);
+                        session(['login_fail' => session('login_fail') + 1]);
                         return show_message($GLOBALS['_LANG']['signin_failed'], '', 'flow.php?step=login');
                     }
                 } elseif (!empty($_POST['act']) && $_POST['act'] == 'signup') {
@@ -225,14 +225,14 @@ class FlowController extends InitController
 
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 /* 取得购物类型 */
-                $flow_type = session('flow_type', CART_GENERAL_GOODS);
+                $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
                 /*
                  * 收货人信息填写界面
                  */
 
                 if (isset($_REQUEST['direct_shopping'])) {
-                    session('direct_shopping', 1);
+                    session(['direct_shopping' => 1]);
                 }
 
                 /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
@@ -307,7 +307,7 @@ class FlowController extends InitController
                 }
 
                 /* 保存到session */
-                session('flow_consignee', stripslashes_deep($consignee));
+                session(['flow_consignee' => stripslashes_deep($consignee)]);
 
                 return ecs_header("Location: flow.php?step=checkout\n");
             }
@@ -330,7 +330,7 @@ class FlowController extends InitController
             /*------------------------------------------------------ */
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 团购标志 */
             if ($flow_type == CART_GROUP_BUY_GOODS) {
@@ -340,7 +340,7 @@ class FlowController extends InitController
                 $GLOBALS['smarty']->assign('is_exchange_goods', 1);
             } else {
                 //正常购物流程  清空其他购物流程情况
-                session('flow_order.extension_code', '');
+                session(['flow_order.extension_code' => '']);
             }
 
             /* 检查购物车中是否有商品 */
@@ -370,7 +370,7 @@ class FlowController extends InitController
                 return ecs_header("Location: flow.php?step=consignee\n");
             }
 
-            session('flow_consignee', $consignee);
+            session(['flow_consignee' => $consignee]);
             $GLOBALS['smarty']->assign('consignee', $consignee);
 
             /* 对商品信息赋值 */
@@ -589,7 +589,7 @@ class FlowController extends InitController
             }
 
             /* 保存 session */
-            session('flow_order', $order);
+            session(['flow_order' => $order]);
         } elseif ($_REQUEST['step'] == 'select_shipping') {
             /*------------------------------------------------------ */
             //-- 改变配送方式
@@ -598,7 +598,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -649,7 +649,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -669,7 +669,7 @@ class FlowController extends InitController
                 $order['need_insure'] = intval($_REQUEST['insure']);
 
                 /* 保存 session */
-                session('flow_order', $order);
+                session(['flow_order' => $order]);
 
                 /* 计算订单的费用 */
                 $total = order_fee($order, $cart_goods, $consignee);
@@ -696,7 +696,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => '', 'need_insure' => 0, 'payment' => 1];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -718,7 +718,7 @@ class FlowController extends InitController
                 $result['pay_code'] = $payment_info['pay_code'];
 
                 /* 保存 session */
-                session('flow_order', $order);
+                session(['flow_order' => $order]);
 
                 /* 计算订单的费用 */
                 $total = order_fee($order, $cart_goods, $consignee);
@@ -745,7 +745,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -765,7 +765,7 @@ class FlowController extends InitController
                 $order['pack_id'] = intval($_REQUEST['pack']);
 
                 /* 保存 session */
-                session('flow_order', $order);
+                session(['flow_order' => $order]);
 
                 /* 计算订单的费用 */
                 $total = order_fee($order, $cart_goods, $consignee);
@@ -792,7 +792,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => '', 'need_insure' => 0];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -812,7 +812,7 @@ class FlowController extends InitController
                 $order['card_id'] = intval($_REQUEST['card']);
 
                 /* 保存 session */
-                session('flow_order', $order);
+                session(['flow_order' => $order]);
 
                 /* 计算订单的费用 */
                 $total = order_fee($order, $cart_goods, $consignee);
@@ -843,7 +843,7 @@ class FlowController extends InitController
                 $result['error'] = $GLOBALS['_LANG']['surplus_not_enough'];
             } else {
                 /* 取得购物类型 */
-                $flow_type = session('flow_type', CART_GENERAL_GOODS);
+                $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
                 /* 取得购物流程设置 */
                 $GLOBALS['smarty']->assign('config', $GLOBALS['_CFG']);
@@ -895,7 +895,7 @@ class FlowController extends InitController
                 $result['error'] = sprintf($GLOBALS['_LANG']['integral_too_much'], $flow_points);
             } else {
                 /* 取得购物类型 */
-                $flow_type = session('flow_type', CART_GENERAL_GOODS);
+                $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
                 $order['integral'] = $points;
 
@@ -932,7 +932,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => ''];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -983,7 +983,7 @@ class FlowController extends InitController
             $_GET['inv_content'] = !empty($_GET['inv_content']) ? json_str_iconv(urldecode($_GET['inv_content'])) : '';
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -1035,7 +1035,7 @@ class FlowController extends InitController
             $order['how_oos'] = intval($_GET['oos']);
 
             /* 保存 session */
-            session('flow_order', $order);
+            session(['flow_order' => $order]);
         } elseif ($_REQUEST['step'] == 'check_surplus') {
             /*------------------------------------------------------ */
             //-- 检查用户输入的余额
@@ -1070,7 +1070,7 @@ class FlowController extends InitController
             load_helper(['clips', 'payment']);
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 检查购物车中是否有商品 */
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('cart') .
@@ -1472,9 +1472,9 @@ class FlowController extends InitController
             $GLOBALS['smarty']->assign('order_submit_back', sprintf($GLOBALS['_LANG']['order_submit_back'], $GLOBALS['_LANG']['back_home'], $GLOBALS['_LANG']['goto_user_center'])); // 返回提示
 
             user_uc_call('add_feed', [$order['order_id'], BUY_GOODS]); //推送feed到uc
-            session('flow_consignee', null); // 清除session中保存的收货人信息
-            session('flow_order', null);
-            session('direct_shopping', null);
+            session(['flow_consignee' => null]); // 清除session中保存的收货人信息
+            session(['flow_order' => null]);
+            session(['direct_shopping' => null]);
         }
 
         /*------------------------------------------------------ */
@@ -1599,7 +1599,7 @@ class FlowController extends InitController
             $result = ['error' => '', 'content' => ''];
 
             /* 取得购物类型 */
-            $flow_type = session('flow_type', CART_GENERAL_GOODS);
+            $flow_type = session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 获得收货人信息 */
             $consignee = get_consignee(session('user_id'));
@@ -1699,7 +1699,7 @@ class FlowController extends InitController
             return json_encode($result);
         } else {
             /* 标记购物流程为普通商品 */
-            session('flow_type', CART_GENERAL_GOODS);
+            session(['flow_type' => CART_GENERAL_GOODS]);
 
             /* 如果是一步购物，跳到结算中心 */
             if ($GLOBALS['_CFG']['one_step_buy'] == '1') {

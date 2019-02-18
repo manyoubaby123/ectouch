@@ -83,7 +83,7 @@ function get_profile($user_id)
     $infos['user_name'] = addslashes($infos['user_name']);
 
     $row = $user->get_profile_by_name($infos['user_name']); //获取用户帐号信息
-    session('email', $row['email']);    //注册SESSION
+    session(['email' => $row['email']]);    //注册SESSION
 
     /* 会员等级 */
     if ($infos['user_rank'] > 0) {

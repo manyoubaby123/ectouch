@@ -678,7 +678,7 @@ function order_fee($order, $goods, $consignee)
     $total['integral_formated'] = price_format($total['integral_money'], false);
 
     /* 保存订单信息 */
-    session('flow_order', $order);
+    session(['flow_order' => $order]);
 
     $se_flow_type = session('?flow_type') ? session('flow_type') : '';
 

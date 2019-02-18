@@ -116,7 +116,7 @@ class ConvertController extends InitController
             }
 
             /* 保存配置信息 */
-            session('convert_config', $config);
+            session(['convert_config' => $config]);
 
             /* 包含插件语言文件 */
             load_lang($config->code, 'convert');

@@ -25,7 +25,7 @@ class MessageController extends InitController
             } else {
                 /* 没有验证码时，用时间来限制机器人发帖或恶意发评论 */
                 if (!session('?send_time')) {
-                    session('send_time', 0);
+                    session(['send_time' => 0]);
                 }
 
                 $cur_time = gmtime();
@@ -61,7 +61,7 @@ class MessageController extends InitController
                 if (intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_MESSAGE) {
                     session($validator->session_word, null);
                 } else {
-                    session('send_time', $cur_time);
+                    session(['send_time' => $cur_time]);
                 }
                 $msg_info = $GLOBALS['_CFG']['message_check'] ? $GLOBALS['_LANG']['message_submit_wait'] : $GLOBALS['_LANG']['message_submit_done'];
                 return show_message($msg_info, $GLOBALS['_LANG']['message_list_lnk'], 'message.php');

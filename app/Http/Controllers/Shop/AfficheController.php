@@ -82,8 +82,8 @@ class AfficheController extends InitController
             $goods_id = !empty($_GET['goods_id']) ? intval($_GET['goods_id']) : 0;
 
             /* 存入SESSION中,购物后一起存到订单数据表里 */
-            session('from_ad', $ad_id);
-            session('referer', stripslashes($site_name));
+            session(['from_ad' => $ad_id]);
+            session(['referer' => stripslashes($site_name)]);
 
             /* 如果是商品的站外JS */
             if ($ad_id == '-1') {

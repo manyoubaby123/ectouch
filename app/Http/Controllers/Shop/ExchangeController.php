@@ -274,9 +274,9 @@ class ExchangeController extends InitController
             $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('cart'), $cart, 'INSERT');
 
             /* 记录购物流程类型：团购 */
-            session('flow_type', CART_EXCHANGE_GOODS);
-            session('extension_code', 'exchange_goods');
-            session('extension_id', $goods_id);
+            session(['flow_type' => CART_EXCHANGE_GOODS]);
+            session(['extension_code' => 'exchange_goods']);
+            session(['extension_id' => $goods_id]);
 
             /* 进入收货人页面 */
             return ecs_header("Location: ./flow.php?step=consignee\n");

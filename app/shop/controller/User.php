@@ -276,7 +276,7 @@ class User extends Init
                 $ucdata = isset($GLOBALS['user']->ucdata) ? $GLOBALS['user']->ucdata : '';
                 return show_message($GLOBALS['_LANG']['login_success'] . $ucdata, [$GLOBALS['_LANG']['back_up_page'], $GLOBALS['_LANG']['profile_lnk']], [$back_act, 'user.php'], 'info');
             } else {
-                session(['login_fail' => session('login_fail') + 1]);
+                session('login_fail', session('login_fail') + 1);
                 return show_message($GLOBALS['_LANG']['login_failure'], $GLOBALS['_LANG']['relogin_lnk'], 'user.php', 'error');
             }
         } /* 处理 ajax 的登录请求 */
@@ -312,7 +312,7 @@ class User extends Init
                 $result['ucdata'] = $ucdata;
                 $result['content'] = $GLOBALS['smarty']->fetch('library/member_info.lbi');
             } else {
-                session(['login_fail' => session('login_fail') + 1]);
+                session('login_fail', session('login_fail') + 1);
                 if (session('login_fail') > 2) {
                     $GLOBALS['smarty']->assign('enabled_captcha', 1);
                     $result['html'] = $GLOBALS['smarty']->fetch('library/member_info.lbi');
@@ -498,9 +498,9 @@ class User extends Init
                 return show_message($GLOBALS['_LANG']['no_passwd_question'], $GLOBALS['_LANG']['back_home_lnk'], './', 'info');
             }
 
-            session(['temp_user' => $user_question_arr['user_id']]);  //设置临时用户，不具有有效身份
-            session(['temp_user_name' => $user_question_arr['user_name']]);  //设置临时用户，不具有有效身份
-            session(['passwd_answer' => $user_question_arr['passwd_answer']]);   //存储密码问题答案，减少一次数据库访问
+            session('temp_user', $user_question_arr['user_id']);  //设置临时用户，不具有有效身份
+            session('temp_user_name', $user_question_arr['user_name']);  //设置临时用户，不具有有效身份
+            session('passwd_answer', $user_question_arr['passwd_answer']);   //存储密码问题答案，减少一次数据库访问
 
             $captcha = intval($GLOBALS['_CFG']['captcha']);
             if (($captcha & CAPTCHA_LOGIN) && (!($captcha & CAPTCHA_LOGIN_FAIL) || (($captcha & CAPTCHA_LOGIN_FAIL) && session('login_fail') > 2)) && gd_version() > 0) {
@@ -529,10 +529,10 @@ class User extends Init
             if (empty($_POST['passwd_answer']) || $_POST['passwd_answer'] != session('passwd_answer')) {
                 return show_message($GLOBALS['_LANG']['wrong_passwd_answer'], $GLOBALS['_LANG']['back_retry_answer'], 'user.php?act=qpassword_name', 'info');
             } else {
-                session(['user_id' => session('temp_user')]);
-                session(['user_name' => session('temp_user_name')]);
-                session(['temp_user' => null]);
-                session(['temp_user_name' => null]);
+                session('user_id', session('temp_user'));
+                session('user_name', session('temp_user_name'));
+                session('temp_user', null);
+                session('temp_user_name', null);
                 $GLOBALS['smarty']->assign('uid', session('user_id'));
                 $GLOBALS['smarty']->assign('action', 'reset_password');
                 return $GLOBALS['smarty']->display('user_passport.dwt');
@@ -1792,7 +1792,7 @@ class User extends Init
                         return $GLOBALS['_LANG']['order_query_toofast'];
                     }
                 }
-                session(['last_email_query' => time()]);
+                session('last_email_query', time());
             }
 
             $email = trim($_GET['email']);
@@ -1933,7 +1933,7 @@ class User extends Init
                     return json_encode($result);
                 }
             }
-            session(['last_order_query' => time()]);
+            session('last_order_query', time());
 
             if (empty($order_sn)) {
                 $result['error'] = 1;

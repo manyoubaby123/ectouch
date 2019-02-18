@@ -393,9 +393,9 @@ class Ucenter extends Integrate
             $row = $GLOBALS['db']->getRow($sql);
 
             if ($row) {
-                session(['user_id' => $row['user_id']]);
-                session(['user_name' => $username]);
-                session(['email' => $row['email']]);
+                session('user_id', $row['user_id']);
+                session('user_name', $username);
+                session('email', $row['email']);
             }
         }
     }

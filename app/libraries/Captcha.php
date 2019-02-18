@@ -175,7 +175,7 @@ class Captcha
      */
     private function record_word($word)
     {
-        session([$this->session_word => base64_encode($this->encrypts_word($word))]);
+        session($this->session_word, base64_encode($this->encrypts_word($word)));
     }
 
     /**

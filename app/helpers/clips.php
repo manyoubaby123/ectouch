@@ -531,7 +531,7 @@ function get_user_default($user_id)
 
     if ($last_time == 0) {
         $last_time = gmtime();
-        session(['last_time' => $last_time]);
+        session('last_time', $last_time);
     }
 
     $info['last_time'] = local_date($GLOBALS['_CFG']['time_format'], $last_time);

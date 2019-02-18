@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\GoogleSitemap;
-use App\Libraries\GoogleSitemapItem;
+use app\libraries\GoogleSitemap;
+use app\libraries\GoogleSitemapItem;
 
 class Sitemap extends Init
 {

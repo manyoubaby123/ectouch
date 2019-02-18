@@ -2,7 +2,7 @@
 
 namespace app\shop\controller;
 
-use App\Libraries\Captcha;
+use app\libraries\Captcha;
 
 class Comment extends Init
 {

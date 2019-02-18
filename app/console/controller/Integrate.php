@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Mysql;
-use App\Libraries\Transport;
+use app\libraries\Mysql;
+use app\libraries\Transport;
 
 class Integrate extends Init
 {

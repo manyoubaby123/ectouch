@@ -2,9 +2,9 @@
 
 namespace app\shop\controller;
 
-use App\Services\ArticleService;
-use App\Services\CategoryService;
-use App\Services\GoodsService;
+use app\services\ArticleService;
+use app\services\CategoryService;
+use app\services\GoodsService;
 
 class Index extends Init
 {

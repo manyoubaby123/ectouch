@@ -2,8 +2,8 @@
 
 namespace app\shop\controller;
 
-use App\Libraries\Captcha;
-use App\Libraries\Sms;
+use app\libraries\Captcha;
+use app\libraries\Sms;
 
 class Flow extends Init
 {

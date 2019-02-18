@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Sms;
+use app\libraries\Sms;
 
 class Order extends Init
 {

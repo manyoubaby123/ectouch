@@ -259,7 +259,7 @@ function send_mail($name, $email, $subject, $content, $type = 0, $notification =
  */
 function gd_version()
 {
-    return App\Libraries\Image::gd_version();
+    return app\libraries\Image::gd_version();
 }
 
 /**

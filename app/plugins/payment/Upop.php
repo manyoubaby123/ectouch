@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Plugins\Payment;
+namespace app\plugins\payment;
 
 // 包含配置文件
 load_lang('upop', 'payment');

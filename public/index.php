@@ -49,4 +49,4 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 |
 */
 
-$app->name('shop')->autoMulti([ADMIN_PATH => 'console'])->run()->send();
+$app->run()->send();

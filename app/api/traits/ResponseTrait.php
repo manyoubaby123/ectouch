@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Traits;
+namespace app\api\Traits;
 
 trait ResponseTrait
 {

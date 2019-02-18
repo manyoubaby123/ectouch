@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Exchange;
-use App\Libraries\Iconv;
+use app\libraries\Exchange;
+use app\libraries\Iconv;
 
 class FriendLink extends Init
 {

@@ -2,7 +2,7 @@
 
 namespace app\shop\controller;
 
-use App\Libraries\RSSBuilder;
+use app\libraries\RSSBuilder;
 
 class Feed extends Init
 {

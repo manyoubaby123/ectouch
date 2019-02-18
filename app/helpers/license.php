@@ -1,6 +1,6 @@
 <?php
 
-use App\Libraries\Transport;
+use app\libraries\Transport;
 
 /**
  * 获得网店 license 信息

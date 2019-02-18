@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Transport;
+use app\libraries\Transport;
 
 class Cloud extends Init
 {

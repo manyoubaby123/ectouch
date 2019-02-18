@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Exchange;
+use app\libraries\Exchange;
 
 class Shipping extends Init
 {

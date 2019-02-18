@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Plugins\Shipping;
+namespace app\plugins\shipping;
 
 load_lang('cac', 'shipping');
 

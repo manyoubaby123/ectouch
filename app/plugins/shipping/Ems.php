@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Plugins\Shipping;
+namespace app\plugins\shipping;
 
 load_lang('ems', 'shipping');
 load_lang('shipping', 'admin');

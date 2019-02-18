@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Proxy;
+namespace app\proxy;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 
 /**
  * Class ShippingProxy
- * @package App\Proxies
+ * @package app\proxies
  */
 class ShippingProxy
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Plugins\Integrates;
+namespace app\plugins\integrates;
 
 class Integrate
 {

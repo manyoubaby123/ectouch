@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Image;
+use app\libraries\Image;
 
 class PictureBatch extends Init
 {

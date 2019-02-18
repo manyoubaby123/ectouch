@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
 use think\Controller;
-use App\Libraries\Error;
-use App\Libraries\Mysql;
-use App\Libraries\Shop;
-use App\Libraries\Template;
-use App\Services\ConfigService;
+use app\libraries\Error;
+use app\libraries\Mysql;
+use app\libraries\Shop;
+use app\libraries\Template;
+use app\services\ConfigService;
 
 class InitController extends Controller
 {

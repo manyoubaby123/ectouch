@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\SqlDump;
+use app\libraries\SqlDump;
 
 class Database extends Init
 {

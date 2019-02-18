@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Plugins\Payment;
+namespace app\plugins\payment;
 
 load_lang('bank', 'payment');
 

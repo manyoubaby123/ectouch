@@ -2,7 +2,7 @@
 
 namespace app\shop\controller;
 
-use App\Libraries\Sms;
+use app\libraries\Sms;
 
 class Wholesale extends Init
 {

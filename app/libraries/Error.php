@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries;
+namespace app\libraries;
 
-use App\Services\ShopService;
+use app\services\ShopService;
 
 class Error
 {

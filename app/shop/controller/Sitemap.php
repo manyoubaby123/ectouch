@@ -2,7 +2,7 @@
 
 namespace app\shop\controller;
 
-use App\Libraries\Sitemap;
+use app\libraries\Sitemap;
 
 class Sitemap extends Init
 {

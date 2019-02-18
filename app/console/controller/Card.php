@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Exchange;
-use App\Libraries\Image;
+use app\libraries\Exchange;
+use app\libraries\Image;
 
 class Card extends Init
 {

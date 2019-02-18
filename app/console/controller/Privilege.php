@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Captcha;
-use App\Libraries\Exchange;
+use app\libraries\Captcha;
+use app\libraries\Exchange;
 
 class Privilege extends Init
 {

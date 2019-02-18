@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Console;
+namespace app\console\controller;
 
-use App\Libraries\Mysql;
+use app\libraries\Mysql;
 
 class Convert extends Init
 {

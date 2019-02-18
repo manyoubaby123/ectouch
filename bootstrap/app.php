@@ -86,7 +86,7 @@ define('API_TIME', '2019-02-15 05:44:57');
 |
 */
 
-$app = new think\App();
+$app = (new think\App())->name('shop')->autoMulti([ADMIN_PATH => 'console']);
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +98,6 @@ $app = new think\App();
 | incoming requests to this application from both the web and CLI.
 |
 */
-
 
 
 /*

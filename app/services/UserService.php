@@ -17,16 +17,18 @@ class UserService
 
     /**
      * UserService constructor.
-     * @param UserRepository $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
+        $this->userRepository = new UserRepository();
     }
 
     /**
      * @param $id
-     * @return mixed
+     * @return array|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getInfo($id)
     {
@@ -891,7 +893,7 @@ class UserService
             return $cls;
         }
 
-        $integrate = '\\App\\Plugins\\Integrates\\' . ucfirst($GLOBALS['_CFG']['integrate_code']);
+        $integrate = '\\app\\plugins\\integrates\\' . ucfirst($GLOBALS['_CFG']['integrate_code']);
         $cfg = unserialize($GLOBALS['_CFG']['integrate_config']);
         $cls = new $integrate($cfg);
 

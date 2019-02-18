@@ -117,7 +117,7 @@ function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_am
         $shipping_config = unserialize($shipping_config);
     }
 
-    $shipping = '\\App\\Plugins\\Shipping\\' . parse_name($shipping_code, true);
+    $shipping = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
     if (class_exists($shipping)) {
         $obj = new $shipping($shipping_config);
 
@@ -142,7 +142,7 @@ function shipping_insure_fee($shipping_code, $goods_amount, $insure)
         /* 如果保价费用不是百分比则直接返回该数值 */
         return floatval($insure);
     } else {
-        $shipping = '\\App\\Plugins\\Shipping\\' . parse_name($shipping_code, true);
+        $shipping = '\\app\\plugins\\shipping\\' . parse_name($shipping_code, true);
         if (class_exists($shipping)) {
             $shipping = new $shipping_code;
             $insure = floatval($insure) / 100;
@@ -680,7 +680,7 @@ function order_fee($order, $goods, $consignee)
     /* 保存订单信息 */
     session(['flow_order' => $order]);
 
-    $se_flow_type = session()->has('flow_type') ? session('flow_type') : '';
+    $se_flow_type = session('?flow_type') ? session('flow_type') : '';
 
     /* 支付费用 */
     if (!empty($order['pay_id']) && ($total['real_goods_count'] > 0 || $se_flow_type != CART_EXCHANGE_GOODS)) {
@@ -1503,7 +1503,7 @@ function get_cart_goods()
  */
 function get_consignee($user_id)
 {
-    if (session()->has('flow_consignee')) {
+    if (session('?flow_consignee')) {
         /* 如果存在session，则直接返回session中的收货人信息 */
 
         return session('flow_consignee');
@@ -1678,7 +1678,7 @@ function change_user_bonus($bonus_id, $order_id, $is_used = true)
  */
 function flow_order_info()
 {
-    $order = session()->has('flow_order') ? session('flow_order') : array();
+    $order = session('?flow_order') ? session('flow_order') : array();
 
     /* 初始化配送和支付方式 */
     if (!isset($order['shipping_id']) || !isset($order['pay_id'])) {
@@ -1720,7 +1720,7 @@ function flow_order_info()
     }
 
     /* 扩展信息 */
-    if (session()->has('flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
+    if (session('?flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
         $order['extension_code'] = session('extension_code');
         $order['extension_id'] = session('extension_id');
     }

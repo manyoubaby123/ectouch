@@ -2,8 +2,7 @@
 
 namespace app\libraries;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use think\facade\Db;
 
 class Mysql
 {
@@ -14,24 +13,10 @@ class Mysql
     public function query($sql)
     {
         $m = strtolower(substr(ltrim(trim($sql), '('), 0, 6));
-        $res = [];
         if ($m == 'select' || substr($m, 0, 4) == 'desc' || substr($m, 0, 4) == 'show') {
-            $result = DB::select($sql);
-            if (empty($result)) {
-                $res = $result;
-            } else {
-                foreach ($result as $vo) {
-                    $res[] = get_object_vars($vo);
-                }
-            }
-        } elseif ($m == 'update') {
-            $res = DB::update($sql);
-        } elseif ($m == 'insert') {
-            $res = DB::insert($sql);
-        } elseif ($m == 'delete') {
-            $res = DB::delete($sql);
+            $res = Db::query($sql);
         } else {
-            $res = DB::statement($sql);
+            $res = Db::execute($sql);
         }
 
         return $res;

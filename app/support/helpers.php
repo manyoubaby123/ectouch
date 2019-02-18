@@ -81,6 +81,15 @@ function plugin_path($path = '')
 }
 
 /**
+ * @param $path
+ * @return mixed
+ */
+function asset($path)
+{
+    return $path;
+}
+
+/**
  * 加载函数库
  * @param array $files
  * @param string $module
@@ -111,7 +120,6 @@ function load_helper($files = [], $module = '', $sub = 'common')
 
         if (file_exists($helper)) {
             $_helper[$hash] = $helper;
-            print_r($_helper);
             require($helper);
         }
     }
@@ -137,6 +145,7 @@ function load_lang($files = [], $module = '')
     foreach ($files as $vo) {
         $helper = $base_path . $vo . '.php';
         $lang = null;
+
         if (file_exists($helper)) {
             $lang = require($helper);
             if (!is_null($lang)) {

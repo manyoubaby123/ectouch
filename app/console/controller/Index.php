@@ -127,7 +127,7 @@ class Index extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'main') {
             //开店向导第一步
-            if (session()->has('shop_guide') && session('shop_guide') === true) {
+            if (session('?shop_guide') && session('shop_guide') === true) {
                 session(['shop_guide' => null]);//销毁session
 
                 return ecs_header("Location: ./index.php?act=first\n");

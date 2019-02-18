@@ -17,16 +17,18 @@ class UserRepository
 
     /**
      * UserRepository constructor.
-     * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        $this->user = new User();
     }
 
     /**
      * @param $id
-     * @return mixed
+     * @return array|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getUserById($id)
     {

@@ -1185,7 +1185,7 @@ class User extends Init
                 $order['log_id'] = insert_pay_log($surplus['rec_id'], $order['order_amount'], $type = PAY_SURPLUS, 0);
 
                 /* 调用相应的支付方式文件 */
-                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($payment_info['pay_code'], true);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment_info['pay_code'], true);
 
                 /* 取得在线支付方式的支付按钮 */
                 $pay_obj = new $plugin;
@@ -1266,7 +1266,7 @@ class User extends Init
                 }
 
                 /* 调用相应的支付方式文件 */
-                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($payment_info['pay_code'], true);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment_info['pay_code'], true);
 
                 /* 取得在线支付方式的支付按钮 */
                 $pay_obj = new $plugin;
@@ -1318,7 +1318,7 @@ class User extends Init
             $result = ['error' => 0, 'message' => ''];
             $goods_id = $_GET['id'];
 
-            if (!session()->has('user_id') || session('user_id') == 0) {
+            if (!session('?user_id') || session('user_id') == 0) {
                 $result['error'] = 1;
                 $result['message'] = $GLOBALS['_LANG']['login_please'];
                 return json_encode($result);
@@ -1787,7 +1787,7 @@ class User extends Init
             $job = $_GET['job'];
 
             if ($job == 'add' || $job == 'del') {
-                if (session()->has('last_email_query')) {
+                if (session('?last_email_query')) {
                     if (time() - session('last_email_query') <= 30) {
                         return $GLOBALS['_LANG']['order_query_toofast'];
                     }
@@ -1926,7 +1926,7 @@ class User extends Init
 
             $result = ['error' => 0, 'message' => '', 'content' => ''];
 
-            if (session()->has('last_order_query')) {
+            if (session('?last_order_query')) {
                 if (time() - session('last_order_query') <= 10) {
                     $result['error'] = 1;
                     $result['message'] = $GLOBALS['_LANG']['order_query_toofast'];
@@ -1961,7 +1961,7 @@ class User extends Init
             if ($row['invoice_no'] && $row['shipping_id'] > 0) {
                 $sql = "SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id = '$row[shipping_id]'";
                 $shipping_code = $GLOBALS['db']->getOne($sql);
-                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($shipping_code, true);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($shipping_code, true);
                 if (class_exists($plugin)) {
                     $shipping = new $plugin;
                     $order_query['invoice_no'] = $shipping->query((string)$row['invoice_no']);

@@ -138,7 +138,7 @@ class AddressService
      */
     public function get_consignee($user_id)
     {
-        if (session()->has('flow_consignee')) {
+        if (session('?flow_consignee')) {
             /* 如果存在session，则直接返回session中的收货人信息 */
 
             return session('flow_consignee');

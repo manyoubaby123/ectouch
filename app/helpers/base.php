@@ -925,11 +925,11 @@ function get_file_suffix($file_name, $allow_type = array())
  */
 function read_static_cache($cache_name)
 {
-    if (config('app.debug')) {
+    if (config('app_debug')) {
         return false;
     }
 
-    return \Illuminate\Support\Facades\Cache::get($cache_name);
+    return cache($cache_name);
 }
 
 /**
@@ -940,9 +940,9 @@ function read_static_cache($cache_name)
  */
 function write_static_cache($cache_name, $caches)
 {
-    if (config('app.debug')) {
+    if (config('app_debug')) {
         return false;
     }
 
-    \Illuminate\Support\Facades\Cache::forever($cache_name, $caches);
+    cache($cache_name, $caches);
 }

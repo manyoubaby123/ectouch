@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name'    => 'ECTouch Console',
+    'name' => 'ECTouch Console',
     'version' => '3.0',
-    'user'    => null,
+    'user' => null,
 ];

@@ -24,7 +24,7 @@ class Message extends Init
                 }
             } else {
                 /* 没有验证码时，用时间来限制机器人发帖或恶意发评论 */
-                if (!session()->has('send_time')) {
+                if (!session('?send_time')) {
                     session(['send_time' => 0]);
                 }
 

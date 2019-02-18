@@ -133,7 +133,7 @@ class Integrate extends Init
         //-- 检查用户填写资料
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'check_config') {
-            $code = '\\App\\Plugins\\Integrates\\' . parse_name($_POST['code'], true);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
@@ -223,7 +223,7 @@ class Integrate extends Init
         if ($_REQUEST['act'] == 'save_uc_config') {
             $cfg = unserialize($GLOBALS['_CFG']['integrate_config']);
 
-            $code = '\\App\\Plugins\\Integrates\\' . parse_name($_POST['code'], true);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
@@ -255,7 +255,7 @@ class Integrate extends Init
         //-- 第一次保存UCenter安装的资料
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'save_uc_config_first') {
-            $code = '\\App\\Plugins\\Integrates\\' . parse_name($_POST['code'], true);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($_POST['code'], true);
             $_POST['cfg']['quiet'] = 1;
             $cls_user = new $code($_POST['cfg']);
 
@@ -326,7 +326,7 @@ class Integrate extends Init
         if ($_REQUEST['act'] == 'check_user') {
             $code = session('code');
 
-            $code = '\\App\\Plugins\\Integrates\\' . parse_name($code, true);
+            $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
             $cls_user = new $code(session('cfg'));
 
             $start = empty($_GET['start']) ? 0 : intval($_GET['start']);
@@ -545,7 +545,7 @@ class Integrate extends Init
 
                 /* 检查和商城是否有重名 */
                 $code = session('code');
-                $code = '\\App\\Plugins\\Integrates\\' . parse_name($code, true);
+                $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
                 $cls_user = new $code(session('cfg'));
 
                 $bbs_error_list = $cls_user->test_conflict($alias);
@@ -699,7 +699,7 @@ class Integrate extends Init
                 return json_encode($result);
             } elseif (session('task.sync.start') < session('task.sync.total')) {
                 $code = session('code');
-                $code = '\\App\\Plugins\\Integrates\\' . parse_name($code, true);
+                $code = '\\app\\plugins\\integrates\\' . parse_name($code, true);
                 $cls_user = new $code(session('cfg'));
                 $cls_user->need_sync = false;
 

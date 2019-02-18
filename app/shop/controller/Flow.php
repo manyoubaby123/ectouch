@@ -249,7 +249,7 @@ class Flow extends Init
                         $consignee_list[] = ['country' => $GLOBALS['_CFG']['shop_country'], 'email' => session('email', '')];
                     }
                 } else {
-                    if (session()->has('flow_consignee')) {
+                    if (session('?flow_consignee')) {
                         $consignee_list = [session('flow_consignee')];
                     } else {
                         $consignee_list[] = ['country' => $GLOBALS['_CFG']['shop_country']];
@@ -1142,7 +1142,7 @@ class Flow extends Init
             ];
 
             /* 扩展信息 */
-            if (session()->has('flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
+            if (session('?flow_type') && intval(session('flow_type')) != CART_GENERAL_GOODS) {
                 $order['extension_code'] = session('extension_code');
                 $order['extension_id'] = session('extension_id');
             } else {
@@ -1452,7 +1452,7 @@ class Flow extends Init
             if ($order['order_amount'] > 0) {
                 $payment = payment_info($order['pay_id']);
 
-                $plugin = '\\App\\Plugins\\Payment\\' . parse_name($payment['pay_code'], true);
+                $plugin = '\\app\\plugins\\payment\\' . parse_name($payment['pay_code'], true);
                 $pay_obj = new $plugin;
 
                 $pay_online = $pay_obj->get_code($order, unserialize_config($payment['pay_config']));

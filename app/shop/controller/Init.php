@@ -24,29 +24,19 @@ class Init extends Controller
      */
     protected $userService;
 
-    /**
-     * InitController constructor.
-     * @param UserService $userService
-     */
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
     protected function initialize()
     {
         if (!file_exists(storage_path('install.lock'))) {
             // header("Location: ./install/index.php\n");
         }
 
-        $PHP_SELF = request()->getPathInfo();
-        define('PHP_SELF', empty($PHP_SELF) ? 'index.php' : $PHP_SELF);
+        define('PHP_SELF', parse_name($this->request->controller()));
 
         load_helper(['time', 'base', 'common', 'main', 'insert', 'goods', 'article']);
 
         /* 对用户传入的变量进行转义操作。*/
-        $_GET = request()->query();
-        $_POST = request()->post();
+        $_GET = $this->request->get();
+        $_POST = $this->request->post();
         $_REQUEST = $_GET + $_POST;
         $_REQUEST['act'] = request()->get('act');
 
@@ -111,7 +101,7 @@ class Init extends Controller
             $GLOBALS['smarty']->cache_dir = storage_path('temp/caches');
             $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled');
 
-            if (config('app.debug')) {
+            if (config('app_debug')) {
                 $GLOBALS['smarty']->direct_output = true;
                 $GLOBALS['smarty']->force_compile = true;
             } else {
@@ -130,9 +120,10 @@ class Init extends Controller
 
         if (!defined('INIT_NO_USERS')) {
             /* 会员信息 */
+            $this->userService = new UserService();
             $GLOBALS['user'] = $this->userService->init_users();
 
-            if (!session()->has('user_id')) {
+            if (!session('?user_id')) {
                 /* 获取投放站点的名称 */
                 $site_name = isset($_GET['from']) ? htmlspecialchars($_GET['from']) : addslashes($GLOBALS['_LANG']['self_site']);
                 $from_ad = !empty($_GET['ad_id']) ? intval($_GET['ad_id']) : 0;
@@ -160,7 +151,7 @@ class Init extends Controller
                     session(['email' => '']);
                     session(['user_rank' => 0]);
                     session(['discount' => 1.00]);
-                    if (!session()->has('login_fail')) {
+                    if (!session('?login_fail')) {
                         session(['login_fail' => 0]);
                     }
                 }

@@ -5,6 +5,7 @@ namespace app\shop\controller;
 use app\services\ArticleService;
 use app\services\CategoryService;
 use app\services\GoodsService;
+use think\App;
 
 class Index extends Init
 {
@@ -23,11 +24,13 @@ class Index extends Init
      */
     protected $goodsService;
 
-    public function __construct(CategoryService $categoryService, GoodsService $goodsService, ArticleService $articleService)
+    public function initialize()
     {
-        $this->categoryService = $categoryService;
-        $this->goodsService = $goodsService;
-        $this->articleService = $articleService;
+        parent::initialize();
+
+        $this->categoryService = new CategoryService();
+        $this->goodsService = new GoodsService();
+        $this->articleService = new ArticleService();
     }
 
     public function index()
@@ -131,7 +134,7 @@ class Index extends Init
         $all = $GLOBALS['db']->getAll($sql);
 
         foreach ($all as $key => $row) {
-            $plugin = '\\App\\Plugins\\Shipping\\' . parse_name($row['shipping_code'], true);
+            $plugin = '\\app\\plugins\\shipping\\' . parse_name($row['shipping_code'], true);
 
             if (class_exists($plugin)) {
                 $shipping = new $plugin;

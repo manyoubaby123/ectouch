@@ -944,7 +944,7 @@ class OrderService
         /* 保存订单信息 */
         session('flow_order', $order);
 
-        $se_flow_type = session('flow_type', '');
+        $se_flow_type = session('?flow_type') ? session('flow_type') : '';
 
         /* 支付费用 */
         if (!empty($order['pay_id']) && ($total['real_goods_count'] > 0 || $se_flow_type != CART_EXCHANGE_GOODS)) {
@@ -1092,7 +1092,7 @@ class OrderService
      */
     public function flow_order_info()
     {
-        $order = session('flow_order', []);
+        $order = session('?flow_order') ? session('flow_order') : [];
 
         /* 初始化配送和支付方式 */
         if (!isset($order['shipping_id']) || !isset($order['pay_id'])) {

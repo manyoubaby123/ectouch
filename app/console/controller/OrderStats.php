@@ -47,9 +47,6 @@ class OrderStats extends Init
             /* 每千个点击的购物额 */
             $click_turnover = $click_count > 0 ? round(($order_general['total_turnover'] * 1000) / $click_count, 2) : 0;
 
-            /* 时区 */
-            $timezone = session('timezone', $GLOBALS['_CFG']['timezone']);
-
             /* 时间参数 */
             $is_multi = empty($_POST['is_multi']) ? false : true;
 
@@ -79,10 +76,8 @@ class OrderStats extends Init
                     }
                 }
             } else {
-                $tmp_time = local_strtotime(local_date('Y-m-d'));
                 $start_date_arr[] = local_strtotime(local_date('Y-m') . '-1');
                 $end_date_arr[] = local_strtotime(local_date('Y-m') . '-31');
-                ;
             }
 
             /* 按月份交叉查询 */

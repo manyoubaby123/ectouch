@@ -1,0 +1,18 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, width=device-width, initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no"/>
+    <title>{$page_title}</title>
+    <meta name="description" content="{$description}"/>
+    <meta name="keywords" content="{$keywords}"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="stylesheet" href="static/plugins/auicss/css/aui.css">
+    {insert_scripts files='common.js'}
+    <script type="text/javascript">
+        var process_request = "{$lang.process_request}";
+    </script>
+</head>
+
+<body>

@@ -96,8 +96,10 @@ class Init extends Controller
             /* 创建 Smarty 对象。*/
             $GLOBALS['smarty'] = new Template();
 
+            $template_dir = $this->request->isMobile() ? 'mobile' : $GLOBALS['_CFG']['template'];
+
             $GLOBALS['smarty']->cache_lifetime = $GLOBALS['_CFG']['cache_time'];
-            $GLOBALS['smarty']->template_dir = resource_path('views/' . $GLOBALS['_CFG']['template']);
+            $GLOBALS['smarty']->template_dir = resource_path('views/' . $template_dir);
             $GLOBALS['smarty']->cache_dir = storage_path('temp/caches');
             $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled');
 

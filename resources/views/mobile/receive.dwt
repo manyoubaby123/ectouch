@@ -1,0 +1,16 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<div class="block">
+    <div class="box">
+        <div class="box_1">
+            <h3><span>{$lang.system_info}</span></h3>
+            <div class="boxCenterList RelaArticle" align="center">
+                <div style="margin:20px auto;">
+                    <p style="font-size: 14px; font-weight:bold; color: red;">{$msg}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

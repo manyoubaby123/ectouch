@@ -8,7 +8,7 @@
        <table width="100%" cellpadding="4">
        <tr style="background:url(images/lineBg.gif) repeat-x left bottom;text-align:center; color:#006bd0; font-weight:bold;"><td width="25%" align="left" style="padding-left:20px">{$lang.username}</td><td width="10%">{$lang.number}</td><td width="45%">{$lang.bought_time}</td><td width="20%">{$lang.order_status}</td></tr>
        <!-- {foreach $notes as $note} -->
-       <tr align="center"><td align="left" style="padding-left:20px"><!-- {if $note.user_name} -->{$note.user_name|escape:html}<!-- {else} -->{$lang.anonymous}<!-- {/if} --></td><td>{$note.goods_number}</td><td>{$note.add_time}</td><td><!--{if $note.order_status}-->{$lang.turnover}<!--{else}-->{$lang.is_cancel}<!--{/if}--></td></tr>
+       <tr align="center"><td align="left" style="padding-left:20px"><!-- {if $note.user_name} -->{$note.user_name}<!-- {else} -->{$lang.anonymous}<!-- {/if} --></td><td>{$note.goods_number}</td><td>{$note.add_time}</td><td><!--{if $note.order_status}-->{$lang.turnover}<!--{else}-->{$lang.is_cancel}<!--{/if}--></td></tr>
        <!-- {/foreach} -->
        </table>
         <!--{else}-->

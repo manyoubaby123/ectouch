@@ -97,8 +97,8 @@
                         <!-- {foreach $wholesale.goods_attr as $key => $property_group} -->
                         <!-- {foreach $property_group as $property} -->
                         <tr>
-                            <td nowrap="true" style="border-bottom:2px solid #ccc;">{$property.name|escape:html}</td>
-                            <td style="border-bottom:1px solid #ccc;">{$property.value|escape:html}</td>
+                            <td nowrap="true" style="border-bottom:2px solid #ccc;">{$property.name}</td>
+                            <td style="border-bottom:1px solid #ccc;">{$property.value}</td>
                         </tr>
                         <!-- {/foreach}-->
                         <!-- {/foreach}-->

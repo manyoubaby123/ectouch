@@ -7,8 +7,8 @@
     <div class="clearfix goodsBox" style="border:none;">
       <!--{foreach $group_buy_goods as $goods}-->
       <div class="goodsItem">
-           <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.goods_name|escape:html}" class="goodsimg" /></a><br />
-					 <p><a href="{$goods.url}" title="{$goods.goods_name|escape:html}">{$goods.short_style_name|escape:html}</a></p>
+           <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.goods_name}" class="goodsimg" /></a><br />
+					 <p><a href="{$goods.url}" title="{$goods.goods_name}">{$goods.short_style_name}</a></p>
            <font class="shop_s">{$goods.last_price}</font>
         </div>
       <!--{/foreach}-->

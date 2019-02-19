@@ -5,9 +5,9 @@
   <h3><span>{$lang.article_cat}</span></h3>
   <div class="boxCenterList RelaArticle">
     <!--{foreach $article_categories as $cat}-->
-    <a href="{$cat.url}">{$cat.name|escape:html}</a><br />
+    <a href="{$cat.url}">{$cat.name}</a><br />
       <!--{foreach $cat.children as $child}-->
-      <a href="{$child.url}" style="background-image:none;">{$child.name|escape:html}</a><br />
+      <a href="{$child.url}" style="background-image:none;">{$child.name}</a><br />
       <!--{/foreach}-->
     <!--{/foreach}-->
   </div>

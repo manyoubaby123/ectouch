@@ -3,7 +3,7 @@
 <div class="block">
     <div class="box">
         <div class="box_1">
-            <h3><span>{$article.title|escape:html}</span></h3>
+            <h3><span>{$article.title}</span></h3>
             <div class="boxCenterList">
                 <!-- {if $article.content } -->
                 {$article.content}

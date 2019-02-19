@@ -13,12 +13,12 @@
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$auction.url}"><img src="{$auction.goods_thumb}" border="0"
-                                                      alt="{$auction.goods_name|escape:html}"
+                                                      alt="{$auction.goods_name}"
                                                       style="vertical-align: middle"/></a>
                     </li>
                     <li style="width:555px; line-height:23px;">
                         {$lang.goods_name}：<a href="{$auction.url}"
-                                              class="f5">{$auction.goods_name|escape:html}</a><br/>
+                                              class="f5">{$auction.goods_name}</a><br/>
                         {$lang.act_status}：
                         <!-- {if $auction.status_no eq 0} -->
                         {$lang.au_pre_start}<br>

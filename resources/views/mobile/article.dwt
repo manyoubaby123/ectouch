@@ -5,7 +5,7 @@
         <div class="box_1">
             <div style="border:4px solid #fcf8f7; background-color:#fff; padding:20px 15px;">
                 <div class="tc" style="padding:8px;">
-                    <font class="f5 f6">{$article.title|escape:html}</font><br/><font class="f3">{$article.author|escape:html}
+                    <font class="f5 f6">{$article.title}</font><br/><font class="f3">{$article.author}
                     / {$article.add_time}</font>
                 </div>
                 <!-- {if $article.content } -->

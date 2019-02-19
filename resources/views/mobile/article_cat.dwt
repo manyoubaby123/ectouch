@@ -19,7 +19,7 @@
                     </tr>
                     <!-- {foreach $artciles_list as $article} -->
                     <tr>
-                        <td bgcolor="#ffffff"><a href="{$article.url}" title="{$article.title|escape:html}" class="f6">{$article.short_title}</a>
+                        <td bgcolor="#ffffff"><a href="{$article.url}" title="{$article.title}" class="f6">{$article.short_title}</a>
                         </td>
                         <td bgcolor="#ffffff">{$article.author}</td>
                         <td bgcolor="#ffffff" align="center">{$article.add_time}</td>

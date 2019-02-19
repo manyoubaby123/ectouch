@@ -5,7 +5,7 @@
   <div id="category_tree">
     <!-- {foreach $cat_list as $cat} -->
      <dl>
-     <dt><a href="{$cat.url}">{$cat.cat_name|escape:html} {if $cat.goods_num}({$cat.goods_num}){/if}</a></dt>
+     <dt><a href="{$cat.url}">{$cat.cat_name} {if $cat.goods_num}({$cat.goods_num}){/if}</a></dt>
      </dl>
     <!--{/foreach}--> 
   </div>

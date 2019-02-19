@@ -8,10 +8,10 @@
   <!-- {foreach $linked.goods as $linked_goods_data} -->
   <ul class="clearfix">
       <li class="goodsimg">
-      <a href="{$linked_goods_data.url}" target="_blank"><img src="{$linked_goods_data.goods_thumb}" alt="{$linked_goods_data.name|escape:html}" class="B_blue" /></a>
+      <a href="{$linked_goods_data.url}" target="_blank"><img src="{$linked_goods_data.goods_thumb}" alt="{$linked_goods_data.name}" class="B_blue" /></a>
       </li>
       <li>
-      <a href="{$linked_goods_data.url}" target="_blank" title="{$goods.linked_goods_data_name|escape:html}">{$linked_goods_data.short_name|escape:html}</a><br />
+      <a href="{$linked_goods_data.url}" target="_blank" title="{$goods.linked_goods_data_name}">{$linked_goods_data.short_name}</a><br />
       {$lang.shop_price}<font class="f1">{$linked_goods_data.shop_price}</font><br />
       </li>
     </ul>

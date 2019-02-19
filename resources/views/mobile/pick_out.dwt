@@ -48,8 +48,8 @@
             <div class="boxCenterList clearfix">
                 <!--{foreach $pickout_goods as $goods name=goods}-->
                 <div class="goodsItem">
-                    <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg"/></a><br/>
-                    <p><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_name}</a></p>
+                    <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name}" class="goodsimg"/></a><br/>
+                    <p><a href="{$goods.url}" title="{$goods.name}">{$goods.short_name}</a></p>
                     <a href="javascript:addToCart({$goods.id})"><img src="images/bnt_buy.gif"/></a> <a
                     href="javascript:collect({$goods.id})"><img src="images/bnt_coll.gif"/></a>
                     <font class="f1">

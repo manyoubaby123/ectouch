@@ -47,7 +47,7 @@
                     <h2><a href="javascript:void(0)"
                            onclick="change_tab_style('itemBest', 'h2', this);get_cat_recommend(1, 0);">{$lang.all_goods}</a>
                     </h2>
-                    {foreach from=$cat_rec[1] item=rec_data}
+                    {foreach $cat_rec[1] as $rec_data}
                     <h2 class="h2bg"><a href="javascript:void(0)"
                                         onclick="change_tab_style('itemBest', 'h2', this);get_cat_recommend(1, {$rec_data.cat_id})">{$rec_data.cat_name}</a>
                     </h2>
@@ -56,12 +56,12 @@
                 </div>
                 <div id="show_best_area" class="clearfix goodsBox">
                     <!-- {/if} -->
-                    <!--{foreach from=$best_goods item=goods}-->
+                    <!--{foreach $best_goods as $goods}-->
                     <div class="goodsItem">
                         <span class="best"></span>
-                        <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}"
+                        <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name}"
                                                     class="goodsimg"/></a><br/>
-                        <p><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a></p>
+                        <p><a href="{$goods.url}" title="{$goods.name}">{$goods.short_style_name}</a></p>
                         <font class="f1">
                             <!-- {if $goods.promote_price neq ""} -->
                             {$goods.promote_price}
@@ -92,7 +92,7 @@
                     <h2><a href="javascript:void(0)"
                            onclick="change_tab_style('itemNew', 'h2', this);get_cat_recommend(2, 0);">{$lang.all_goods}</a>
                     </h2>
-                    {foreach from=$cat_rec[2] item=rec_data}
+                    {foreach $cat_rec[2] as $rec_data}
                     <h2 class="h2bg"><a href="javascript:void(0)"
                                         onclick="change_tab_style('itemNew', 'h2', this);get_cat_recommend(2, {$rec_data.cat_id})">{$rec_data.cat_name}</a>
                     </h2>
@@ -101,12 +101,12 @@
                 </div>
                 <div id="show_new_area" class="clearfix goodsBox">
                     <!-- {/if} -->
-                    <!--{foreach from=$new_goods item=goods}-->
+                    <!--{foreach $new_goods as $goods}-->
                     <div class="goodsItem">
                         <span class="news"></span>
-                        <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}"
+                        <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name}"
                                                     class="goodsimg"/></a><br/>
-                        <p><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a></p>
+                        <p><a href="{$goods.url}" title="{$goods.name}">{$goods.short_style_name}</a></p>
                         <font class="f1">
                             <!-- {if $goods.promote_price neq ""} -->
                             {$goods.promote_price}
@@ -137,7 +137,7 @@
                     <h2><a href="javascript:void(0)"
                            onclick="change_tab_style('itemHot', 'h2', this);get_cat_recommend(3, 0);">{$lang.all_goods}</a>
                     </h2>
-                    {foreach from=$cat_rec[3] item=rec_data}
+                    {foreach $cat_rec[3] as $rec_data}
                     <h2 class="h2bg"><a href="javascript:void(0)"
                                         onclick="change_tab_style('itemHot', 'h2', this);get_cat_recommend(3, {$rec_data.cat_id})">{$rec_data.cat_name}</a>
                     </h2>
@@ -146,12 +146,12 @@
                 </div>
                 <div id="show_hot_area" class="clearfix goodsBox">
                     <!-- {/if} -->
-                    <!--{foreach from=$hot_goods item=goods}-->
+                    <!--{foreach $hot_goods as $goods}-->
                     <div class="goodsItem">
                         <span class="hot"></span>
-                        <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}"
+                        <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name}"
                                                     class="goodsimg"/></a><br/>
-                        <p><a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a></p>
+                        <p><a href="{$goods.url}" title="{$goods.name}">{$goods.short_style_name}</a></p>
                         <font class="f1">
                             <!-- {if $goods.promote_price neq ""} -->
                             {$goods.promote_price}
@@ -179,11 +179,11 @@
                 <h3><span>{$lang.auction_goods}</span><a href="auction.php"><img src="../images/more.gif"></a></h3>
                 <div class="centerPadd">
                     <div class="clearfix goodsBox" style="border:none;">
-                        <!--{foreach from=$auction_list item=auction}-->
+                        <!--{foreach $auction_list as $auction}-->
                         <div class="goodsItem">
-                            <a href="{$auction.url}"><img src="{$auction.thumb}" alt="{$auction.goods_name|escape:html}"
+                            <a href="{$auction.url}"><img src="{$auction.thumb}" alt="{$auction.goods_name}"
                                                           class="goodsimg"/></a><br/>
-                            <p><a href="{$auction.url}" title="{$auction.goods_name|escape:html}">{$auction.short_style_name|escape:html}</a>
+                            <p><a href="{$auction.url}" title="{$auction.goods_name}">{$auction.short_style_name}</a>
                             </p>
                             <font class="shop_s">{$auction.formated_start_price}</font>
                         </div>
@@ -203,11 +203,11 @@
                 <h3><span>{$lang.group_buy_goods}</span><a href="group_buy.php"><img src="../images/more.gif"></a></h3>
                 <div class="centerPadd">
                     <div class="clearfix goodsBox" style="border:none;">
-                        <!--{foreach from=$group_buy_goods item=goods}-->
+                        <!--{foreach $group_buy_goods as $goods}-->
                         <div class="goodsItem">
-                            <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.goods_name|escape:html}"
+                            <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.goods_name}"
                                                         class="goodsimg"/></a><br/>
-                            <p><a href="{$goods.url}" title="{$goods.goods_name|escape:html}">{$goods.short_style_name|escape:html}</a>
+                            <p><a href="{$goods.url}" title="{$goods.goods_name}">{$goods.short_style_name}</a>
                             </p>
                             <font class="shop_s">{$goods.last_price}</font>
                         </div>

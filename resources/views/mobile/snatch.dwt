@@ -8,16 +8,16 @@
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$snatch_goods.url}"><img src="{$snatch_goods.goods_thumb}"
-                                                           alt="{$snatch_goods.goods_name|escape:html}"/></a>
+                                                           alt="{$snatch_goods.goods_name}"/></a>
                     </li>
                     <li style="width:555px; line-height:23px;">
                         {insert_scripts files='lefttime.js'}
-                        <a href="{$snatch_goods.url}"><strong>{$snatch_goods.goods_name|escape:html}</strong>{if
+                        <a href="{$snatch_goods.url}"><strong>{$snatch_goods.goods_name}</strong>{if
                             $snatch_goods.product_id > 0}&nbsp;[{$products_info}]{/if}</a><br/>
                         {$lang.shop_price} <font class="shop">{$snatch_goods.formated_shop_price}</font><br/>
                         {$lang.market_price} <font class="market">{$snatch_goods.formated_market_price}</font> <br/>
                         {$lang.residual_time} <font color="red"><span id="leftTime">{$lang.please_waiting}</span></font><br/>
-                        {$lang.activity_desc}：<br/>{$snatch_goods.desc|escape:html|nl2br}
+                        {$lang.activity_desc}：<br/>{$snatch_goods.desc|nl2br}
                     </li>
                 </ul>
             </div>

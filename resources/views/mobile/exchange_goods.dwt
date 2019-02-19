@@ -7,10 +7,10 @@
         <div class="imgInfo">
             <!-- {if $pictures}-->
             <a href="javascript:;" onclick="window.open('gallery.php?id={$goods.goods_id}'); return false;">
-                <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
+                <img src="{$goods.goods_img}" alt="{$goods.goods_name}"/>
             </a>
             <!-- {else} -->
-            <img src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}"/>
+            <img src="{$goods.goods_img}" alt="{$goods.goods_name}"/>
             <!-- {/if}-->
             <div class="blank5"></div>
 
@@ -123,9 +123,9 @@
                         </tr>
                         <!-- {foreach $property_group as $property} -->
                         <tr>
-                            <td bgcolor="#FFFFFF" align="left" width="30%" class="f1">[{$property.name|escape:html}]
+                            <td bgcolor="#FFFFFF" align="left" width="30%" class="f1">[{$property.name}]
                             </td>
-                            <td bgcolor="#FFFFFF" align="left" width="70%">{$property.value|escape:html}</td>
+                            <td bgcolor="#FFFFFF" align="left" width="70%">{$property.value}</td>
                         </tr>
                         <!-- {/foreach}-->
                         <!-- {/foreach}-->

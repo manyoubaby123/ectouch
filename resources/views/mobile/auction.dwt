@@ -25,11 +25,11 @@
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$auction_goods.url}"><img src="{$auction_goods.goods_thumb}"
-                                                            alt="{$auction_goods.goods_name|escape:html}"/></a>
+                                                            alt="{$auction_goods.goods_name}"/></a>
                     </li>
                     <li style="width:555px; line-height:23px;">
                         <form name="theForm" action="auction.php" method="post">
-                            {$lang.goods_name}：<font class="f5">{$auction.goods_name|escape:html}</font>{if
+                            {$lang.goods_name}：<font class="f5">{$auction.goods_name}</font>{if
                             $auction.product_id > 0}&nbsp;[{$products_info}]{/if}<br>
                             {$lang.au_current_price}：{$auction.formated_current_price}<br>
                             起止时间：{$auction.start_time} -- {$auction.end_time}<br>
@@ -73,7 +73,7 @@
         <div class="box_1">
             <h3><span>{$lang.activity_intro}</span></h3>
             <div class="boxCenterList">
-                {$auction.act_desc|escape:html|nl2br}
+                {$auction.act_desc|nl2br}
             </div>
         </div>
     </div>

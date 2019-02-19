@@ -3,9 +3,9 @@
   <!-- {foreach $brand_list as $brand name="brand_foreach"} -->
     {if $smarty.foreach.brand_foreach.index <= 11}
       <!-- {if $brand.brand_logo} -->
-        <a href="{$brand.url}"><img src="data/brandlogo/{$brand.brand_logo}" alt="{$brand.brand_name|escape:html} ({$brand.goods_num})" /></a>
+        <a href="{$brand.url}"><img src="data/brandlogo/{$brand.brand_logo}" alt="{$brand.brand_name} ({$brand.goods_num})" /></a>
       <!-- {else} -->
-        <a href="{$brand.url}">{$brand.brand_name|escape:html} {if $brand.goods_num}({$brand.goods_num}){/if}</a>
+        <a href="{$brand.url}">{$brand.brand_name} {if $brand.goods_num}({$brand.goods_num}){/if}</a>
       <!-- {/if} -->
     {/if}
   <!-- {/foreach} -->

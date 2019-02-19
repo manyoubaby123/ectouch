@@ -8,7 +8,7 @@
        <!-- {if $comments} -->
        <!-- {foreach $comments as $comment} -->
         <li class="word">
-        <font class="f2"><!-- {if $comment.username} -->{$comment.username|escape:html}<!-- {else} -->{$lang.anonymous}<!-- {/if} --></font> <font class="f3">( {$comment.add_time} )</font><br />
+        <font class="f2"><!-- {if $comment.username} -->{$comment.username}<!-- {else} -->{$lang.anonymous}<!-- {/if} --></font> <font class="f3">( {$comment.add_time} )</font><br />
         <img src="../images/stars{$comment.rank}.gif" alt="{$comment.comment_rank}" />
         <p>{$comment.content}</p>
 				<!-- {if $comment.re_content} -->

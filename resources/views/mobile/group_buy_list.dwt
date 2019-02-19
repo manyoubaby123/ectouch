@@ -13,12 +13,12 @@
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$group_buy.url}"><img src="{$group_buy.goods_thumb}" border="0"
-                                                        alt="{$group_buy.goods_name|escape:html}"
+                                                        alt="{$group_buy.goods_name}"
                                                         style="vertical-align: middle"/></a>
                     </li>
                     <li style="width:555px; line-height:23px;">
                         {$lang.gb_goods_name}<a href="{$group_buy.url}"
-                                                class="f5">{$group_buy.goods_name|escape:html}</a><br/>
+                                                class="f5">{$group_buy.goods_name}</a><br/>
                         {$lang.act_time}：{$group_buy.formated_start_date} -- {$group_buy.formated_end_date}<br/>
                         {$lang.gb_price_ladder}<br/>
                         <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">

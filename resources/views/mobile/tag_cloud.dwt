@@ -10,9 +10,9 @@
                 <!-- 标签云开始 {foreach $tags as $tag}-->
                 <span style="font-size:{$tag.size}; line-height:36px;"> <a href="{$tag.url}" style="color:{$tag.color}">
           {if $tag.bold}
-          <b>{$tag.tag_words|escape:html}</b>
+          <b>{$tag.tag_words}</b>
           {else}
-          {$tag.tag_words|escape:html}
+          {$tag.tag_words}
           {/if}
           </a>
                     <!-- {if $tags_from eq 'user'} -->

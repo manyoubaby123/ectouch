@@ -7,8 +7,8 @@
     <div class="clearfix goodsBox" style="border:none;">
       <!--{foreach $auction_list as $auction}-->
       <div class="goodsItem">
-           <a href="{$auction.url}"><img src="{$auction.thumb}" alt="{$auction.goods_name|escape:html}" class="goodsimg" /></a><br />
-           <p><a href="{$auction.url}" title="{$auction.goods_name|escape:html}">{$auction.short_style_name|escape:html}</a></p>
+           <a href="{$auction.url}"><img src="{$auction.thumb}" alt="{$auction.goods_name}" class="goodsimg" /></a><br />
+           <p><a href="{$auction.url}" title="{$auction.goods_name}">{$auction.short_style_name}</a></p>
            <font class="shop_s">{$auction.formated_start_price}</font>
         </div>
       <!--{/foreach}-->

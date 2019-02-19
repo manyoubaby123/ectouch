@@ -23,10 +23,10 @@
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$gb_goods.url}"><img src="{$gb_goods.goods_thumb}"
-                                                       alt="{$gb_goods.goods_name|escape:html}"/></a>
+                                                       alt="{$gb_goods.goods_name}"/></a>
                     </li>
                     <li style="width:555px; line-height:23px;">
-                        {$lang.gb_goods_name} <font class="f5">{$gb_goods.goods_name|escape:html}</font><br>
+                        {$lang.gb_goods_name} <font class="f5">{$gb_goods.goods_name}</font><br>
                         <!-- {if $cfg.show_goodssn && 0} -->
                         {$lang.goods_sn} {$gb_goods.goods_sn}<br>
                         <!-- {/if} -->

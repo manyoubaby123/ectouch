@@ -172,7 +172,7 @@
                 <div class="blank"></div>
                 <!-- {if $tags} -->
                 <!-- 标签云开始 {foreach $tags as $tag}-->
-                <a href="search.php?keywords={$tag.tag_words|escape:url}" class="f6">{$tag.tag_words|escape:html}</a> <a
+                <a href="search.php?keywords={$tag.tag_words|escape:url}" class="f6">{$tag.tag_words}</a> <a
                 href="user.php?act=act_del_tag&amp;tag_words={$tag.tag_words|escape:url}"
                 onclick="if (!confirm('{$lang.confirm_drop_tag}')) return false;" title="{$lang.drop}"><img
                 src="images/drop.gif" alt="{$lang.drop}"/></a>&nbsp;&nbsp;
@@ -195,7 +195,7 @@
                     </tr>
                     <!--{foreach $goods_list as $goods}-->
                     <tr>
-                        <td bgcolor="#ffffff"><a href="{$goods.url}" class="f6">{$goods.goods_name|escape:html}</a></td>
+                        <td bgcolor="#ffffff"><a href="{$goods.url}" class="f6">{$goods.goods_name}</a></td>
                         <td bgcolor="#ffffff"><!-- {if $goods.promote_price neq ""} -->
                             {$lang.promote_price}<span class="goods-price">{$goods.promote_price}</span>
                             <!-- {else}-->

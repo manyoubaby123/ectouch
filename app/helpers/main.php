@@ -111,11 +111,9 @@ function get_user_info($id = 0)
 function assign_ur_here($cat = 0, $str = '')
 {
     /* 判断是否重写，取得文件名 */
-    $cur_url = basename(PHP_SELF);
+    $filename = basename(PHP_SELF);
     if (intval($GLOBALS['_CFG']['rewrite'])) {
-        $filename = strpos($cur_url, '-') ? substr($cur_url, 0, strpos($cur_url, '-')) : substr($cur_url, 0, -4);
-    } else {
-        $filename = substr($cur_url, 0, -4);
+        $filename = strpos($filename, '-') ? substr($filename, 0, strpos($filename, '-')) : $filename;
     }
 
     /* 初始化“页面标题”和“当前位置” */

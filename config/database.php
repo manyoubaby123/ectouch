@@ -32,7 +32,7 @@ return [
     // 指定从服务器序号
     'slave_no' => '',
     // 是否严格检查字段的值
-    'strict' => true,
+    'strict' => false,
     // 自动读取主库数据
     'read_master' => false,
     // 是否严格检查字段是否存在

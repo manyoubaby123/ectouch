@@ -51,7 +51,7 @@ class Shipping extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['03_shipping_list']);
             $this->assign('modules', $modules);
 
-            return $GLOBALS['smarty']->display('shipping_list.htm');
+            return $this->fetch('shipping_list');
         }
 
         /*------------------------------------------------------ */
@@ -147,7 +147,7 @@ class Shipping extends Init
             $this->assign('shipping', $row);
             $this->assign('shipping_id', $shipping_id);
 
-            return $GLOBALS['smarty']->display('print_index.htm');
+            return $this->fetch('print_index');
         }
 
         /*------------------------------------------------------ */
@@ -272,7 +272,7 @@ class Shipping extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['03_shipping_list'], 'href' => 'shipping.php?act=list']);
             $this->assign('shipping_id', $shipping_id);
 
-            return $GLOBALS['smarty']->display('shipping_template.htm');
+            return $this->fetch('shipping_template');
         }
 
         /*------------------------------------------------------ */

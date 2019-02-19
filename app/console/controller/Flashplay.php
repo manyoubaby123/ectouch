@@ -42,7 +42,7 @@ class Flashplay extends Init
             $this->assign('flashtpls', $this->get_flash_templates($flash_dir));
             $this->assign('current_flashtpl', $GLOBALS['_CFG']['flash_theme']);
             $this->assign('playerdb', $playerdb);
-            return $GLOBALS['smarty']->display('flashplay_list.htm');
+            return $this->fetch('flashplay_list');
         }
         if ($_REQUEST['act'] == 'del') {
             admin_priv('flash_manage');
@@ -86,7 +86,7 @@ class Flashplay extends Init
                 $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_url'], 'href' => 'flashplay.php?act=list']);
                 $this->assign('rt', $rt);
                 $this->assign('ur_here', $GLOBALS['_LANG']['add_picad']);
-                return $GLOBALS['smarty']->display('flashplay_add.htm');
+                return $this->fetch('flashplay_add');
             } elseif ($_POST['step'] == 2) {
                 if (!empty($_FILES['img_file_src']['name'])) {
                     if (!get_file_suffix($_FILES['img_file_src']['name'], $allow_suffix)) {
@@ -165,7 +165,7 @@ class Flashplay extends Init
                 $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_url'], 'href' => 'flashplay.php?act=list']);
                 $this->assign('rt', $rt);
                 $this->assign('ur_here', $GLOBALS['_LANG']['edit_picad']);
-                return $GLOBALS['smarty']->display('flashplay_add.htm');
+                return $this->fetch('flashplay_add');
             } elseif ($_POST['step'] == 2) {
                 if (empty($_POST['img_url'])) {
                     //若链接地址为空
@@ -280,7 +280,7 @@ class Flashplay extends Init
             $this->assign('ad', $ad);
             $this->assign('form_act', 'custom_insert');
 
-            return $GLOBALS['smarty']->display('flashplay_custom.htm');
+            return $this->fetch('flashplay_custom');
         }
 
         /*------------------------------------------------------ */
@@ -317,7 +317,7 @@ class Flashplay extends Init
             $this->assign('ad', $ad);
             $this->assign('form_act', 'custom_insert');
 
-            return $GLOBALS['smarty']->display('flashplay_custom_add.htm');
+            return $this->fetch('flashplay_custom_add');
         }
 
         /*------------------------------------------------------ */
@@ -486,9 +486,9 @@ class Flashplay extends Init
                 $this->assign('ad', $ad);
                 $this->assign('form_act', 'custom_insert');
 
-                $GLOBALS['smarty']->fetch('flashplay_custom.htm');
+                $GLOBALS['smarty']->display('flashplay_custom');
 
-                return make_json_result($GLOBALS['smarty']->fetch('flashplay_custom.htm'));
+                return make_json_result($GLOBALS['smarty']->display('flashplay_custom'));
             } else {
                 return make_json_error($GLOBALS['_LANG']['edit_no']);
             }
@@ -516,7 +516,7 @@ class Flashplay extends Init
 
             /* 添加 */
             $this->assign('ad', $ad);
-            return $GLOBALS['smarty']->display('flashplay_ccustom_edit.htm');
+            return $this->fetch('flashplay_ccustom_edit');
         }
 
         /*------------------------------------------------------ */
@@ -705,7 +705,7 @@ class Flashplay extends Init
         $flashtpls = [];
         $template_dir = @opendir($dir);
         while ($file = readdir($template_dir)) {
-            if ($file != '.' && $file != '..' && is_dir($dir . $file) && $file != '.svn' && $file != 'index.htm') {
+            if ($file != '.' && $file != '..' && is_dir($dir . $file) && $file != '.svn' && $file != 'index') {
                 $flashtpls[] = $this->get_flash_tpl_info($dir, $file);
             }
         }

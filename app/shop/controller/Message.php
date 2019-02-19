@@ -100,7 +100,7 @@ class Message extends Init
             $this->assign('msg_lists', $msg_lists);
             $this->assign('pager', $pager);
 
-            return $GLOBALS['smarty']->display('message_board.dwt');
+            return $this->fetch('message_board');
         }
     }
 

@@ -16,7 +16,7 @@ class Index extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == '') {
             $this->assign('shop_url', urlencode($GLOBALS['ecs']->url()));
-            return $GLOBALS['smarty']->display('index.htm');
+            return $this->fetch('index');
         }
 
         /*------------------------------------------------------ */
@@ -44,7 +44,7 @@ class Index extends Init
             $this->assign('admin_id', session('admin_id'));
             $this->assign('certi', $GLOBALS['_CFG']['certi']);
 
-            return $GLOBALS['smarty']->display('top.htm');
+            return $this->fetch('top');
         }
 
         /*------------------------------------------------------ */
@@ -52,7 +52,7 @@ class Index extends Init
         /*------------------------------------------------------ */
 
         if ($_REQUEST['act'] == 'calculator') {
-            return $GLOBALS['smarty']->display('calculator.htm');
+            return $this->fetch('calculator');
         }
 
         /*------------------------------------------------------ */
@@ -109,7 +109,7 @@ class Index extends Init
             $this->assign('help_lang', $GLOBALS['_CFG']['lang']);
             $this->assign('charset', EC_CHARSET);
             $this->assign('admin_id', session('admin_id'));
-            return $GLOBALS['smarty']->display('menu.htm');
+            return $this->fetch('menu');
         }
 
         /*------------------------------------------------------ */
@@ -405,7 +405,7 @@ class Index extends Init
             $this->assign('ecs_lang', $GLOBALS['_CFG']['lang']);
             $this->assign('ecs_charset', strtoupper(EC_CHARSET));
             $this->assign('install_date', local_date($GLOBALS['_CFG']['date_format'], $GLOBALS['_CFG']['install_date']));
-            return $GLOBALS['smarty']->display('start.htm');
+            return $this->fetch('start');
         }
         if ($_REQUEST['act'] == 'main_api') {
             load_helper('base');
@@ -521,7 +521,7 @@ class Index extends Init
             $this->assign('modules_payment', $modules);
 
             $this->assign('ur_here', $GLOBALS['_LANG']['ur_config']);
-            return $GLOBALS['smarty']->display('setting_first.htm');
+            return $this->fetch('setting_first');
         }
 
         /*------------------------------------------------------ */
@@ -684,7 +684,7 @@ class Index extends Init
             clear_all_files();
 
             $this->assign('ur_here', $GLOBALS['_LANG']['ur_add']);
-            return $GLOBALS['smarty']->display('setting_second.htm');
+            return $this->fetch('setting_second');
         }
 
         /*------------------------------------------------------ */
@@ -866,7 +866,7 @@ class Index extends Init
                 }
             }
 
-            return $GLOBALS['smarty']->display('setting_third.htm');
+            return $this->fetch('setting_third');
         }
 
         /*------------------------------------------------------ */
@@ -874,7 +874,7 @@ class Index extends Init
         /*------------------------------------------------------ */
 
         if ($_REQUEST['act'] == 'about_us') {
-            return $GLOBALS['smarty']->display('about_us.htm');
+            return $this->fetch('about_us');
         }
 
         /*------------------------------------------------------ */
@@ -882,7 +882,7 @@ class Index extends Init
         /*------------------------------------------------------ */
 
         if ($_REQUEST['act'] == 'drag') {
-            return $GLOBALS['smarty']->display('drag.htm');;
+            return $this->fetch('drag');;
         }
 
         /*------------------------------------------------------ */

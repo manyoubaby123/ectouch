@@ -37,7 +37,7 @@ class Article extends Init
             $sort_flag = sort_flag($article_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('article_list.htm');
+            return $this->fetch('article_list');
         }
 
         /*------------------------------------------------------ */
@@ -57,7 +57,7 @@ class Article extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('article_list.htm'),
+                $GLOBALS['smarty']->display('article_list'),
                 '',
                 ['filter' => $article_list['filter'], 'page_count' => $article_list['page_count']]
             );
@@ -94,7 +94,7 @@ class Article extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['03_article_list'], 'href' => 'article.php?act=list']);
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('article_info.htm');
+            return $this->fetch('article_info');
         }
 
         /*------------------------------------------------------ */
@@ -195,7 +195,7 @@ class Article extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['03_article_list'], 'href' => 'article.php?act=list&' . list_link_postfix()]);
             $this->assign('form_action', 'update');
 
-            return $GLOBALS['smarty']->display('article_info.htm');
+            return $this->fetch('article_info');
         }
 
         if ($_REQUEST['act'] == 'update') {

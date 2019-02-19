@@ -36,7 +36,7 @@ class Package extends Init
             $this->assign('brand_list', get_brand_list());
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('package_info.htm');
+            return $this->fetch('package_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -96,7 +96,7 @@ class Package extends Init
             $this->assign('form_action', 'update');
             $this->assign('package_goods_list', $package_goods_list);
 
-            return $GLOBALS['smarty']->display('package_info.htm');
+            return $this->fetch('package_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */
@@ -170,7 +170,7 @@ class Package extends Init
 
             $this->assign('full_page', 1);
 
-            return $GLOBALS['smarty']->display('package_list.htm');
+            return $this->fetch('package_list');
         }
 
         /*------------------------------------------------------ */
@@ -189,7 +189,7 @@ class Package extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('package_list.htm'),
+                $GLOBALS['smarty']->display('package_list'),
                 '',
                 ['filter' => $packages['filter'], 'page_count' => $packages['page_count']]
             );

@@ -70,6 +70,6 @@ class Package extends Init
         $this->assign('lang', $GLOBALS['_LANG']);
 
         $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-typepackage.xml" : 'feed.php?type=package'); // RSS URL
-        return $GLOBALS['smarty']->display('package.dwt');
+        return $this->fetch('package');
     }
 }

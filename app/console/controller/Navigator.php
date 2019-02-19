@@ -27,7 +27,7 @@ class Navigator extends Init
             $this->assign('record_count', $navdb['record_count']);
             $this->assign('page_count', $navdb['page_count']);
 
-            return $GLOBALS['smarty']->display('navigator.htm');
+            return $this->fetch('navigator');
         }
         /*------------------------------------------------------ */
         //-- 自定义导航栏列表Ajax
@@ -42,7 +42,7 @@ class Navigator extends Init
             $sort_flag = sort_flag($navdb['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('navigator.htm'), '', ['filter' => $navdb['filter'], 'page_count' => $navdb['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('navigator'), '', ['filter' => $navdb['filter'], 'page_count' => $navdb['page_count']]);
         }
         /*------------------------------------------------------ */
         //-- 自定义导航栏增加
@@ -58,7 +58,7 @@ class Navigator extends Init
 
                 $this->assign('sysmain', $sysmain);
                 $this->assign('rt', $rt);
-                return $GLOBALS['smarty']->display('navigator_add.htm');
+                return $this->fetch('navigator_add');
             } elseif ($_REQUEST['step'] == 2) {
                 $item_name = $_REQUEST['item_name'];
                 $item_url = $_REQUEST['item_url'];
@@ -113,7 +113,7 @@ class Navigator extends Init
 
                 $this->assign('sysmain', $sysmain);
                 $this->assign('rt', $rt);
-                return $GLOBALS['smarty']->display('navigator_add.htm');
+                return $this->fetch('navigator_add');
             } elseif ($_REQUEST['step'] == 2) {
                 $item_name = $_REQUEST['item_name'];
                 $item_url = $_REQUEST['item_url'];

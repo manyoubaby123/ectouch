@@ -220,7 +220,7 @@ function send_pwd_email($uid, $user_name, $email, $code)
     $GLOBALS['smarty']->assign('send_date', date('Y-m-d'));
     $GLOBALS['smarty']->assign('sent_date', date('Y-m-d'));
 
-    $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
+    $content = $GLOBALS['smarty']->display('str:' . $template['template_content']);
 
     /* 发送确认重置密码的确认邮件 */
     if (send_mail($user_name, $email, $template['template_subject'], $content, $template['is_html'])) {
@@ -253,7 +253,7 @@ function send_regiter_hash($user_id)
     $GLOBALS['smarty']->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
     $GLOBALS['smarty']->assign('send_date', date($GLOBALS['_CFG']['date_format']));
 
-    $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
+    $content = $GLOBALS['smarty']->display('str:' . $template['template_content']);
 
     /* 发送激活验证邮件 */
     if (send_mail($row['user_name'], $row['email'], $template['template_subject'], $content, $template['is_html'])) {

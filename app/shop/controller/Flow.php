@@ -637,7 +637,7 @@ class Flow extends Init
                     $result['cod_fee'] = price_format($result['cod_fee'], false);
                 }
                 $result['need_insure'] = ($shipping_info['insure'] > 0 && !empty($order['need_insure'])) ? 1 : 0;
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             echo json_encode($result);
@@ -684,7 +684,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             echo json_encode($result);
@@ -733,7 +733,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             echo json_encode($result);
@@ -780,7 +780,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             echo json_encode($result);
@@ -827,7 +827,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             echo json_encode($result);
@@ -870,7 +870,7 @@ class Flow extends Init
                         $this->assign('is_group_buy', 1);
                     }
 
-                    $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                    $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
                 }
             }
 
@@ -918,7 +918,7 @@ class Flow extends Init
                         $this->assign('is_group_buy', 1);
                     }
 
-                    $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                    $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
                     $result['error'] = '';
                 }
             }
@@ -967,7 +967,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             return json_encode($result);
@@ -1022,7 +1022,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                return $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                return $GLOBALS['smarty']->display('library/order_total.lbi');
             }
         } elseif ($_REQUEST['step'] == 'change_oos') {
             /*------------------------------------------------------ */
@@ -1385,7 +1385,7 @@ class Flow extends Init
                 $this->assign('goods_list', $cart_goods);
                 $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                 $this->assign('send_date', date($GLOBALS['_CFG']['time_format']));
-                $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                 send_mail($GLOBALS['_CFG']['shop_name'], $GLOBALS['_CFG']['service_email'], $tpl['template_subject'], $content, $tpl['is_html']);
             }
 
@@ -1649,7 +1649,7 @@ class Flow extends Init
                     $this->assign('is_group_buy', 1);
                 }
 
-                $result['content'] = $GLOBALS['smarty']->fetch('library/order_total.lbi');
+                $result['content'] = $GLOBALS['smarty']->display('library/order_total.lbi');
             }
 
             return json_encode($result);
@@ -1768,7 +1768,7 @@ class Flow extends Init
         $this->assign('step', $_REQUEST['step']);
         assign_dynamic('shopping_flow');
 
-        return $GLOBALS['smarty']->display('flow.dwt');
+        return $this->fetch('flow');
     }
 
     /**

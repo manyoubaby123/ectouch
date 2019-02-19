@@ -45,7 +45,7 @@ class AdminLogs extends Init
             $sort_flag = sort_flag($log_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('admin_logs.htm');
+            return $this->fetch('admin_logs');
         }
 
         /*------------------------------------------------------ */
@@ -63,7 +63,7 @@ class AdminLogs extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('admin_logs.htm'),
+                $GLOBALS['smarty']->display('admin_logs'),
                 '',
                 ['filter' => $log_list['filter'], 'page_count' => $log_list['page_count']]
             );

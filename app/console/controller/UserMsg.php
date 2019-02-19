@@ -36,7 +36,7 @@ class UserMsg extends Init
             $this->assign('msg_list', $msg_list);
             $this->assign('order_id', $_GET['order_id']);
             $this->assign('user_id', $_GET['user_id']);
-            return $GLOBALS['smarty']->display('msg_add.htm');
+            return $this->fetch('msg_add');
         }
 
         if ($_REQUEST['act'] == 'insert') {
@@ -106,7 +106,7 @@ class UserMsg extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['08_unreply_msg']);
             $this->assign('full_page', 1);
-            return $GLOBALS['smarty']->display('msg_list.htm');
+            return $this->fetch('msg_list');
         }
 
         /*------------------------------------------------------ */
@@ -123,7 +123,7 @@ class UserMsg extends Init
             $sort_flag = sort_flag($msg_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('msg_list.htm'), '', ['filter' => $msg_list['filter'], 'page_count' => $msg_list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('msg_list'), '', ['filter' => $msg_list['filter'], 'page_count' => $msg_list['page_count']]);
         }
         /*------------------------------------------------------ */
         //-- ajax 删除留言
@@ -200,7 +200,7 @@ class UserMsg extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['reply']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['08_unreply_msg'], 'href' => 'user_msg.php?act=list_all']);
 
-            return $GLOBALS['smarty']->display('msg_info.htm');
+            return $this->fetch('msg_info');
         }
         if ($_REQUEST['act'] == 'action') {
             if (empty($_REQUEST['parent_id'])) {
@@ -233,7 +233,7 @@ class UserMsg extends Init
                 $this->assign('shop_name', "<a href='" . $GLOBALS['ecs']->url() . "'>" . $GLOBALS['_CFG']['shop_name'] . '</a>');
                 $this->assign('send_date', date('Y-m-d'));
 
-                $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $template['template_content']);
 
                 /* 发送邮件 */
                 if (send_mail($message_info['user_name'], $message_info['user_email'], $template['template_subject'], $content, $template['is_html'])) {

@@ -68,6 +68,6 @@ class Myship extends Init
 
         $this->assign('shipping_list', $shipping_list);
 
-        return $GLOBALS['smarty']->display('myship.dwt');
+        return $this->fetch('myship');
     }
 }

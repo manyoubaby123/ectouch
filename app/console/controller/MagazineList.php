@@ -27,7 +27,7 @@ class MagazineList extends Init
             }
             $this->assign('send_rank', $send_rank);
 
-            return $GLOBALS['smarty']->display('magazine_list.htm');
+            return $this->fetch('magazine_list');
         }
         if ($_REQUEST['act'] == 'query') {
             $magazinedb = $this->get_magazine();
@@ -39,7 +39,7 @@ class MagazineList extends Init
             $sort_flag = sort_flag($magazinedb['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('magazine_list.htm'), '', ['filter' => $magazinedb['filter'], 'page_count' => $magazinedb['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('magazine_list'), '', ['filter' => $magazinedb['filter'], 'page_count' => $magazinedb['page_count']]);
         }
         if ($_REQUEST['act'] == 'add') {
             if (empty($_POST['step'])) {
@@ -47,7 +47,7 @@ class MagazineList extends Init
                 $this->assign(['ur_here' => $GLOBALS['_LANG']['magazine_list'], 'act' => 'add']);
                 create_html_editor('magazine_content');
 
-                return $GLOBALS['smarty']->display('magazine_list_add.htm');
+                return $this->fetch('magazine_list_add');
             } elseif ($_POST['step'] == 2) {
                 $magazine_name = trim($_POST['magazine_name']);
                 $magazine_content = trim($_POST['magazine_content']);
@@ -69,7 +69,7 @@ class MagazineList extends Init
                 $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'magazine_list.php?act=list']);
                 create_html_editor('magazine_content', $rt['template_content']);
 
-                return $GLOBALS['smarty']->display('magazine_list_add.htm');
+                return $this->fetch('magazine_list_add');
             } elseif ($_POST['step'] == 2) {
                 $magazine_name = trim($_POST['magazine_name']);
                 $magazine_content = trim($_POST['magazine_content']);

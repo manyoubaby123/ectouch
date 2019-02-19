@@ -36,7 +36,7 @@ class ExchangeGoods extends Init
             $sort_flag = sort_flag($goods_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('exchange_goods_list.htm');
+            return $this->fetch('exchange_goods_list');
         }
 
         /*------------------------------------------------------ */
@@ -56,7 +56,7 @@ class ExchangeGoods extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('exchange_goods_list.htm'),
+                $GLOBALS['smarty']->display('exchange_goods_list'),
                 '',
                 ['filter' => $goods_list['filter'], 'page_count' => $goods_list['page_count']]
             );
@@ -80,7 +80,7 @@ class ExchangeGoods extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['15_exchange_goods_list'], 'href' => 'exchange_goods.php?act=list']);
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('exchange_goods_info.htm');
+            return $this->fetch('exchange_goods_info');
         }
 
         /*------------------------------------------------------ */
@@ -139,7 +139,7 @@ class ExchangeGoods extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['15_exchange_goods_list'], 'href' => 'exchange_goods.php?act=list&' . list_link_postfix()]);
             $this->assign('form_action', 'update');
 
-            return $GLOBALS['smarty']->display('exchange_goods_info.htm');
+            return $this->fetch('exchange_goods_info');
         }
 
         /*------------------------------------------------------ */

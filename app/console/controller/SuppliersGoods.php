@@ -62,8 +62,8 @@ class SuppliersGoods extends Init
             /* 显示商品列表页面 */
 
             $htm_file = ($_REQUEST['act'] == 'list') ?
-                'goods_list.htm' : (($_REQUEST['act'] == 'trash') ? 'goods_trash.htm' : 'group_list.htm');
-            return $GLOBALS['smarty']->display($htm_file);
+                'goods_list' : (($_REQUEST['act'] == 'trash') ? 'goods_trash' : 'group_list');
+            return $this->fetch($htm_file);
         }
 
         /*------------------------------------------------------ */
@@ -364,7 +364,7 @@ class SuppliersGoods extends Init
 
             /* 显示商品信息页面 */
 
-            return $GLOBALS['smarty']->display('goods_info.htm');
+            return $this->fetch('goods_info');
         }
 
         /*------------------------------------------------------ */
@@ -1012,7 +1012,7 @@ class SuppliersGoods extends Init
                 }
             }
             $this->assign('img_url', $img_url);
-            return $GLOBALS['smarty']->display('goods_show_image.htm');
+            return $this->fetch('goods_show_image');
         }
 
         /*------------------------------------------------------ */
@@ -1204,10 +1204,10 @@ class SuppliersGoods extends Init
             $sort_flag = sort_flag($goods_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            $tpl = $is_delete ? 'goods_trash.htm' : 'goods_list.htm';
+            $tpl = $is_delete ? 'goods_trash' : 'goods_list';
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch($tpl),
+                $GLOBALS['smarty']->display($tpl),
                 '',
                 ['filter' => $goods_list['filter'], 'page_count' => $goods_list['page_count']]
             );

@@ -40,7 +40,7 @@ class Ads extends Init
             $sort_flag = sort_flag($ads_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('ads_list.htm');
+            return $this->fetch('ads_list');
         }
 
         /*------------------------------------------------------ */
@@ -58,7 +58,7 @@ class Ads extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('ads_list.htm'),
+                $GLOBALS['smarty']->display('ads_list'),
                 '',
                 ['filter' => $ads_list['filter'], 'page_count' => $ads_list['page_count']]
             );
@@ -90,7 +90,7 @@ class Ads extends Init
             $this->assign('action', 'add');
             $this->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
 
-            return $GLOBALS['smarty']->display('ads_info.htm');
+            return $this->fetch('ads_info');
         }
 
         /*------------------------------------------------------ */
@@ -273,7 +273,7 @@ class Ads extends Init
             $this->assign('position_list', get_position_list());
             $this->assign('ads', $ads_arr);
 
-            return $GLOBALS['smarty']->display('ads_info.htm');
+            return $this->fetch('ads_info');
         }
 
         /*------------------------------------------------------ */
@@ -400,7 +400,7 @@ class Ads extends Init
             $this->assign('js_code', $js_code);
             $this->assign('lang_list', $lang_list);
 
-            return $GLOBALS['smarty']->display('ads_js.htm');
+            return $this->fetch('ads_js');
         }
 
         /*------------------------------------------------------ */

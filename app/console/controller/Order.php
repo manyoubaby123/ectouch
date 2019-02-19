@@ -38,7 +38,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('order_query.htm');
+            return $this->fetch('order_query');
         }
 
         /*------------------------------------------------------ */
@@ -69,7 +69,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('order_list.htm');
+            return $this->fetch('order_list');
         }
 
         /*------------------------------------------------------ */
@@ -87,7 +87,7 @@ class Order extends Init
             $this->assign('page_count', $order_list['page_count']);
             $sort_flag = sort_flag($order_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
-            return make_json_result($GLOBALS['smarty']->fetch('order_list.htm'), '', ['filter' => $order_list['filter'], 'page_count' => $order_list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('order_list'), '', ['filter' => $order_list['filter'], 'page_count' => $order_list['page_count']]);
         }
 
         /*------------------------------------------------------ */
@@ -343,7 +343,7 @@ class Order extends Init
                 $this->assign('action_user', session('admin_name'));
 
                 $GLOBALS['smarty']->template_dir = '../' . DATA_DIR;
-                return $GLOBALS['smarty']->display('order_print.html');
+                return $this->fetch('order_print.html');
             } /* 打印快递单 */
             elseif (isset($_GET['shipping_print'])) {
                 //$this->assign('print_time',   local_date($GLOBALS['_CFG']['time_format']));
@@ -432,10 +432,10 @@ class Order extends Init
 
                     $this->assign('shipping', $shipping);
 
-                    return $GLOBALS['smarty']->display('print.htm');
+                    return $this->fetch('print');
                 } elseif (!empty($shipping['shipping_print'])) {
                     /* 代码 */
-                    echo $GLOBALS['smarty']->fetch("str:" . $shipping['shipping_print']);
+                    echo $GLOBALS['smarty']->display("str:" . $shipping['shipping_print']);
                 } else {
                     $shipping_code = $GLOBALS['db']->getOne("SELECT shipping_code FROM " . $GLOBALS['ecs']->table('shipping') . " WHERE shipping_id=" . $order['shipping_id']);
                     if ($shipping_code) {
@@ -443,7 +443,7 @@ class Order extends Init
                     }
 
                     if (!empty($GLOBALS['_LANG']['shipping_print'])) {
-                        echo $GLOBALS['smarty']->fetch("str:".$GLOBALS['_LANG']['shipping_print']);
+                        echo $GLOBALS['smarty']->display("str:".$GLOBALS['_LANG']['shipping_print']);
                     } else {
                         echo $GLOBALS['_LANG']['no_print_shipping'];
                     }
@@ -455,7 +455,7 @@ class Order extends Init
 
                 /* 显示模板 */
 
-                return $GLOBALS['smarty']->display('order_info.htm');
+                return $this->fetch('order_info');
             }
         }
 
@@ -485,7 +485,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('delivery_list.htm');
+            return $this->fetch('delivery_list');
         }
 
         /*------------------------------------------------------ */
@@ -504,7 +504,7 @@ class Order extends Init
 
             $sort_flag = sort_flag($result['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
-            return make_json_result($GLOBALS['smarty']->fetch('delivery_list.htm'), '', ['filter' => $result['filter'], 'page_count' => $result['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('delivery_list'), '', ['filter' => $result['filter'], 'page_count' => $result['page_count']]);
         }
 
         /*------------------------------------------------------ */
@@ -599,7 +599,7 @@ class Order extends Init
             $this->assign('action_link', ['href' => 'order.php?act=delivery_list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['09_delivery_order']]);
             $this->assign('action_act', ($delivery_order['status'] == 2) ? 'delivery_ship' : 'delivery_cancel_ship');
 
-            return $GLOBALS['smarty']->display('delivery_info.htm');
+            return $this->fetch('delivery_info');
             exit; //
         }
 
@@ -769,7 +769,7 @@ class Order extends Init
                     $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
                     $this->assign('confirm_url', $GLOBALS['ecs']->url() . 'receive.php?id=' . $order['order_id'] . '&con=' . rawurlencode($order['consignee']));
                     $this->assign('send_msg_url', $GLOBALS['ecs']->url() . 'user.php?act=message_list&order_id=' . $order['order_id']);
-                    $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                    $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                     if (!send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
                         $msg = $GLOBALS['_LANG']['send_mail_fail'];
                     }
@@ -937,7 +937,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('back_list.htm');
+            return $this->fetch('back_list');
         }
 
         /*------------------------------------------------------ */
@@ -956,7 +956,7 @@ class Order extends Init
 
             $sort_flag = sort_flag($result['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
-            return make_json_result($GLOBALS['smarty']->fetch('back_list.htm'), '', ['filter' => $result['filter'], 'page_count' => $result['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('back_list'), '', ['filter' => $result['filter'], 'page_count' => $result['page_count']]);
         }
 
         /*------------------------------------------------------ */
@@ -1037,7 +1037,7 @@ class Order extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['back_operate'] . $GLOBALS['_LANG']['detail']);
             $this->assign('action_link', ['href' => 'order.php?act=back_list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['10_back_order']]);
 
-            return $GLOBALS['smarty']->display('back_info.htm');
+            return $this->fetch('back_info');
             exit; //
         }
 
@@ -1960,7 +1960,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('order_step.htm');
+            return $this->fetch('order_step');
         }
 
         /*------------------------------------------------------ */
@@ -2047,7 +2047,7 @@ class Order extends Init
                 /* 显示模板 */
                 $this->assign('ur_here', $GLOBALS['_LANG']['refund']);
 
-                return $GLOBALS['smarty']->display('order_refund.htm');
+                return $this->fetch('order_refund');
             } else {
                 return 'invalid params';
             }
@@ -2075,7 +2075,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('merge_order.htm');
+            return $this->fetch('merge_order');
         }
 
         /*------------------------------------------------------ */
@@ -2102,7 +2102,7 @@ class Order extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('order_templates.htm');
+            return $this->fetch('order_templates');
         }
         /*------------------------------------------------------ */
         //-- 订单打印模板（提交修改）
@@ -2289,7 +2289,7 @@ class Order extends Init
                 /* 显示模板 */
                 $this->assign('ur_here', $GLOBALS['_LANG']['order_operate'] . $GLOBALS['_LANG']['op_split']);
 
-                return $GLOBALS['smarty']->display('order_delivery_info.htm');
+                return $this->fetch('order_delivery_info');
             } /* 未发货 */
             elseif (isset($_POST['unship'])) {
                 /* 检查权限 */
@@ -2561,7 +2561,7 @@ class Order extends Init
                     $this->assign('goods_list', $goods_list);
 
                     $GLOBALS['smarty']->template_dir = '../' . DATA_DIR;
-                    $html .= $GLOBALS['smarty']->fetch('order_print.html') .
+                    $html .= $GLOBALS['smarty']->display('order_print.html') .
                         '<div style="PAGE-BREAK-AFTER:always"></div>';
                 }
 
@@ -2590,7 +2590,7 @@ class Order extends Init
                 /* 显示模板 */
                 $this->assign('ur_here', $GLOBALS['_LANG']['order_operate'] . $action);
 
-                return $GLOBALS['smarty']->display('order_operate.htm');
+                return $this->fetch('order_operate');
             } else {
                 /* 直接处理 */
                 if (!$batch) {
@@ -2657,7 +2657,7 @@ class Order extends Init
                             $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                             $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                             $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-                            $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                            $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                             send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html']);
                         }
 
@@ -2704,7 +2704,7 @@ class Order extends Init
                             $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                             $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                             $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-                            $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                            $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                             send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html']);
                         }
 
@@ -2753,7 +2753,7 @@ class Order extends Init
                             $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                             $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                             $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-                            $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                            $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                             send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html']);
                         }
 
@@ -2831,7 +2831,7 @@ class Order extends Init
 
                 /* 显示模板 */
 
-                return $GLOBALS['smarty']->display('order_operate_info.htm');
+                return $this->fetch('order_operate_info');
             }
         }
 
@@ -2884,7 +2884,7 @@ class Order extends Init
                     $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                     $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                     $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-                    $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                    $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                     if (!send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
                         $msg = $GLOBALS['_LANG']['send_mail_fail'];
                     }
@@ -3351,7 +3351,7 @@ class Order extends Init
                     $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                     $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                     $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-                    $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                    $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                     if (!send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
                         $msg = $GLOBALS['_LANG']['send_mail_fail'];
                     }
@@ -3377,7 +3377,7 @@ class Order extends Init
                     $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                     $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                     $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-                    $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                    $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                     if (!send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
                         $msg = $GLOBALS['_LANG']['send_mail_fail'];
                     }
@@ -3765,7 +3765,7 @@ class Order extends Init
 
             $this->assign('goods_attr', $attr);
             $this->assign('goods_list', $goods_list);
-            $str = $GLOBALS['smarty']->fetch('order_goods_info.htm');
+            $str = $GLOBALS['smarty']->display('order_goods_info');
             $goods[] = ['order_id' => $order_id, 'str' => $str];
             return make_json_result($goods);
         }
@@ -5292,7 +5292,7 @@ class Order extends Init
                 $this->assign('sent_date', date('Y-m-d'));
 
                 $tpl = get_mail_template('virtual_card');
-                $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                 send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html']);
             }
         }

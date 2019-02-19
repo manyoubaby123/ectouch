@@ -28,7 +28,7 @@ class Articlecat extends Init
             $this->assign('full_page', 1);
             $this->assign('articlecat', $articlecat);
 
-            return $GLOBALS['smarty']->display('articlecat_list.htm');
+            return $this->fetch('articlecat_list');
         }
 
         /*------------------------------------------------------ */
@@ -41,7 +41,7 @@ class Articlecat extends Init
             }
             $this->assign('articlecat', $articlecat);
 
-            return make_json_result($GLOBALS['smarty']->fetch('articlecat_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('articlecat_list'));
         }
 
         /*------------------------------------------------------ */
@@ -56,7 +56,7 @@ class Articlecat extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_articlecat_list'], 'href' => 'articlecat.php?act=list']);
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('articlecat_info.htm');
+            return $this->fetch('articlecat_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -140,7 +140,7 @@ class Articlecat extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_articlecat_list'], 'href' => 'articlecat.php?act=list']);
             $this->assign('form_action', 'update');
 
-            return $GLOBALS['smarty']->display('articlecat_info.htm');
+            return $this->fetch('articlecat_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */

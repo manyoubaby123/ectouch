@@ -35,7 +35,7 @@ class TagManage extends Init
 
             /* 页面显示 */
 
-            return $GLOBALS['smarty']->display('tag_manage.htm');
+            return $this->fetch('tag_manage');
         }
 
         /*------------------------------------------------------ */
@@ -65,7 +65,7 @@ class TagManage extends Init
             $this->assign('tag', $tag);
             $this->assign('action_link', ['href' => 'tag_manage.php?act=list', 'text' => $GLOBALS['_LANG']['tag_list']]);
 
-            return $GLOBALS['smarty']->display('tag_edit.htm');
+            return $this->fetch('tag_edit');
         }
 
         /*------------------------------------------------------ */
@@ -132,7 +132,7 @@ class TagManage extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('tag_manage.htm'),
+                $GLOBALS['smarty']->display('tag_manage'),
                 '',
                 ['filter' => $tag_list['filter'], 'page_count' => $tag_list['page_count']]
             );

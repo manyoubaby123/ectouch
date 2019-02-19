@@ -84,7 +84,7 @@ class Goods extends Init
                 $this->assign('notes', $bought_notes);
                 $this->assign('pager', $pager);
 
-                $res['result'] = $GLOBALS['smarty']->fetch('library/bought_notes.lbi');
+                $res['result'] = $GLOBALS['smarty']->display('library/bought_notes.lbi');
 
                 $GLOBALS['smarty']->caching = $need_cache;
                 $GLOBALS['smarty']->force_compile = $need_compile;
@@ -93,112 +93,104 @@ class Goods extends Init
             return json_encode($res);
         }
 
-        /*------------------------------------------------------ */
-        //-- PROCESSOR
-        /*------------------------------------------------------ */
+        $this->assign('image_width', $GLOBALS['_CFG']['image_width']);
+        $this->assign('image_height', $GLOBALS['_CFG']['image_height']);
+        $this->assign('helps', get_shop_help()); // 网店帮助
+        $this->assign('id', $goods_id);
+        $this->assign('type', 0);
+        $this->assign('cfg', $GLOBALS['_CFG']);
+        $this->assign('promotion', get_promotion_info($goods_id));//促销信息
+        $this->assign('promotion_info', get_promotion_info());
 
-        $cache_id = $goods_id . '-' . session('user_rank') . '-' . $GLOBALS['_CFG']['lang'];
-        $cache_id = sprintf('%X', crc32($cache_id));
-        if (!$GLOBALS['smarty']->is_cached('goods.dwt', $cache_id)) {
-            $this->assign('image_width', $GLOBALS['_CFG']['image_width']);
-            $this->assign('image_height', $GLOBALS['_CFG']['image_height']);
-            $this->assign('helps', get_shop_help()); // 网店帮助
-            $this->assign('id', $goods_id);
-            $this->assign('type', 0);
-            $this->assign('cfg', $GLOBALS['_CFG']);
-            $this->assign('promotion', get_promotion_info($goods_id));//促销信息
-            $this->assign('promotion_info', get_promotion_info());
+        /* 获得商品的信息 */
+        $goods = get_goods_info($goods_id);
 
-            /* 获得商品的信息 */
-            $goods = get_goods_info($goods_id);
-
-            if ($goods === false) {
-                /* 如果没有找到任何记录则跳回到首页 */
-                return ecs_header("Location: ./\n");
-            } else {
-                if ($goods['brand_id'] > 0) {
-                    $goods['goods_brand_url'] = build_uri('brand', ['bid' => $goods['brand_id']], $goods['goods_brand']);
-                }
-
-                $shop_price = $goods['shop_price'];
-                $linked_goods = $this->get_linked_goods($goods_id);
-
-                $goods['goods_style_name'] = add_style($goods['goods_name'], $goods['goods_name_style']);
-
-                /* 购买该商品可以得到多少钱的红包 */
-                if ($goods['bonus_type_id'] > 0) {
-                    $time = gmtime();
-                    $sql = "SELECT type_money FROM " . $GLOBALS['ecs']->table('bonus_type') .
-                        " WHERE type_id = '$goods[bonus_type_id]' " .
-                        " AND send_type = '" . SEND_BY_GOODS . "' " .
-                        " AND send_start_date <= '$time'" .
-                        " AND send_end_date >= '$time'";
-                    $goods['bonus_money'] = floatval($GLOBALS['db']->getOne($sql));
-                    if ($goods['bonus_money'] > 0) {
-                        $goods['bonus_money'] = price_format($goods['bonus_money']);
-                    }
-                }
-
-                $this->assign('goods', $goods);
-                $this->assign('goods_id', $goods['goods_id']);
-                $this->assign('promote_end_time', $goods['gmt_end_time']);
-                $this->assign('categories', get_categories_tree($goods['cat_id']));  // 分类树
-
-                /* meta */
-                $this->assign('keywords', htmlspecialchars($goods['keywords']));
-                $this->assign('description', htmlspecialchars($goods['goods_brief']));
-
-                $catlist = [];
-                foreach (get_parent_cats($goods['cat_id']) as $k => $v) {
-                    $catlist[] = $v['cat_id'];
-                }
-
-                $this->assign_template('c', $catlist);
-
-                /* 上一个商品下一个商品 */
-                $prev_gid = $GLOBALS['db']->getOne("SELECT goods_id FROM " . $GLOBALS['ecs']->table('goods') . " WHERE cat_id=" . $goods['cat_id'] . " AND goods_id > " . $goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 LIMIT 1");
-                if (!empty($prev_gid)) {
-                    $prev_good['url'] = build_uri('goods', ['gid' => $prev_gid], $goods['goods_name']);
-                    $this->assign('prev_good', $prev_good);//上一个商品
-                }
-
-                $next_gid = $GLOBALS['db']->getOne("SELECT max(goods_id) FROM " . $GLOBALS['ecs']->table('goods') . " WHERE cat_id=" . $goods['cat_id'] . " AND goods_id < " . $goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0");
-                if (!empty($next_gid)) {
-                    $next_good['url'] = build_uri('goods', ['gid' => $next_gid], $goods['goods_name']);
-                    $this->assign('next_good', $next_good);//下一个商品
-                }
-
-                $position = assign_ur_here($goods['cat_id'], $goods['goods_name']);
-
-                /* current position */
-                $this->assign('page_title', $position['title']);                    // 页面标题
-                $this->assign('ur_here', $position['ur_here']);                  // 当前位置
-
-                $properties = get_goods_properties($goods_id);  // 获得商品的规格和属性
-
-                $this->assign('properties', $properties['pro']);                              // 商品属性
-                $this->assign('specification', $properties['spe']);                              // 商品规格
-                $this->assign('attribute_linked', get_same_attribute_goods($properties));           // 相同属性的关联商品
-                $this->assign('related_goods', $linked_goods);                                   // 关联商品
-                $this->assign('goods_article_list', $this->get_linked_articles($goods_id));                  // 关联文章
-                $this->assign('fittings', get_goods_fittings([$goods_id]));                   // 配件
-                $this->assign('rank_prices', $this->get_user_rank_prices($goods_id, $shop_price));    // 会员等级价格
-                $this->assign('pictures', get_goods_gallery($goods_id));                    // 商品相册
-                $this->assign('bought_goods', $this->get_also_bought($goods_id));                      // 购买了该商品的用户还购买了哪些商品
-                $this->assign('goods_rank', $this->get_goods_rank($goods_id));                       // 商品的销售排名
-
-                //获取tag
-                $tag_array = get_tags($goods_id);
-                $this->assign('tags', $tag_array);                                       // 商品的标记
-
-                //获取关联礼包
-                $package_goods_list = $this->get_package_goods_list($goods['goods_id']);
-                $this->assign('package_goods_list', $package_goods_list);    // 获取关联礼包
-
-                assign_dynamic('goods');
-                $volume_price_list = get_volume_price_list($goods['goods_id'], '1');
-                $this->assign('volume_price_list', $volume_price_list);    // 商品优惠价格区间
+        if ($goods === false) {
+            /* 如果没有找到任何记录则跳回到首页 */
+            return ecs_header("Location: ./\n");
+        } else {
+            if ($goods['brand_id'] > 0) {
+                $goods['goods_brand_url'] = build_uri('brand', ['bid' => $goods['brand_id']], $goods['goods_brand']);
             }
+
+            $shop_price = $goods['shop_price'];
+            $linked_goods = $this->get_linked_goods($goods_id);
+
+            $goods['goods_style_name'] = add_style($goods['goods_name'], $goods['goods_name_style']);
+
+            /* 购买该商品可以得到多少钱的红包 */
+            if ($goods['bonus_type_id'] > 0) {
+                $time = gmtime();
+                $sql = "SELECT type_money FROM " . $GLOBALS['ecs']->table('bonus_type') .
+                    " WHERE type_id = '$goods[bonus_type_id]' " .
+                    " AND send_type = '" . SEND_BY_GOODS . "' " .
+                    " AND send_start_date <= '$time'" .
+                    " AND send_end_date >= '$time'";
+                $goods['bonus_money'] = floatval($GLOBALS['db']->getOne($sql));
+                if ($goods['bonus_money'] > 0) {
+                    $goods['bonus_money'] = price_format($goods['bonus_money']);
+                }
+            }
+
+            $this->assign('goods', $goods);
+            $this->assign('goods_id', $goods['goods_id']);
+            $this->assign('promote_end_time', $goods['gmt_end_time']);
+            $this->assign('categories', get_categories_tree($goods['cat_id']));  // 分类树
+
+            /* meta */
+            $this->assign('keywords', htmlspecialchars($goods['keywords']));
+            $this->assign('description', htmlspecialchars($goods['goods_brief']));
+
+            $catlist = [];
+            foreach (get_parent_cats($goods['cat_id']) as $k => $v) {
+                $catlist[] = $v['cat_id'];
+            }
+
+            $this->assign_template('c', $catlist);
+
+            /* 上一个商品下一个商品 */
+            $prev_gid = $GLOBALS['db']->getOne("SELECT goods_id FROM " . $GLOBALS['ecs']->table('goods') . " WHERE cat_id=" . $goods['cat_id'] . " AND goods_id > " . $goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 LIMIT 1");
+            if (!empty($prev_gid)) {
+                $prev_good['url'] = build_uri('goods', ['gid' => $prev_gid], $goods['goods_name']);
+                $this->assign('prev_good', $prev_good);//上一个商品
+            }
+
+            $next_gid = $GLOBALS['db']->getOne("SELECT max(goods_id) FROM " . $GLOBALS['ecs']->table('goods') . " WHERE cat_id=" . $goods['cat_id'] . " AND goods_id < " . $goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0");
+            if (!empty($next_gid)) {
+                $next_good['url'] = build_uri('goods', ['gid' => $next_gid], $goods['goods_name']);
+                $this->assign('next_good', $next_good);//下一个商品
+            }
+
+            $position = assign_ur_here($goods['cat_id'], $goods['goods_name']);
+
+            /* current position */
+            $this->assign('page_title', $position['title']);                    // 页面标题
+            $this->assign('ur_here', $position['ur_here']);                  // 当前位置
+
+            $properties = get_goods_properties($goods_id);  // 获得商品的规格和属性
+
+            $this->assign('properties', $properties['pro']);                              // 商品属性
+            $this->assign('specification', $properties['spe']);                              // 商品规格
+            $this->assign('attribute_linked', get_same_attribute_goods($properties));           // 相同属性的关联商品
+            $this->assign('related_goods', $linked_goods);                                   // 关联商品
+            $this->assign('goods_article_list', $this->get_linked_articles($goods_id));                  // 关联文章
+            $this->assign('fittings', get_goods_fittings([$goods_id]));                   // 配件
+            $this->assign('rank_prices', $this->get_user_rank_prices($goods_id, $shop_price));    // 会员等级价格
+            $this->assign('pictures', get_goods_gallery($goods_id));                    // 商品相册
+            $this->assign('bought_goods', $this->get_also_bought($goods_id));                      // 购买了该商品的用户还购买了哪些商品
+            $this->assign('goods_rank', $this->get_goods_rank($goods_id));                       // 商品的销售排名
+
+            //获取tag
+            $tag_array = get_tags($goods_id);
+            $this->assign('tags', $tag_array);                                       // 商品的标记
+
+            //获取关联礼包
+            $package_goods_list = $this->get_package_goods_list($goods['goods_id']);
+            $this->assign('package_goods_list', $package_goods_list);    // 获取关联礼包
+
+            assign_dynamic('goods');
+            $volume_price_list = get_volume_price_list($goods['goods_id'], '1');
+            $this->assign('volume_price_list', $volume_price_list);    // 商品优惠价格区间
         }
 
         /* 记录浏览历史 */
@@ -221,7 +213,7 @@ class Goods extends Init
         $GLOBALS['db']->query('UPDATE ' . $GLOBALS['ecs']->table('goods') . " SET click_count = click_count + 1 WHERE goods_id = '$_REQUEST[id]'");
 
         $this->assign('now_time', gmtime());           // 当前系统时间
-        return $GLOBALS['smarty']->display('goods.dwt', $cache_id);
+        return $this->fetch('goods');
     }
 
     /**

@@ -31,7 +31,7 @@ class Message extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('message_list.htm');
+            return $this->fetch('message_list');
         }
 
         /*------------------------------------------------------ */
@@ -49,7 +49,7 @@ class Message extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('message_list.htm'),
+                $GLOBALS['smarty']->display('message_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -68,7 +68,7 @@ class Message extends Init
             $this->assign('form_act', 'insert');
             $this->assign('admin_list', $admin_list);
 
-            return $GLOBALS['smarty']->display('message_info.htm');
+            return $this->fetch('message_info');
         }
 
         /*------------------------------------------------------ */
@@ -139,7 +139,7 @@ class Message extends Init
             $this->assign('admin_list', $admin_list);
             $this->assign('msg_arr', $msg_arr);
 
-            return $GLOBALS['smarty']->display('message_info.htm');
+            return $this->fetch('message_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 获得留言数据*/
@@ -195,7 +195,7 @@ class Message extends Init
             $this->assign('admin_user', session('admin_name'));
             $this->assign('msg_arr', $msg_arr);
 
-            return $GLOBALS['smarty']->display('message_view.htm');
+            return $this->fetch('message_view');
         }
 
         /*------------------------------------------------------ */
@@ -219,7 +219,7 @@ class Message extends Init
             $this->assign('form_act', 're_msg');
             $this->assign('msg_val', $msg_val);
 
-            return $GLOBALS['smarty']->display('message_info.htm');
+            return $this->fetch('message_info');
         }
 
         /*------------------------------------------------------ */

@@ -25,7 +25,7 @@ class UserRank extends Init
 
             $this->assign('user_ranks', $ranks);
 
-            return $GLOBALS['smarty']->display('user_rank.htm');
+            return $this->fetch('user_rank');
         }
 
         /*------------------------------------------------------ */
@@ -36,7 +36,7 @@ class UserRank extends Init
             $ranks = $GLOBALS['db']->getAll("SELECT * FROM " . $GLOBALS['ecs']->table('user_rank'));
 
             $this->assign('user_ranks', $ranks);
-            return make_json_result($GLOBALS['smarty']->fetch('user_rank.htm'));
+            return make_json_result($GLOBALS['smarty']->display('user_rank'));
         }
 
         /*------------------------------------------------------ */
@@ -61,7 +61,7 @@ class UserRank extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['add_user_rank']);
             $this->assign('form_action', $form_action);
 
-            return $GLOBALS['smarty']->display('user_rank_info.htm');
+            return $this->fetch('user_rank_info');
         }
 
         /*------------------------------------------------------ */

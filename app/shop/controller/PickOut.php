@@ -235,7 +235,7 @@ class PickOut extends Init
         $this->assign('count', $goods_count);
         $this->assign('picks', $picks);
         $this->assign('condition', $condition);
-        return $GLOBALS['smarty']->display('pick_out.dwt');
+        return $this->fetch('pick_out');
     }
 
     /**

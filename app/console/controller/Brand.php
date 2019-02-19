@@ -28,7 +28,7 @@ class Brand extends Init
             $this->assign('record_count', $brand_list['record_count']);
             $this->assign('page_count', $brand_list['page_count']);
 
-            return $GLOBALS['smarty']->display('brand_list.htm');
+            return $this->fetch('brand_list');
         }
 
         /*------------------------------------------------------ */
@@ -43,7 +43,7 @@ class Brand extends Init
             $this->assign('form_action', 'insert');
 
             $this->assign('brand', ['sort_order' => 50, 'is_show' => 1]);
-            return $GLOBALS['smarty']->display('brand_info.htm');
+            return $this->fetch('brand_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /*检查品牌名是否重复*/
@@ -103,7 +103,7 @@ class Brand extends Init
             $this->assign('brand', $brand);
             $this->assign('form_action', 'updata');
 
-            return $GLOBALS['smarty']->display('brand_info.htm');
+            return $this->fetch('brand_info');
         }
         if ($_REQUEST['act'] == 'updata') {
             admin_priv('brand_manage');
@@ -277,7 +277,7 @@ class Brand extends Init
             $this->assign('page_count', $brand_list['page_count']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('brand_list.htm'),
+                $GLOBALS['smarty']->display('brand_list'),
                 '',
                 ['filter' => $brand_list['filter'], 'page_count' => $brand_list['page_count']]
             );

@@ -37,7 +37,7 @@ class Auction extends Init
 
             /* 显示商品列表页面 */
 
-            return $GLOBALS['smarty']->display('auction_list.htm');
+            return $this->fetch('auction_list');
         }
 
         /*------------------------------------------------------ */
@@ -56,7 +56,7 @@ class Auction extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('auction_list.htm'),
+                $GLOBALS['smarty']->display('auction_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -153,7 +153,7 @@ class Auction extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['auction_log']);
             $this->assign('action_link', ['href' => 'auction.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['auction_list']]);
 
-            return $GLOBALS['smarty']->display('auction_log.htm');
+            return $this->fetch('auction_log');
         }
 
         /*------------------------------------------------------ */
@@ -212,7 +212,7 @@ class Auction extends Init
             }
             $this->assign('action_link', $this->list_link($is_add));
 
-            return $GLOBALS['smarty']->display('auction_info.htm');
+            return $this->fetch('auction_info');
         }
 
         /*------------------------------------------------------ */

@@ -42,7 +42,7 @@ class Quotation extends Init
             $this->assign('extend_rank', $user_men);
             $this->assign('goods_list', $goods_list);
 
-            $html = $GLOBALS['smarty']->fetch('quotation_print.html');
+            $html = $GLOBALS['smarty']->display('quotation_print.html');
             return $html;
         }
 
@@ -59,7 +59,7 @@ class Quotation extends Init
             $this->assign('helps', get_shop_help()); // 网店帮助
         }
 
-        return $GLOBALS['smarty']->display('quotation.dwt');
+        return $this->fetch('quotation');
     }
 
     private function get_quotation_where($filter)

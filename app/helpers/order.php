@@ -2323,7 +2323,7 @@ function send_order_bonus($order_id)
             $GLOBALS['smarty']->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
             $GLOBALS['smarty']->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
             $GLOBALS['smarty']->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
-            $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+            $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
             send_mail($user['user_name'], $user['email'], $tpl['template_subject'], $content, $tpl['is_html']);
         }
     }

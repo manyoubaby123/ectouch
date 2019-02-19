@@ -37,7 +37,7 @@ class Bonus extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('bonus_type.htm');
+            return $this->fetch('bonus_type');
         }
 
         /*------------------------------------------------------ */
@@ -56,7 +56,7 @@ class Bonus extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('bonus_type.htm'),
+                $GLOBALS['smarty']->display('bonus_type'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -164,7 +164,7 @@ class Bonus extends Init
 
             $this->assign('bonus_arr', $bonus_arr);
 
-            return $GLOBALS['smarty']->display('bonus_type_info.htm');
+            return $this->fetch('bonus_type_info');
         }
 
         /*------------------------------------------------------ */
@@ -240,7 +240,7 @@ class Bonus extends Init
             $this->assign('form_act', 'update');
             $this->assign('bonus_arr', $bonus_arr);
 
-            return $GLOBALS['smarty']->display('bonus_type_info.htm');
+            return $this->fetch('bonus_type_info');
         }
 
         /*------------------------------------------------------ */
@@ -298,7 +298,7 @@ class Bonus extends Init
                 $this->assign('id', $id);
                 $this->assign('ranklist', get_rank_list());
 
-                return $GLOBALS['smarty']->display('bonus_by_user.htm');
+                return $this->fetch('bonus_by_user');
             } elseif ($_REQUEST['send_by'] == SEND_BY_GOODS) {
                 /* 查询此红包类型信息 */
                 $bonus_type = $GLOBALS['db']->getRow("SELECT type_id, type_name FROM " . $GLOBALS['ecs']->table('bonus_type') .
@@ -320,11 +320,11 @@ class Bonus extends Init
                 $this->assign('bonus_type', $bonus_type);
                 $this->assign('goods_list', $goods_list);
 
-                return $GLOBALS['smarty']->display('bonus_by_goods.htm');
+                return $this->fetch('bonus_by_goods');
             } elseif ($_REQUEST['send_by'] == SEND_BY_PRINT) {
                 $this->assign('type_list', get_bonus_type());
 
-                return $GLOBALS['smarty']->display('bonus_by_print.htm');
+                return $this->fetch('bonus_by_print');
             }
         }
 
@@ -412,7 +412,7 @@ class Bonus extends Init
                 $this->assign('count', 1);
                 $this->assign('money', price_format($bonus_type['type_money']));
 
-                $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
 
                 if ($this->add_to_maillist($val['user_name'], $val['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
                     /* 向会员红包表录入数据 */
@@ -691,7 +691,7 @@ class Bonus extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('bonus_list.htm');
+            return $this->fetch('bonus_list');
         }
 
         /*------------------------------------------------------ */
@@ -719,7 +719,7 @@ class Bonus extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('bonus_list.htm'),
+                $GLOBALS['smarty']->display('bonus_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -955,7 +955,7 @@ class Bonus extends Init
             $this->assign('count', 1);
             $this->assign('money', price_format($bonus_type['type_money']));
 
-            $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+            $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
             if ($this->add_to_maillist($bonus['user_name'], $bonus['email'], $tpl['template_subject'], $content, $tpl['is_html'], false)) {
                 $sql = "UPDATE " . $GLOBALS['ecs']->table('user_bonus') .
                     " SET emailed = '" . BONUS_MAIL_SUCCEED . "'" .

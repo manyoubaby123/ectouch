@@ -29,7 +29,7 @@ class Snatch extends Init
             $this->assign('brand_list', get_brand_list());
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('snatch_info.htm');
+            return $this->fetch('snatch_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -106,7 +106,7 @@ class Snatch extends Init
 
             $this->assign('full_page', 1);
 
-            return $GLOBALS['smarty']->display('snatch_list.htm');
+            return $this->fetch('snatch_list');
         }
 
         /*------------------------------------------------------ */
@@ -125,7 +125,7 @@ class Snatch extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('snatch_list.htm'),
+                $GLOBALS['smarty']->display('snatch_list'),
                 '',
                 ['filter' => $snatchs['filter'], 'page_count' => $snatchs['page_count']]
             );
@@ -187,7 +187,7 @@ class Snatch extends Init
             /* 商品货品表 */
             $this->assign('good_products_select', get_good_products_select($snatch['goods_id']));
 
-            return $GLOBALS['smarty']->display('snatch_info.htm');
+            return $this->fetch('snatch_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */
@@ -269,7 +269,7 @@ class Snatch extends Init
             $this->assign('result', get_snatch_result($id));
             $this->assign('ur_here', $GLOBALS['_LANG']['view_detail']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_snatch_list'], 'href' => 'snatch.php?act=list']);
-            return $GLOBALS['smarty']->display('snatch_view.htm');
+            return $this->fetch('snatch_view');
         }
 
         /*------------------------------------------------------ */
@@ -288,7 +288,7 @@ class Snatch extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('snatch_view.htm'),
+                $GLOBALS['smarty']->display('snatch_view'),
                 '',
                 ['filter' => $bid_list['filter'], 'page_count' => $bid_list['page_count']]
             );

@@ -67,7 +67,7 @@ class UserAccountManage extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('user_account_manage.htm');
+            return $this->fetch('user_account_manage');
         }
         if ($_REQUEST['act'] == 'surplus') {
             $order_list = $this->order_list();
@@ -83,7 +83,7 @@ class UserAccountManage extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('order_surplus_list.htm');
+            return $this->fetch('order_surplus_list');
         }
 
         /*------------------------------------------------------ */
@@ -100,7 +100,7 @@ class UserAccountManage extends Init
             $sort_flag = sort_flag($order_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('order_surplus_list.htm'), '', ['filter' => $order_list['filter'], 'page_count' => $order_list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('order_surplus_list'), '', ['filter' => $order_list['filter'], 'page_count' => $order_list['page_count']]);
         }
     }
 

@@ -104,7 +104,7 @@ class SearchengineStats extends Init
             $this->assign('lang', $GLOBALS['_LANG']);
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('searchengine_stats.htm');
+            return $this->fetch('searchengine_stats');
         }
         if ($_REQUEST['act'] == 'download') {
             $start_date = empty($_REQUEST['start_date']) ? strtotime('-20 day') : intval($_REQUEST['start_date']);

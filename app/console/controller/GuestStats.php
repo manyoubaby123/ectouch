@@ -120,7 +120,7 @@ class GuestStats extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['down_guest_stats'],
                 'href' => 'guest_stats.php?flag=download']);
 
-            return $GLOBALS['smarty']->display('guest_stats.htm');
+            return $this->fetch('guest_stats');
         }
     }
 }

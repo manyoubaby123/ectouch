@@ -167,7 +167,7 @@ function insert_ads($arr)
     $GLOBALS['smarty']->caching = false;
 
     $GLOBALS['smarty']->assign('ads', $ads);
-    $val = $GLOBALS['smarty']->fetch($position_style);
+    $val = $GLOBALS['smarty']->display($position_style);
 
     $GLOBALS['smarty']->caching = $need_cache;
 
@@ -197,7 +197,7 @@ function insert_member_info()
             $GLOBALS['smarty']->assign('rand', mt_rand());
         }
     }
-    $output = $GLOBALS['smarty']->fetch('library/member_info.lbi');
+    $output = $GLOBALS['smarty']->display('library/member_info.lbi');
 
     $GLOBALS['smarty']->caching = $need_cache;
 
@@ -231,7 +231,7 @@ function insert_comments($arr)
     $GLOBALS['smarty']->assign('comments', $cmt['comments']);
     $GLOBALS['smarty']->assign('pager', $cmt['pager']);
 
-    $val = $GLOBALS['smarty']->fetch('library/comments_list.lbi');
+    $val = $GLOBALS['smarty']->display('library/comments_list.lbi');
 
     $GLOBALS['smarty']->caching = $need_cache;
     $GLOBALS['smarty']->force_compile = $need_compile;
@@ -283,7 +283,7 @@ function insert_bought_notes($arr)
     $GLOBALS['smarty']->assign('notes', $bought_notes);
     $GLOBALS['smarty']->assign('pager', $pager);
 
-    $val = $GLOBALS['smarty']->fetch('library/bought_notes.lbi');
+    $val = $GLOBALS['smarty']->display('library/bought_notes.lbi');
 
     $GLOBALS['smarty']->caching = $need_cache;
     $GLOBALS['smarty']->force_compile = $need_compile;
@@ -304,7 +304,7 @@ function insert_vote()
         $GLOBALS['smarty']->assign('vote_id', $vote['id']);
         $GLOBALS['smarty']->assign('vote', $vote['content']);
     }
-    $val = $GLOBALS['smarty']->fetch('library/vote.lbi');
+    $val = $GLOBALS['smarty']->display('library/vote.lbi');
 
     return $val;
 }

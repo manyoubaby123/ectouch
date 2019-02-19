@@ -17,7 +17,7 @@ class ViewSendlist extends Init
             $this->assign('record_count', $listdb['record_count']);
             $this->assign('page_count', $listdb['page_count']);
 
-            return $GLOBALS['smarty']->display('view_sendlist.htm');
+            return $this->fetch('view_sendlist');
         }
         if ($_REQUEST['act'] == 'query') {
             $listdb = $this->get_sendlist();
@@ -29,7 +29,7 @@ class ViewSendlist extends Init
             $sort_flag = sort_flag($listdb['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('view_sendlist.htm'), '', ['filter' => $listdb['filter'], 'page_count' => $listdb['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('view_sendlist'), '', ['filter' => $listdb['filter'], 'page_count' => $listdb['page_count']]);
         }
         if ($_REQUEST['act'] == 'del') {
             $id = (int)$_REQUEST['id'];

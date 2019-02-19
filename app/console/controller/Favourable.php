@@ -36,7 +36,7 @@ class Favourable extends Init
 
             /* 显示商品列表页面 */
 
-            return $GLOBALS['smarty']->display('favourable_list.htm');
+            return $this->fetch('favourable_list');
         }
 
         /*------------------------------------------------------ */
@@ -55,7 +55,7 @@ class Favourable extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('favourable_list.htm'),
+                $GLOBALS['smarty']->display('favourable_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -221,7 +221,7 @@ class Favourable extends Init
             }
             $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['favourable_list']]);
 
-            return $GLOBALS['smarty']->display('favourable_info.htm');
+            return $this->fetch('favourable_info');
         }
 
         /*------------------------------------------------------ */

@@ -34,7 +34,7 @@ class CommentManage extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('comment_list.htm');
+            return $this->fetch('comment_list');
         }
 
         /*------------------------------------------------------ */
@@ -52,7 +52,7 @@ class CommentManage extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('comment_list.htm'),
+                $GLOBALS['smarty']->display('comment_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -116,7 +116,7 @@ class CommentManage extends Init
 
             /* 页面显示 */
 
-            return $GLOBALS['smarty']->display('comment_info.htm');
+            return $this->fetch('comment_info');
         }
         /*------------------------------------------------------ */
         //-- 处理 回复用户评论
@@ -172,7 +172,7 @@ class CommentManage extends Init
                 $this->assign('shop_name', "<a href='" . $GLOBALS['ecs']->url() . "'>" . $GLOBALS['_CFG']['shop_name'] . '</a>');
                 $this->assign('send_date', date('Y-m-d'));
 
-                $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $template['template_content']);
 
                 /* 发送邮件 */
                 if (send_mail($comment_info['user_name'], $comment_info['email'], $template['template_subject'], $content, $template['is_html'])) {

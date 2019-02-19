@@ -46,7 +46,7 @@ class Topic extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['topic_add'], 'href' => 'topic.php?act=add']);
-            return $GLOBALS['smarty']->display('topic_list.htm');
+            return $this->fetch('topic_list');
         }
         /* 添加,编辑 */
         if ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit') {
@@ -103,7 +103,7 @@ class Topic extends Init
                 create_html_editor('topic_intro');
                 $this->assign('act', "insert");
             }
-            return $GLOBALS['smarty']->display('topic_edit.htm');
+            return $this->fetch('topic_edit');
         }
         if ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update') {
             admin_priv('topic_manage');
@@ -263,8 +263,8 @@ class Topic extends Init
             $sort_flag = sort_flag($topic_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            $tpl = 'topic_list.htm';
-            return make_json_result($GLOBALS['smarty']->fetch($tpl), '', ['filter' => $topic_list['filter'], 'page_count' => $topic_list['page_count']]);
+            $tpl = 'topic_list';
+            return make_json_result($GLOBALS['smarty']->display($tpl), '', ['filter' => $topic_list['filter'], 'page_count' => $topic_list['page_count']]);
         }
     }
 

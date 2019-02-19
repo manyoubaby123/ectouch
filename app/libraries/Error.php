@@ -103,7 +103,7 @@ class Error
                 $this->shopService->assign_template();
                 $GLOBALS['smarty']->assign('auto_redirect', true);
                 $GLOBALS['smarty']->assign('message', $message);
-                return $GLOBALS['smarty']->display($this->_template);
+                return $GLOBALS['smarty']->fetch($this->_template);
             } else {
                 return $message['content'];
             }

@@ -29,7 +29,7 @@ class AffiliateCk extends Init
                 $this->assign('action_link', ['text' => $GLOBALS['_LANG']['back_note'], 'href' => "users.php?act=edit&id=$_GET[auid]"]);
             }
 
-            return $GLOBALS['smarty']->display('affiliate_ck_list.htm');
+            return $this->fetch('affiliate_ck_list');
         }
         /*------------------------------------------------------ */
         //-- 分页
@@ -45,7 +45,7 @@ class AffiliateCk extends Init
             $sort_flag = sort_flag($logdb['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('affiliate_ck_list.htm'), '', ['filter' => $logdb['filter'], 'page_count' => $logdb['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('affiliate_ck_list'), '', ['filter' => $logdb['filter'], 'page_count' => $logdb['page_count']]);
         } /*
     取消分成，不再能对该订单进行分成
 */

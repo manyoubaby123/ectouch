@@ -25,7 +25,7 @@ class ShippingArea extends Init
                 'text' => $GLOBALS['_LANG']['new_area']]);
             $this->assign('full_page', 1);
 
-            return $GLOBALS['smarty']->display('shipping_area_list.htm');
+            return $this->fetch('shipping_area_list');
         }
 
         /*------------------------------------------------------ */
@@ -69,7 +69,7 @@ class ShippingArea extends Init
             $this->assign('countries', get_regions());
             $this->assign('default_country', $GLOBALS['_CFG']['shop_country']);
 
-            return $GLOBALS['smarty']->display('shipping_area_info.htm');
+            return $this->fetch('shipping_area_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('shiparea_manage');
@@ -207,7 +207,7 @@ class ShippingArea extends Init
             $this->assign('form_action', 'update');
             $this->assign('countries', get_regions());
             $this->assign('default_country', 1);
-            return $GLOBALS['smarty']->display('shipping_area_info.htm');
+            return $this->fetch('shipping_area_info');
         }
         if ($_REQUEST['act'] == 'update') {
             admin_priv('shiparea_manage');
@@ -368,7 +368,7 @@ class ShippingArea extends Init
 
             $list = $this->get_shipping_area_list($shipping_id);
             $this->assign('areas', $list);
-            return make_json_result($GLOBALS['smarty']->fetch('shipping_area_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('shipping_area_list'));
         }
     }
 

@@ -61,7 +61,7 @@ class VisitSold extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('visit_sold.htm');
+            return $this->fetch('visit_sold');
         }
     }
 

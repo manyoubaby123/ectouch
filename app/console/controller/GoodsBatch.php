@@ -47,7 +47,7 @@ class GoodsBatch extends Init
             $this->assign('ur_here', $ur_here);
 
             /* 显示模板 */
-            return $GLOBALS['smarty']->display('goods_batch_add.htm');
+            return $this->fetch('goods_batch_add');
         }
 
         /*------------------------------------------------------ */
@@ -150,7 +150,7 @@ class GoodsBatch extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['goods_upload_confirm']);
 
             /* 显示模板 */
-            return $GLOBALS['smarty']->display('goods_batch_confirm.htm');
+            return $this->fetch('goods_batch_confirm');
         }
 
         /*------------------------------------------------------ */
@@ -362,7 +362,7 @@ class GoodsBatch extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('goods_batch_select.htm');
+            return $this->fetch('goods_batch_select');
         }
 
         /*------------------------------------------------------ */
@@ -442,7 +442,7 @@ class GoodsBatch extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('goods_batch_edit.htm');
+            return $this->fetch('goods_batch_edit');
         }
 
         /*------------------------------------------------------ */

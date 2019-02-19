@@ -43,7 +43,7 @@ class AccountLog extends Init
             $this->assign('record_count', $account_list['record_count']);
             $this->assign('page_count', $account_list['page_count']);
 
-            return $GLOBALS['smarty']->display('account_list.htm');
+            return $this->fetch('account_list');
         }
 
         /*------------------------------------------------------ */
@@ -78,7 +78,7 @@ class AccountLog extends Init
             $this->assign('page_count', $account_list['page_count']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('account_list.htm'),
+                $GLOBALS['smarty']->display('account_list'),
                 '',
                 ['filter' => $account_list['filter'], 'page_count' => $account_list['page_count']]
             );
@@ -105,7 +105,7 @@ class AccountLog extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['add_account']);
             $this->assign('action_link', ['href' => 'account_log.php?act=list&user_id=' . $user_id, 'text' => $GLOBALS['_LANG']['account_list']]);
 
-            return $GLOBALS['smarty']->display('account_info.htm');
+            return $this->fetch('account_info');
         }
 
         /*------------------------------------------------------ */

@@ -50,7 +50,7 @@ class MailTemplate extends Init
             $this->assign('templates', $templates);
             $this->assign('template', $content);
             $this->assign('full_page', 1);
-            return $GLOBALS['smarty']->display('mail_template.htm');
+            return $this->fetch('mail_template');
         }
 
         /*------------------------------------------------------ */
@@ -98,7 +98,7 @@ class MailTemplate extends Init
             $this->assign('templates', $templates);
             $this->assign('template', $content);
 
-            return make_json_result($GLOBALS['smarty']->fetch('mail_template.htm'));
+            return make_json_result($GLOBALS['smarty']->display('mail_template'));
         }
 
         /*------------------------------------------------------ */

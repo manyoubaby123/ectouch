@@ -49,68 +49,61 @@ class Brand extends Init
         $display = in_array($display, ['list', 'grid', 'text']) ? $display : 'text';
         setcookie('ECS[display]', $display, gmtime() + 86400 * 7);
 
-        /*------------------------------------------------------ */
-        //-- PROCESSOR
-        /*------------------------------------------------------ */
+        $brand_info = $this->get_brand_info($brand_id);
 
-        /* 页面的缓存ID */
-        $cache_id = sprintf('%X', crc32($brand_id . '-' . $display . '-' . $sort . '-' . $order . '-' . $page . '-' . $size . '-' . session('user_rank') . '-' . $GLOBALS['_CFG']['lang'] . '-' . $cate));
-
-        if (!$GLOBALS['smarty']->is_cached('brand.dwt', $cache_id)) {
-            $brand_info = $this->get_brand_info($brand_id);
-
-            if (empty($brand_info)) {
-                return ecs_header("Location: ./\n");
-            }
-
-            $this->assign('data_dir', DATA_DIR);
-            $this->assign('keywords', htmlspecialchars($brand_info['brand_desc']));
-            $this->assign('description', htmlspecialchars($brand_info['brand_desc']));
-
-            /* 赋值固定内容 */
-            $this->assign_template();
-            $position = assign_ur_here($cate, $brand_info['brand_name']);
-            $this->assign('page_title', $position['title']);   // 页面标题
-            $this->assign('ur_here', $position['ur_here']); // 当前位置
-            $this->assign('brand_id', $brand_id);
-            $this->assign('category', $cate);
-
-            $this->assign('categories', get_categories_tree());        // 分类树
-            $this->assign('helps', get_shop_help());              // 网店帮助
-            $this->assign('top_goods', get_top10());                  // 销售排行
-            $this->assign('show_marketprice', $GLOBALS['_CFG']['show_marketprice']);
-            $this->assign('brand_cat_list', $this->brand_related_cat($brand_id)); // 相关分类
-            $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-b$brand_id.xml" : 'feed.php?brand=' . $brand_id);
-
-            /* 调查 */
-            $vote = get_vote();
-            if (!empty($vote)) {
-                $this->assign('vote_id', $vote['id']);
-                $this->assign('vote', $vote['content']);
-            }
-
-            $this->assign('best_goods', $this->brand_recommend_goods('best', $brand_id, $cate));
-            $this->assign('promotion_goods', $this->brand_recommend_goods('promote', $brand_id, $cate));
-            $this->assign('brand', $brand_info);
-            $this->assign('promotion_info', get_promotion_info());
-
-            $count = $this->goods_count_by_brand($brand_id, $cate);
-
-            $goodslist = $this->brand_get_goods($brand_id, $cate, $size, $page, $sort, $order, $display);
-
-            if ($display == 'grid') {
-                if (count($goodslist) % 2 != 0) {
-                    $goodslist[] = [];
-                }
-            }
-            $this->assign('goods_list', $goodslist);
-            $this->assign('script_name', 'brand');
-
-            assign_pager('brand', $cate, $count, $size, $sort, $order, $page, '', $brand_id, 0, 0, $display); // 分页
-            assign_dynamic('brand'); // 动态内容
+        if (empty($brand_info)) {
+            return ecs_header("Location: ./\n");
         }
 
-        return $GLOBALS['smarty']->display('brand.dwt', $cache_id);
+        $this->assign('data_dir', DATA_DIR);
+        $this->assign('keywords', htmlspecialchars($brand_info['brand_desc']));
+        $this->assign('description', htmlspecialchars($brand_info['brand_desc']));
+
+        /* 赋值固定内容 */
+        $this->assign_template();
+        $position = assign_ur_here($cate, $brand_info['brand_name']);
+        $this->assign('page_title', $position['title']);   // 页面标题
+        $this->assign('ur_here', $position['ur_here']); // 当前位置
+        $this->assign('brand_id', $brand_id);
+        $this->assign('category', $cate);
+
+        $this->assign('categories', get_categories_tree());        // 分类树
+        $this->assign('helps', get_shop_help());              // 网店帮助
+        $this->assign('top_goods', get_top10());                  // 销售排行
+        $this->assign('show_marketprice', $GLOBALS['_CFG']['show_marketprice']);
+        $this->assign('brand_cat_list', $this->brand_related_cat($brand_id)); // 相关分类
+        $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-b$brand_id.xml" : 'feed.php?brand=' . $brand_id);
+
+        /* 调查 */
+        $vote = get_vote();
+        if (!empty($vote)) {
+            $this->assign('vote_id', $vote['id']);
+            $this->assign('vote', $vote['content']);
+        }
+
+        $this->assign('best_goods', $this->brand_recommend_goods('best', $brand_id, $cate));
+        $this->assign('promotion_goods', $this->brand_recommend_goods('promote', $brand_id, $cate));
+        $this->assign('brand', $brand_info);
+        $this->assign('promotion_info', get_promotion_info());
+
+        $count = $this->goods_count_by_brand($brand_id, $cate);
+
+        $goodslist = $this->brand_get_goods($brand_id, $cate, $size, $page, $sort, $order, $display);
+
+        if ($display == 'grid') {
+            if (count($goodslist) % 2 != 0) {
+                $goodslist[] = [];
+            }
+        }
+        $this->assign('goods_list', $goodslist);
+        $this->assign('script_name', 'brand');
+
+        $pager = assign_pager('brand', $cate, $count, $size, $sort, $order, $page, '', $brand_id, 0, 0, $display); // 分页
+        $this->assign('pager', $pager);
+
+        assign_dynamic('brand'); // 动态内容
+
+        return $this->fetch('brand');
     }
 
     /**

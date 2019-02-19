@@ -28,7 +28,7 @@ class Card extends Init
             $this->assign('record_count', $cards_list['record_count']);
             $this->assign('page_count', $cards_list['page_count']);
 
-            return $GLOBALS['smarty']->display('card_list.htm');
+            return $this->fetch('card_list');
         }
 
         /*------------------------------------------------------ */
@@ -44,7 +44,7 @@ class Card extends Init
             $sort_flag = sort_flag($cards_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('card_list.htm'), '', ['filter' => $cards_list['filter'], 'page_count' => $cards_list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('card_list'), '', ['filter' => $cards_list['filter'], 'page_count' => $cards_list['page_count']]);
         }
         /*------------------------------------------------------ */
         //-- 删除贺卡
@@ -88,7 +88,7 @@ class Card extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['07_card_list'], 'href' => 'card.php?act=list']);
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('card_info.htm');
+            return $this->fetch('card_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -136,7 +136,7 @@ class Card extends Init
             $this->assign('card', $card);
             $this->assign('form_action', 'update');
 
-            return $GLOBALS['smarty']->display('card_info.htm');
+            return $this->fetch('card_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */

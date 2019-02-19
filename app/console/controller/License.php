@@ -27,7 +27,7 @@ class License extends Init
             $this->assign('certificate_id', $license['certificate_id']);
             $this->assign('token', $license['token']);
 
-            return $GLOBALS['smarty']->display('license.htm');
+            return $this->fetch('license');
         }
 
         /*------------------------------------------------------ */

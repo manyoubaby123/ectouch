@@ -24,7 +24,7 @@ class GoodsBooking extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('booking_list.htm');
+            return $this->fetch('booking_list');
         }
 
         /*------------------------------------------------------ */
@@ -42,7 +42,7 @@ class GoodsBooking extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('booking_list.htm'),
+                $GLOBALS['smarty']->display('booking_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -74,7 +74,7 @@ class GoodsBooking extends Init
             $this->assign('booking', $this->get_booking_info($id));
             $this->assign('ur_here', $GLOBALS['_LANG']['detail']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['06_undispose_booking'], 'href' => 'goods_booking.php?act=list_all']);
-            return $GLOBALS['smarty']->display('booking_info.htm');
+            return $this->fetch('booking_info');
         }
 
         /*------------------------------------------------------ */
@@ -111,7 +111,7 @@ class GoodsBooking extends Init
                 $this->assign('shop_name', "<a href='" . $GLOBALS['ecs']->url() . "'>" . $GLOBALS['_CFG']['shop_name'] . '</a>');
                 $this->assign('send_date', date('Y-m-d'));
 
-                $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $template['template_content']);
 
                 /* 发送邮件 */
                 if (send_mail($booking_info['link_man'], $booking_info['email'], $template['template_subject'], $content, $template['is_html'])) {

@@ -21,7 +21,7 @@ class Shophelp extends Init
             $this->assign('full_page', 1);
             $this->assign('list', $this->get_shophelp_list());
 
-            return $GLOBALS['smarty']->display('shophelp_cat_list.htm');
+            return $this->fetch('shophelp_cat_list');
         }
 
         /*------------------------------------------------------ */
@@ -34,7 +34,7 @@ class Shophelp extends Init
             $this->assign('cat', article_cat_list($_REQUEST['cat_id'], true, 'cat_id', 0, "onchange=\"location.href='?act=list_article&cat_id='+this.value\""));
             $this->assign('list', $this->shophelp_article_list($_REQUEST['cat_id']));
 
-            return $GLOBALS['smarty']->display('shophelp_article_list.htm');
+            return $this->fetch('shophelp_article_list');
         }
 
         /*------------------------------------------------------ */
@@ -44,7 +44,7 @@ class Shophelp extends Init
             $cat_id = intval($_GET['cat']);
 
             $this->assign('list', $this->shophelp_article_list($cat_id));
-            return make_json_result($GLOBALS['smarty']->fetch('shophelp_article_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('shophelp_article_list'));
         }
 
         /*------------------------------------------------------ */
@@ -53,7 +53,7 @@ class Shophelp extends Init
         if ($_REQUEST['act'] == 'query') {
             $this->assign('list', $this->get_shophelp_list());
 
-            return make_json_result($GLOBALS['smarty']->fetch('shophelp_cat_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('shophelp_cat_list'));
         }
 
         /*------------------------------------------------------ */
@@ -77,7 +77,7 @@ class Shophelp extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['article_add']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['cat_list'], 'href' => 'shophelp.php?act=list_cat']);
             $this->assign('form_action', 'insert');
-            return $GLOBALS['smarty']->display('shophelp_info.htm');
+            return $this->fetch('shophelp_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -123,7 +123,7 @@ class Shophelp extends Init
             $this->assign('article', $article);
             $this->assign('form_action', 'update');
 
-            return $GLOBALS['smarty']->display('shophelp_info.htm');
+            return $this->fetch('shophelp_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */

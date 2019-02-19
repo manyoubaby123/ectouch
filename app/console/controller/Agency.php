@@ -28,7 +28,7 @@ class Agency extends Init
             $sort_flag = sort_flag($agency_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('agency_list.htm');
+            return $this->fetch('agency_list');
         }
 
         /*------------------------------------------------------ */
@@ -46,7 +46,7 @@ class Agency extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('agency_list.htm'),
+                $GLOBALS['smarty']->display('agency_list'),
                 '',
                 ['filter' => $agency_list['filter'], 'page_count' => $agency_list['page_count']]
             );
@@ -205,7 +205,7 @@ class Agency extends Init
             }
             $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['agency_list']]);
 
-            return $GLOBALS['smarty']->display('agency_info.htm');
+            return $this->fetch('agency_info');
         }
 
         /*------------------------------------------------------ */

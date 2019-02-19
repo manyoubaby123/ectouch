@@ -26,45 +26,34 @@ class Auction extends Init
                 /* 取得当前页 */
                 $page = isset($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
                 $page = $page > $page_count ? $page_count : $page;
-
-                /* 缓存id：语言 - 每页记录数 - 当前页 */
-                $cache_id = $GLOBALS['_CFG']['lang'] . '-' . $size . '-' . $page;
-                $cache_id = sprintf('%X', crc32($cache_id));
-            } else {
-                /* 缓存id：语言 */
-                $cache_id = $GLOBALS['_CFG']['lang'];
-                $cache_id = sprintf('%X', crc32($cache_id));
             }
 
-            /* 如果没有缓存，生成缓存 */
-            if (!$GLOBALS['smarty']->is_cached('auction_list.dwt', $cache_id)) {
-                if ($count > 0) {
-                    /* 取得当前页的拍卖活动 */
-                    $auction_list = $this->auction_list($size, $page);
-                    $this->assign('auction_list', $auction_list);
+            if ($count > 0) {
+                /* 取得当前页的拍卖活动 */
+                $auction_list = $this->auction_list($size, $page);
+                $this->assign('auction_list', $auction_list);
 
-                    /* 设置分页链接 */
-                    $pager = get_pager('auction.php', ['act' => 'list'], $count, $page, $size);
-                    $this->assign('pager', $pager);
-                }
-
-                /* 模板赋值 */
-                $this->assign('cfg', $GLOBALS['_CFG']);
-                $this->assign_template();
-                $position = assign_ur_here();
-                $this->assign('page_title', $position['title']);    // 页面标题
-                $this->assign('ur_here', $position['ur_here']);  // 当前位置
-                $this->assign('categories', get_categories_tree()); // 分类树
-                $this->assign('helps', get_shop_help());       // 网店帮助
-                $this->assign('top_goods', get_top10());           // 销售排行
-                $this->assign('promotion_info', get_promotion_info());
-                $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-typeauction.xml" : 'feed.php?type=auction'); // RSS URL
-
-                assign_dynamic('auction_list');
+                /* 设置分页链接 */
+                $pager = get_pager('auction.php', ['act' => 'list'], $count, $page, $size);
+                $this->assign('pager', $pager);
             }
+
+            /* 模板赋值 */
+            $this->assign('cfg', $GLOBALS['_CFG']);
+            $this->assign_template();
+            $position = assign_ur_here();
+            $this->assign('page_title', $position['title']);    // 页面标题
+            $this->assign('ur_here', $position['ur_here']);  // 当前位置
+            $this->assign('categories', get_categories_tree()); // 分类树
+            $this->assign('helps', get_shop_help());       // 网店帮助
+            $this->assign('top_goods', get_top10());           // 销售排行
+            $this->assign('promotion_info', get_promotion_info());
+            $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-typeauction.xml" : 'feed.php?type=auction'); // RSS URL
+
+            assign_dynamic('auction_list');
 
             /* 显示模板 */
-            return $GLOBALS['smarty']->display('auction_list.dwt', $cache_id);
+            return $this->fetch('auction_list');
         }
 
         /*------------------------------------------------------ */
@@ -83,67 +72,55 @@ class Auction extends Init
                 return ecs_header("Location: ./\n");
             }
 
-            /* 缓存id：语言，拍卖活动id，状态，如果是进行中，还要最后出价的时间（如果有的话） */
-            $cache_id = $GLOBALS['_CFG']['lang'] . '-' . $id . '-' . $auction['status_no'];
-            if ($auction['status_no'] == UNDER_WAY) {
-                if (isset($auction['last_bid'])) {
-                    $cache_id = $cache_id . '-' . $auction['last_bid']['bid_time'];
-                }
-            } elseif ($auction['status_no'] == FINISHED && $auction['last_bid']['bid_user'] == session('user_id')
+            if ($auction['status_no'] == FINISHED && $auction['last_bid']['bid_user'] == session('user_id')
                 && $auction['order_count'] == 0) {
                 $auction['is_winner'] = 1;
-                $cache_id = $cache_id . '-' . $auction['last_bid']['bid_time'] . '-1';
             }
 
-            $cache_id = sprintf('%X', crc32($cache_id));
+            //取货品信息
+            if ($auction['product_id'] > 0) {
+                $goods_specifications = get_specifications_list($auction['goods_id']);
 
-            /* 如果没有缓存，生成缓存 */
-            if (!$GLOBALS['smarty']->is_cached('auction.dwt', $cache_id)) {
-                //取货品信息
-                if ($auction['product_id'] > 0) {
-                    $goods_specifications = get_specifications_list($auction['goods_id']);
+                $good_products = get_good_products($auction['goods_id'], 'AND product_id = ' . $auction['product_id']);
 
-                    $good_products = get_good_products($auction['goods_id'], 'AND product_id = ' . $auction['product_id']);
-
-                    $_good_products = explode('|', $good_products[0]['goods_attr']);
-                    $products_info = '';
-                    foreach ($_good_products as $value) {
-                        $products_info .= ' ' . $goods_specifications[$value]['attr_name'] . '：' . $goods_specifications[$value]['attr_value'];
-                    }
-                    $this->assign('products_info', $products_info);
-                    unset($goods_specifications, $good_products, $_good_products, $products_info);
+                $_good_products = explode('|', $good_products[0]['goods_attr']);
+                $products_info = '';
+                foreach ($_good_products as $value) {
+                    $products_info .= ' ' . $goods_specifications[$value]['attr_name'] . '：' . $goods_specifications[$value]['attr_value'];
                 }
-
-                $auction['gmt_end_time'] = local_strtotime($auction['end_time']);
-                $this->assign('auction', $auction);
-
-                /* 取得拍卖商品信息 */
-                $goods_id = $auction['goods_id'];
-                $goods = goods_info($goods_id);
-                if (empty($goods)) {
-                    return ecs_header("Location: ./\n");
-                }
-                $goods['url'] = build_uri('goods', ['gid' => $goods_id], $goods['goods_name']);
-                $this->assign('auction_goods', $goods);
-
-                /* 出价记录 */
-                $this->assign('auction_log', auction_log($id));
-
-                //模板赋值
-                $this->assign('cfg', $GLOBALS['_CFG']);
-                $this->assign_template();
-
-                $position = assign_ur_here(0, $goods['goods_name']);
-                $this->assign('page_title', $position['title']);    // 页面标题
-                $this->assign('ur_here', $position['ur_here']);  // 当前位置
-
-                $this->assign('categories', get_categories_tree()); // 分类树
-                $this->assign('helps', get_shop_help());       // 网店帮助
-                $this->assign('top_goods', get_top10());           // 销售排行
-                $this->assign('promotion_info', get_promotion_info());
-
-                assign_dynamic('auction');
+                $this->assign('products_info', $products_info);
+                unset($goods_specifications, $good_products, $_good_products, $products_info);
             }
+
+            $auction['gmt_end_time'] = local_strtotime($auction['end_time']);
+            $this->assign('auction', $auction);
+
+            /* 取得拍卖商品信息 */
+            $goods_id = $auction['goods_id'];
+            $goods = goods_info($goods_id);
+            if (empty($goods)) {
+                return ecs_header("Location: ./\n");
+            }
+            $goods['url'] = build_uri('goods', ['gid' => $goods_id], $goods['goods_name']);
+            $this->assign('auction_goods', $goods);
+
+            /* 出价记录 */
+            $this->assign('auction_log', auction_log($id));
+
+            //模板赋值
+            $this->assign('cfg', $GLOBALS['_CFG']);
+            $this->assign_template();
+
+            $position = assign_ur_here(0, $goods['goods_name']);
+            $this->assign('page_title', $position['title']);    // 页面标题
+            $this->assign('ur_here', $position['ur_here']);  // 当前位置
+
+            $this->assign('categories', get_categories_tree()); // 分类树
+            $this->assign('helps', get_shop_help());       // 网店帮助
+            $this->assign('top_goods', get_top10());           // 销售排行
+            $this->assign('promotion_info', get_promotion_info());
+
+            assign_dynamic('auction');
 
             //更新商品点击次数
             $sql = 'UPDATE ' . $GLOBALS['ecs']->table('goods') . ' SET click_count = click_count + 1 ' .
@@ -151,7 +128,7 @@ class Auction extends Init
             $GLOBALS['db']->query($sql);
 
             $this->assign('now_time', gmtime());           // 当前系统时间
-            return $GLOBALS['smarty']->display('auction.dwt', $cache_id);
+            return $this->fetch('auction');
         }
 
         /*------------------------------------------------------ */

@@ -53,7 +53,7 @@ class UserAccount extends Init
             $this->assign('page_count', $list['page_count']);
             $this->assign('full_page', 1);
 
-            return $GLOBALS['smarty']->display('user_account_list.htm');
+            return $this->fetch('user_account_list');
         }
 
         /*------------------------------------------------------ */
@@ -106,7 +106,7 @@ class UserAccount extends Init
             }
             $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['09_user_account']]);
 
-            return $GLOBALS['smarty']->display('user_account_info.htm');
+            return $this->fetch('user_account_info');
         }
 
         /*------------------------------------------------------ */
@@ -257,7 +257,7 @@ class UserAccount extends Init
 
             /* 页面显示 */
 
-            return $GLOBALS['smarty']->display('user_account_check.htm');
+            return $this->fetch('user_account_check');
         }
 
         /*------------------------------------------------------ */
@@ -338,7 +338,7 @@ class UserAccount extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('user_account_list.htm'), '', ['filter' => $list['filter'], 'page_count' => $list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('user_account_list'), '', ['filter' => $list['filter'], 'page_count' => $list['page_count']]);
         }
         /*------------------------------------------------------ */
         //-- ajax删除一条信息

@@ -33,7 +33,7 @@ class GoodsType extends Init
 
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['new_goods_type'], 'href' => 'goods_type.php?act=add']);
 
-            return $GLOBALS['smarty']->display('goods_type.htm');
+            return $this->fetch('goods_type');
         }
 
         /*------------------------------------------------------ */
@@ -49,7 +49,7 @@ class GoodsType extends Init
             $this->assign('page_count', $good_type_list['page_count']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('goods_type.htm'),
+                $GLOBALS['smarty']->display('goods_type'),
                 '',
                 ['filter' => $good_type_list['filter'], 'page_count' => $good_type_list['page_count']]
             );
@@ -106,7 +106,7 @@ class GoodsType extends Init
             $this->assign('form_act', 'insert');
             $this->assign('goods_type', ['enabled' => 1]);
 
-            return $GLOBALS['smarty']->display('goods_type_info.htm');
+            return $this->fetch('goods_type_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             //$goods_type['cat_name']   = trim_right(sub_str($_POST['cat_name'], 60));
@@ -142,7 +142,7 @@ class GoodsType extends Init
             $this->assign('form_act', 'update');
             $this->assign('goods_type', $goods_type);
 
-            return $GLOBALS['smarty']->display('goods_type_info.htm');
+            return $this->fetch('goods_type_info');
         }
         if ($_REQUEST['act'] == 'update') {
             $goods_type['cat_name'] = sub_str($_POST['cat_name'], 60);

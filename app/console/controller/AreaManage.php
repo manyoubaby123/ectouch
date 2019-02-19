@@ -64,7 +64,7 @@ class AreaManage extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['05_area_list']);
             $this->assign('full_page', 1);
 
-            return $GLOBALS['smarty']->display('area_list.htm');
+            return $this->fetch('area_list');
         }
 
         /*------------------------------------------------------ */
@@ -98,7 +98,7 @@ class AreaManage extends Init
 
                 $this->assign('region_type', $region_type);
 
-                return make_json_result($GLOBALS['smarty']->fetch('area_list.htm'));
+                return make_json_result($GLOBALS['smarty']->display('area_list'));
             } else {
                 return make_json_error($GLOBALS['_LANG']['add_area_error']);
             }
@@ -174,7 +174,7 @@ class AreaManage extends Init
                 $this->assign('region_arr', $region_arr);
                 $this->assign('region_type', $region['region_type']);
 
-                return make_json_result($GLOBALS['smarty']->fetch('area_list.htm'));
+                return make_json_result($GLOBALS['smarty']->display('area_list'));
             } else {
                 return make_json_error($GLOBALS['db']->error());
             }

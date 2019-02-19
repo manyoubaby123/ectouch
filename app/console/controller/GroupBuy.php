@@ -40,7 +40,7 @@ class GroupBuy extends Init
 
             /* 显示商品列表页面 */
 
-            return $GLOBALS['smarty']->display('group_buy_list.htm');
+            return $this->fetch('group_buy_list');
         }
         if ($_REQUEST['act'] == 'query') {
             $list = $this->group_buy_list();
@@ -54,7 +54,7 @@ class GroupBuy extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('group_buy_list.htm'),
+                $GLOBALS['smarty']->display('group_buy_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -90,7 +90,7 @@ class GroupBuy extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('group_buy_info.htm');
+            return $this->fetch('group_buy_info');
         }
 
         /*------------------------------------------------------ */
@@ -350,7 +350,7 @@ class GroupBuy extends Init
                     $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
 
                     /* 取得模板内容，发邮件 */
-                    $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                    $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                     if (send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html'])) {
                         $send_count++;
                     }

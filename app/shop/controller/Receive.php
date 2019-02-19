@@ -47,6 +47,6 @@ class Receive extends Init
         assign_dynamic('receive');
 
         $this->assign('msg', $msg);
-        return $GLOBALS['smarty']->display('receive.dwt');
+        return $this->fetch('receive');
     }
 }

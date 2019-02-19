@@ -33,7 +33,7 @@ class Wholesale extends Init
 
             /* 显示商品列表页面 */
 
-            return $GLOBALS['smarty']->display('wholesale_list.htm');
+            return $this->fetch('wholesale_list');
         }
 
         /*------------------------------------------------------ */
@@ -52,7 +52,7 @@ class Wholesale extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('wholesale_list.htm'),
+                $GLOBALS['smarty']->display('wholesale_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -185,7 +185,7 @@ class Wholesale extends Init
             $href = 'wholesale.php?act=list';
             $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['wholesale_list']]);
 
-            return $GLOBALS['smarty']->display('wholesale_batch_info.htm');
+            return $this->fetch('wholesale_batch_info');
         }
 
         /*------------------------------------------------------ */
@@ -360,7 +360,7 @@ class Wholesale extends Init
             }
             $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['wholesale_list']]);
 
-            return $GLOBALS['smarty']->display('wholesale_info.htm');
+            return $this->fetch('wholesale_info');
         }
 
         /*------------------------------------------------------ */

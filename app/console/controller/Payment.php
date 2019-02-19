@@ -52,7 +52,7 @@ class Payment extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['02_payment_list']);
             $this->assign('modules', $modules);
             $this->assign('tenpayc2c', $tenpayc2c);
-            return $GLOBALS['smarty']->display('payment_list.htm');
+            return $this->fetch('payment_list');
         }
 
         /*------------------------------------------------------ */
@@ -95,7 +95,7 @@ class Payment extends Init
 
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_payment_list'], 'href' => 'payment.php?act=list']);
             $this->assign('pay', $pay);
-            return $GLOBALS['smarty']->display('payment_edit.htm');
+            return $this->fetch('payment_edit');
         }
         if ($_REQUEST['act'] == 'get_config') {
             return check_authz_json('payment');
@@ -206,7 +206,7 @@ class Payment extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_payment_list'], 'href' => 'payment.php?act=list']);
             $this->assign('ur_here', $GLOBALS['_LANG']['edit'] . $GLOBALS['_LANG']['payment']);
             $this->assign('pay', $pay);
-            return $GLOBALS['smarty']->display('payment_edit.htm');
+            return $this->fetch('payment_edit');
         }
 
         /*------------------------------------------------------ */

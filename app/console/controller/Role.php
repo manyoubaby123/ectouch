@@ -45,7 +45,7 @@ class Role extends Init
                 $this->assign('random', mt_rand());
             }
 
-            return $GLOBALS['smarty']->display('login.htm');
+            return $this->fetch('login');
         }
 
         /*------------------------------------------------------ */
@@ -60,7 +60,7 @@ class Role extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('role_list.htm');
+            return $this->fetch('role_list');
         }
 
         /*------------------------------------------------------ */
@@ -69,7 +69,7 @@ class Role extends Init
         if ($_REQUEST['act'] == 'query') {
             $this->assign('admin_list', $this->get_role_list());
 
-            return make_json_result($GLOBALS['smarty']->fetch('role_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('role_list'));
         }
 
         /*------------------------------------------------------ */
@@ -118,7 +118,7 @@ class Role extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('role_info.htm');
+            return $this->fetch('role_info');
         }
 
         /*------------------------------------------------------ */
@@ -201,7 +201,7 @@ class Role extends Init
             $this->assign('priv_arr', $priv_arr);
             $this->assign('user_id', $_GET['id']);
 
-            return $GLOBALS['smarty']->display('role_info.htm');
+            return $this->fetch('role_info');
         }
 
         /*------------------------------------------------------ */

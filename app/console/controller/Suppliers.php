@@ -31,7 +31,7 @@ class Suppliers extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('suppliers_list.htm');
+            return $this->fetch('suppliers_list');
         }
 
         /*------------------------------------------------------ */
@@ -52,7 +52,7 @@ class Suppliers extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('suppliers_list.htm'),
+                $GLOBALS['smarty']->display('suppliers_list'),
                 '',
                 ['filter' => $result['filter'], 'page_count' => $result['page_count']]
             );
@@ -266,7 +266,7 @@ class Suppliers extends Init
                 $this->assign('form_action', 'insert');
                 $this->assign('suppliers', $suppliers);
 
-                return $GLOBALS['smarty']->display('suppliers_info.htm');
+                return $this->fetch('suppliers_info');
             }
             if ($_REQUEST['act'] == 'edit') {
                 $suppliers = [];
@@ -297,7 +297,7 @@ class Suppliers extends Init
                 $this->assign('form_action', 'update');
                 $this->assign('suppliers', $suppliers);
 
-                return $GLOBALS['smarty']->display('suppliers_info.htm');
+                return $this->fetch('suppliers_info');
             }
         }
 

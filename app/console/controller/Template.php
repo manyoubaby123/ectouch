@@ -22,7 +22,7 @@ class Template extends Init
             $available_templates = [];
             $template_dir = @opendir(ROOT_PATH . 'themes/');
             while ($file = readdir($template_dir)) {
-                if ($file != '.' && $file != '..' && is_dir(ROOT_PATH . 'themes/' . $file) && $file != '.svn' && $file != 'index.htm') {
+                if ($file != '.' && $file != '..' && is_dir(ROOT_PATH . 'themes/' . $file) && $file != '.svn' && $file != 'index') {
                     $available_templates[] = get_template_info($file);
                 }
             }
@@ -45,7 +45,7 @@ class Template extends Init
             }
             $tmp_bak_dir = @opendir(ROOT_PATH . 'temp/backup/library/');
             while ($file = readdir($tmp_bak_dir)) {
-                if ($file != '.' && $file != '..' && $file != '.svn' && $file != 'index.htm' && is_file(ROOT_PATH . 'temp/backup/library/' . $file) == true) {
+                if ($file != '.' && $file != '..' && $file != '.svn' && $file != 'index' && is_file(ROOT_PATH . 'temp/backup/library/' . $file) == true) {
                     $code = substr($file, 0, strpos($file, '-'));
                     if (!in_array($code, $available_code)) {
                         @unlink(ROOT_PATH . 'temp/backup/library/' . $file);
@@ -60,7 +60,7 @@ class Template extends Init
             $this->assign('template_style', $templates_style);
             $this->assign('curr_template', get_template_info($curr_template, $curr_style));
             $this->assign('available_templates', $available_templates);
-            return $GLOBALS['smarty']->display('templates_list.htm');
+            return $this->fetch('templates_list');
         }
 
         /*------------------------------------------------------ */
@@ -183,7 +183,7 @@ class Template extends Init
             $this->assign('arr_brands', get_brand_list());
             $this->assign('arr_article_cats', article_cat_list(0, 0, true));
             $this->assign('arr_ad_positions', get_position_list());
-            return $GLOBALS['smarty']->display('template_setup.htm');
+            return $this->fetch('template_setup');
         }
 
         /*------------------------------------------------------ */
@@ -428,7 +428,7 @@ class Template extends Init
             $this->assign('curr_library', $curr_library);
             $this->assign('libraries', $arr_library);
             $this->assign('library_html', $lib['html']);
-            return $GLOBALS['smarty']->display('template_library.htm');
+            return $this->fetch('template_library');
         }
 
         /*------------------------------------------------------ */
@@ -557,7 +557,7 @@ class Template extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['backup_setting']);
             $this->assign('list', $remarks);
             $this->assign('files', $files);
-            return $GLOBALS['smarty']->display('templates_backup.htm');
+            return $this->fetch('templates_backup');
         }
 
         if ($_REQUEST['act'] == 'act_backup_setting') {
@@ -696,7 +696,7 @@ class Template extends Init
         $dir = ROOT_PATH . 'themes/' . $tpl_name . '/';
         $tpl_style_dir = @opendir($dir);
         while ($file = readdir($tpl_style_dir)) {
-            if ($file != '.' && $file != '..' && is_file($dir . $file) && $file != '.svn' && $file != 'index.htm') {
+            if ($file != '.' && $file != '..' && is_file($dir . $file) && $file != '.svn' && $file != 'index') {
                 if (preg_match("/^(style|style_)(.*)*/i", $file)) { // 取模板风格缩略图
                     $start = strpos($file, '.');
                     $temp = substr($file, 0, $start);

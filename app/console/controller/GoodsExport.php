@@ -27,7 +27,7 @@ class GoodsExport extends Init
             $this->assign('data_format', $data_format_array);
             $this->assign('goods_fields', $goods_fields);
 
-            return $GLOBALS['smarty']->display('goods_export.htm');
+            return $this->fetch('goods_export');
         }
         if ($_REQUEST['act'] == 'act_export_taobao') {
             /* 检查权限 */
@@ -173,7 +173,7 @@ class GoodsExport extends Init
             return $zip->file();
         } /* 从淘宝导入数据 */
         if ($_REQUEST['act'] == 'import_taobao') {
-            return $GLOBALS['smarty']->display('import_taobao.htm');
+            return $this->fetch('import_taobao');
         }
         if ($_REQUEST['act'] == 'act_export_ectouch') {
             /* 检查权限 */
@@ -478,7 +478,7 @@ class GoodsExport extends Init
             return $zip->file();
         } /* 从拍拍网导入数据 */
         if ($_REQUEST['act'] == 'import_paipai') {
-            return $GLOBALS['smarty']->display('import_paipai.htm');
+            return $this->fetch('import_paipai');
         } /* 处理Ajax调用 */
         if ($_REQUEST['act'] == 'get_goods_fields') {
             $cat_id = isset($_REQUEST['cat_id']) ? intval($_REQUEST['cat_id']) : 0;

@@ -17,7 +17,7 @@ class EmailList extends Init
             $this->assign('record_count', $emaildb['record_count']);
             $this->assign('page_count', $emaildb['page_count']);
 
-            return $GLOBALS['smarty']->display('email_list.htm');
+            return $this->fetch('email_list');
         }
         if ($_REQUEST['act'] == 'export') {
             $sql = "SELECT email FROM " . $GLOBALS['ecs']->table('email_list') . "WHERE stat = 1";
@@ -47,7 +47,7 @@ class EmailList extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('email_list.htm'),
+                $GLOBALS['smarty']->display('email_list'),
                 '',
                 ['filter' => $emaildb['filter'], 'page_count' => $emaildb['page_count']]
             );

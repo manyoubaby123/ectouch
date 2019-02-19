@@ -33,6 +33,6 @@ class TagCloud extends Init
 
         $this->assign('tags', $tags);
 
-        return $GLOBALS['smarty']->display('tag_cloud.dwt');
+        return $this->fetch('tag_cloud');
     }
 }

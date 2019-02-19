@@ -201,7 +201,7 @@ class Comment extends Init
             }
 
             $result['message'] = $GLOBALS['_CFG']['comment_check'] ? $GLOBALS['_LANG']['cmt_submit_wait'] : $GLOBALS['_LANG']['cmt_submit_done'];
-            $result['content'] = $GLOBALS['smarty']->fetch("library/comments_list.lbi");
+            $result['content'] = $GLOBALS['smarty']->display("library/comments_list.lbi");
         }
 
         echo json_encode($result);

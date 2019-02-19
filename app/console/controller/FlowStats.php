@@ -284,7 +284,7 @@ class FlowStats extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('flow_stats.htm');
+            return $this->fetch('flow_stats');
         } /* 报表下载 */
         elseif ($act = 'download') {
             $filename = !empty($_REQUEST['filename']) ? trim($_REQUEST['filename']) : '';

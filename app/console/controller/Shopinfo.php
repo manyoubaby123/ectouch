@@ -19,7 +19,7 @@ class Shopinfo extends Init
             $this->assign('full_page', 1);
             $this->assign('list', $this->shopinfo_article_list());
 
-            return $GLOBALS['smarty']->display('shopinfo_list.htm');
+            return $this->fetch('shopinfo_list');
         }
 
         /*------------------------------------------------------ */
@@ -28,7 +28,7 @@ class Shopinfo extends Init
         if ($_REQUEST['act'] == 'query') {
             $this->assign('list', $this->shopinfo_article_list());
 
-            return make_json_result($GLOBALS['smarty']->fetch('shopinfo_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('shopinfo_list'));
         }
 
         /*------------------------------------------------------ */
@@ -48,7 +48,7 @@ class Shopinfo extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_list'], 'href' => 'shopinfo.php?act=list']);
             $this->assign('form_action', 'insert');
 
-            return $GLOBALS['smarty']->display('shopinfo_info.htm');
+            return $this->fetch('shopinfo_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -97,7 +97,7 @@ class Shopinfo extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_list'], 'href' => 'shopinfo.php?act=list']);
             $this->assign('article', $article);
             $this->assign('form_action', 'update');
-            return $GLOBALS['smarty']->display('shopinfo_info.htm');
+            return $this->fetch('shopinfo_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */

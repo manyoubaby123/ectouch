@@ -44,7 +44,7 @@ class UsersOrder extends Init
             $sort_flag = sort_flag($user_orderinfo['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('users_order.htm'), '', ['filter' => $user_orderinfo['filter'], 'page_count' => $user_orderinfo['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('users_order'), '', ['filter' => $user_orderinfo['filter'], 'page_count' => $user_orderinfo['page_count']]);
         } else {
             /* 权限判断 */
             admin_priv('client_flow_stats');
@@ -73,7 +73,7 @@ class UsersOrder extends Init
             $this->assign('sort_order_num', '<img src="images/sort_desc.gif">');
             /* 页面显示 */
 
-            return $GLOBALS['smarty']->display('users_order.htm');
+            return $this->fetch('users_order');
         }
     }
 

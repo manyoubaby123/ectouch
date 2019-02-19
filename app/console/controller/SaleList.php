@@ -51,7 +51,7 @@ class SaleList extends Init
             $this->assign('record_count', $sale_list_data['record_count']);
             $this->assign('page_count', $sale_list_data['page_count']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('sale_list.htm'), '', ['filter' => $sale_list_data['filter'], 'page_count' => $sale_list_data['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('sale_list'), '', ['filter' => $sale_list_data['filter'], 'page_count' => $sale_list_data['page_count']]);
         }
         /*------------------------------------------------------ */
         //--商品明细列表
@@ -83,7 +83,7 @@ class SaleList extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('sale_list.htm');
+            return $this->fetch('sale_list');
         }
     }
 

@@ -20,7 +20,7 @@ class SearchLog extends Init
             $this->assign('start_date', local_date('Y-m-d'));
             $this->assign('end_date', local_date('Y-m-d'));
 
-            return $GLOBALS['smarty']->display('search_log_list.htm');
+            return $this->fetch('search_log_list');
         }
         if ($_REQUEST['act'] == 'query') {
             $logdb = $this->get_search_log();
@@ -32,7 +32,7 @@ class SearchLog extends Init
             $this->assign('start_date', local_date('Y-m-d'));
             $this->assign('end_date', local_date('Y-m-d'));
             return make_json_result(
-                $GLOBALS['smarty']->fetch('search_log_list.htm'),
+                $GLOBALS['smarty']->display('search_log_list'),
                 '',
                 ['filter' => $logdb['filter'], 'page_count' => $logdb['page_count']]
             );

@@ -65,7 +65,7 @@ class EditLanguages extends Init
             $this->assign('lang_file', $lang_file);//语言文件
             $this->assign('language_arr', $language_arr); //需要编辑的语言项列表
 
-            return $GLOBALS['smarty']->display('language_list.htm');
+            return $this->fetch('language_list');
         }
 
         /*------------------------------------------------------ */

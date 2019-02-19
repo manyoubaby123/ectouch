@@ -39,7 +39,7 @@ class Convert extends Init
             /* 显示模板 */
             $this->assign('ur_here', $GLOBALS['_LANG']['convert']);
 
-            return $GLOBALS['smarty']->display('convert_main.htm');
+            return $this->fetch('convert_main');
         }
 
         /*------------------------------------------------------ */

@@ -37,7 +37,7 @@ class Vote extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('vote_list.htm');
+            return $this->fetch('vote_list');
         }
 
         /*------------------------------------------------------ */
@@ -52,7 +52,7 @@ class Vote extends Init
             $this->assign('page_count', $vote_list['page_count']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('vote_list.htm'),
+                $GLOBALS['smarty']->display('vote_list'),
                 '',
                 ['filter' => $vote_list['filter'], 'page_count' => $vote_list['page_count']]
             );
@@ -79,7 +79,7 @@ class Vote extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('vote_info.htm');
+            return $this->fetch('vote_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('vote_priv');
@@ -137,7 +137,7 @@ class Vote extends Init
             $this->assign('form_act', 'update');
             $this->assign('vote_arr', $vote_arr);
 
-            return $GLOBALS['smarty']->display('vote_info.htm');
+            return $this->fetch('vote_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 获得广告的开始时期与结束日期 */
@@ -179,7 +179,7 @@ class Vote extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('vote_option.htm');
+            return $this->fetch('vote_option');
         }
 
         /*------------------------------------------------------ */
@@ -191,7 +191,7 @@ class Vote extends Init
             $this->assign('id', $id);
             $this->assign('option_arr', $this->get_optionlist($id));
 
-            return make_json_result($GLOBALS['smarty']->fetch('vote_option.htm'));
+            return make_json_result($GLOBALS['smarty']->display('vote_option'));
         }
 
         /*------------------------------------------------------ */

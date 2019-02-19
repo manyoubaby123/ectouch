@@ -30,7 +30,7 @@ class Users extends Init
             $this->assign('full_page', 1);
             $this->assign('sort_user_id', '<img src="images/sort_desc.gif">');
 
-            return $GLOBALS['smarty']->display('users_list.htm');
+            return $this->fetch('users_list');
         }
 
         /*------------------------------------------------------ */
@@ -47,7 +47,7 @@ class Users extends Init
             $sort_flag = sort_flag($user_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('users_list.htm'), '', ['filter' => $user_list['filter'], 'page_count' => $user_list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('users_list'), '', ['filter' => $user_list['filter'], 'page_count' => $user_list['page_count']]);
         }
 
         /*------------------------------------------------------ */
@@ -73,7 +73,7 @@ class Users extends Init
             $this->assign('user', $user);
             $this->assign('special_ranks', get_rank_list(true));
 
-            return $GLOBALS['smarty']->display('user_info.htm');
+            return $this->fetch('user_info');
         }
 
         /*------------------------------------------------------ */
@@ -288,7 +288,7 @@ class Users extends Init
             $this->assign('user', $user);
             $this->assign('form_action', 'update');
             $this->assign('special_ranks', get_rank_list(true));
-            return $GLOBALS['smarty']->display('user_info.htm');
+            return $this->fetch('user_info');
         }
 
         /*------------------------------------------------------ */
@@ -494,7 +494,7 @@ class Users extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['address_list']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['03_users_list'], 'href' => 'users.php?act=list&' . list_link_postfix()]);
-            return $GLOBALS['smarty']->display('user_address_list.htm');
+            return $this->fetch('user_address_list');
         }
 
         /*------------------------------------------------------ */
@@ -571,7 +571,7 @@ class Users extends Init
             $this->assign('full_page', 1);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['back_note'], 'href' => "users.php?act=edit&id=$auid"]);
 
-            return $GLOBALS['smarty']->display('affiliate_list.htm');
+            return $this->fetch('affiliate_list');
         }
     }
 

@@ -40,7 +40,7 @@ class FriendLink extends Init
             $sort_flag = sort_flag($links_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('link_list.htm');
+            return $this->fetch('link_list');
         }
 
         /*------------------------------------------------------ */
@@ -59,7 +59,7 @@ class FriendLink extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('link_list.htm'),
+                $GLOBALS['smarty']->display('link_list'),
                 '',
                 ['filter' => $links_list['filter'], 'page_count' => $links_list['page_count']]
             );
@@ -76,7 +76,7 @@ class FriendLink extends Init
             $this->assign('action', 'add');
             $this->assign('form_act', 'insert');
 
-            return $GLOBALS['smarty']->display('link_info.htm');
+            return $this->fetch('link_info');
         }
 
         /*------------------------------------------------------ */
@@ -174,7 +174,7 @@ class FriendLink extends Init
             $this->assign('link_logo', $link_logo);
             $this->assign('link_arr', $link_arr);
 
-            return $GLOBALS['smarty']->display('link_info.htm');
+            return $this->fetch('link_info');
         }
 
         /*------------------------------------------------------ */

@@ -1658,7 +1658,7 @@ class OrderService
         $GLOBALS['smarty']->assign('sent_date', date('Y-m-d'));
 
         $tpl = get_mail_template('virtual_card');
-        $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+        $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
         send_mail($order['consignee'], $order['email'], $tpl['template_subject'], $content, $tpl['is_html']);
 
         return true;

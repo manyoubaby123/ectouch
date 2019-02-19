@@ -33,7 +33,7 @@ class Category extends Init
 
             /* 列表页面 */
 
-            return $GLOBALS['smarty']->display('category_list.htm');
+            return $this->fetch('category_list');
         }
 
         /*------------------------------------------------------ */
@@ -43,7 +43,7 @@ class Category extends Init
             $cat_list = cat_list(0, 0, false);
             $this->assign('cat_info', $cat_list);
 
-            return make_json_result($GLOBALS['smarty']->fetch('category_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('category_list'));
         }
         /*------------------------------------------------------ */
         //-- 添加商品分类
@@ -65,7 +65,7 @@ class Category extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('category_info.htm');
+            return $this->fetch('category_info');
         }
 
         /*------------------------------------------------------ */
@@ -185,7 +185,7 @@ class Category extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('category_info.htm');
+            return $this->fetch('category_info');
         }
         if ($_REQUEST['act'] == 'add_category') {
             $parent_id = empty($_REQUEST['parent_id']) ? 0 : intval($_REQUEST['parent_id']);
@@ -314,7 +314,7 @@ class Category extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('category_move.htm');
+            return $this->fetch('category_move');
         }
 
         /*------------------------------------------------------ */

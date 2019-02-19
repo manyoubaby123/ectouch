@@ -20,7 +20,7 @@ class GoodsAuto extends Init
             $this->assign('record_count', $goodsdb['record_count']);
             $this->assign('page_count', $goodsdb['page_count']);
 
-            return $GLOBALS['smarty']->display('goods_auto.htm');
+            return $this->fetch('goods_auto');
         }
         if ($_REQUEST['act'] == 'query') {
             $goodsdb = $this->get_auto_goods();
@@ -33,7 +33,7 @@ class GoodsAuto extends Init
             $sort_flag = sort_flag($goodsdb['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('goods_auto.htm'), '', ['filter' => $goodsdb['filter'], 'page_count' => $goodsdb['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('goods_auto'), '', ['filter' => $goodsdb['filter'], 'page_count' => $goodsdb['page_count']]);
         }
         if ($_REQUEST['act'] == 'del') {
             $goods_id = (int)$_REQUEST['goods_id'];

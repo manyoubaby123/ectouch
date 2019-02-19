@@ -42,7 +42,7 @@ class Cron extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['07_cron_schcron']);
             $this->assign('modules', $modules);
-            return $GLOBALS['smarty']->display('cron_list.htm');
+            return $this->fetch('cron_list');
         }
         if ($_REQUEST['act'] == 'install') {
             if (empty($_POST['step'])) {
@@ -89,7 +89,7 @@ class Cron extends Init
                 $this->assign('week', $week);
                 $this->assign('hours', $hours);
                 $this->assign('cron', $cron);
-                return $GLOBALS['smarty']->display('cron_edit.htm');
+                return $this->fetch('cron_edit');
             } elseif ($_POST['step'] == 2) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
                 if (empty($_POST['cron_name'])) {
@@ -204,7 +204,7 @@ class Cron extends Init
                 $this->assign('week', $week);
                 $this->assign('hours', $hours);
                 $this->assign('page_list', $page_list);
-                return $GLOBALS['smarty']->display('cron_edit.htm');
+                return $this->fetch('cron_edit');
             } elseif ($_POST['step'] == 2) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
                 if (empty($_POST['cron_id'])) {

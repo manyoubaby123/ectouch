@@ -17,7 +17,7 @@ class AttentionList extends Init
             $this->assign('record_count', $goodsdb['record_count']);
             $this->assign('page_count', $goodsdb['page_count']);
 
-            return $GLOBALS['smarty']->display('attention_list.htm');
+            return $this->fetch('attention_list');
         }
         if ($_REQUEST['act'] == 'query') {
             $goodsdb = get_attention();
@@ -26,7 +26,7 @@ class AttentionList extends Init
             $this->assign('record_count', $goodsdb['record_count']);
             $this->assign('page_count', $goodsdb['page_count']);
             return make_json_result(
-                $GLOBALS['smarty']->fetch('attention_list.htm'),
+                $GLOBALS['smarty']->display('attention_list'),
                 '',
                 ['filter' => $goodsdb['filter'], 'page_count' => $goodsdb['page_count']]
             );
@@ -57,7 +57,7 @@ class AttentionList extends Init
                     $time = time();
                     $goods_url = $GLOBALS['ecs']->url() . build_uri('goods', ['gid' => $id], $rt['goods_name']);
                     $this->assign(['user_name' => $rt['user_name'], 'goods_name' => $rt['goods_name'], 'goods_url' => $goods_url, 'shop_name' => $GLOBALS['_CFG']['shop_title'], 'send_date' => local_date($GLOBALS['_CFG']['date_format'])]);
-                    $content = $GLOBALS['smarty']->fetch("str:$template[template_content]");
+                    $content = $GLOBALS['smarty']->display("str:$template[template_content]");
                     $add .= $add ? ",('$rt[email]','$template[template_id]','$content','$pri','$time')" : "('$rt[email]','$template[template_id]','$content','$pri','$time')";
                     $i++;
                 }
@@ -107,7 +107,7 @@ class AttentionList extends Init
                     $goods_url = $GLOBALS['ecs']->url() . build_uri('goods', ['gid' => $rt['goods_id']], $rt['user_name']);
 
                     $this->assign(['user_name' => $rt['user_name'], 'goods_name' => $rt['goods_name'], 'goods_url' => $goods_url]);
-                    $content = $GLOBALS['smarty']->fetch("str:$template[template_content]");
+                    $content = $GLOBALS['smarty']->display("str:$template[template_content]");
                     $add .= $add ? ",('$rt[email]','$template[template_id]','$content','$pri','$time')" : "('$rt[email]','$template[template_id]','$content','$pri','$time')";
                     $i++;
                 }

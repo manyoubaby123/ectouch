@@ -44,6 +44,6 @@ class Gallery extends Init
         $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
         $this->assign('watermark', str_replace('../', './', $GLOBALS['_CFG']['watermark']));
         $this->assign('gallery', $gallery);
-        return $GLOBALS['smarty']->display('gallery.dwt');
+        return $this->fetch('gallery');
     }
 }

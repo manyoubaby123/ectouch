@@ -98,6 +98,6 @@ class Activity extends Init
         $this->assign('lang', $GLOBALS['_LANG']);
 
         $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-typeactivity.xml" : 'feed.php?type=activity'); // RSS URL
-        return $GLOBALS['smarty']->display('activity.dwt');
+        return $this->fetch('activity');
     }
 }

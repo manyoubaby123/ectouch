@@ -55,6 +55,6 @@ class Respond extends Init
         $this->assign('message', $msg);
         $this->assign('shop_url', $GLOBALS['ecs']->url());
 
-        return $GLOBALS['smarty']->display('respond.dwt');
+        return $this->fetch('respond');
     }
 }

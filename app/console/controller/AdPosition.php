@@ -35,7 +35,7 @@ class AdPosition extends Init
             $this->assign('record_count', $position_list['record_count']);
             $this->assign('page_count', $position_list['page_count']);
 
-            return $GLOBALS['smarty']->display('ad_position_list.htm');
+            return $this->fetch('ad_position_list');
         }
 
         /*------------------------------------------------------ */
@@ -51,7 +51,7 @@ class AdPosition extends Init
             $this->assign('action_link', ['href' => 'ad_position.php?act=list', 'text' => $GLOBALS['_LANG']['ad_position']]);
             $this->assign('posit_arr', ['position_style' => '<table cellpadding="0" cellspacing="0">' . "\n" . '{foreach from=$ads item=ad}' . "\n" . '<tr><td>{$ad}</td></tr>' . "\n" . '{/foreach}' . "\n" . '</table>']);
 
-            return $GLOBALS['smarty']->display('ad_position_info.htm');
+            return $this->fetch('ad_position_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             admin_priv('ad_manage');
@@ -106,7 +106,7 @@ class AdPosition extends Init
             $this->assign('posit_arr', $posit_arr);
             $this->assign('form_act', 'update');
 
-            return $GLOBALS['smarty']->display('ad_position_info.htm');
+            return $this->fetch('ad_position_info');
         }
         if ($_REQUEST['act'] == 'update') {
             admin_priv('ad_manage');
@@ -157,7 +157,7 @@ class AdPosition extends Init
             $this->assign('page_count', $position_list['page_count']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('ad_position_list.htm'),
+                $GLOBALS['smarty']->display('ad_position_list'),
                 '',
                 ['filter' => $position_list['filter'], 'page_count' => $position_list['page_count']]
             );

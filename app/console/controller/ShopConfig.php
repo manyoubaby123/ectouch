@@ -55,7 +55,7 @@ class ShopConfig extends Init
             }
             $this->assign('cfg', $GLOBALS['_CFG']);
 
-            return $GLOBALS['smarty']->display('shop_config.htm');
+            return $this->fetch('shop_config');
         }
 
         /*------------------------------------------------------ */
@@ -69,7 +69,7 @@ class ShopConfig extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['mail_settings']);
             $this->assign('cfg', $arr[5]['vars']);
-            return $GLOBALS['smarty']->display('shop_config_mail_settings.htm');
+            return $this->fetch('shop_config_mail_settings');
         }
 
         /*------------------------------------------------------ */

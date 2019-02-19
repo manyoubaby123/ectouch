@@ -40,7 +40,7 @@ class Attribute extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('attribute_list.htm');
+            return $this->fetch('attribute_list');
         }
 
         /*------------------------------------------------------ */
@@ -59,7 +59,7 @@ class Attribute extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('attribute_list.htm'),
+                $GLOBALS['smarty']->display('attribute_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -106,7 +106,7 @@ class Attribute extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('attribute_info.htm');
+            return $this->fetch('attribute_info');
         }
 
         /*------------------------------------------------------ */

@@ -47,7 +47,7 @@ class GetPassword extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['get_newpassword']);
 
-            return $GLOBALS['smarty']->display('get_pwd.htm');
+            return $this->fetch('get_pwd');
         }
 
         /*------------------------------------------------------ */
@@ -83,7 +83,7 @@ class GetPassword extends Init
                     $this->assign('send_date', local_date($GLOBALS['_CFG']['date_format']));
                     $this->assign('sent_date', local_date($GLOBALS['_CFG']['date_format']));
 
-                    $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
+                    $content = $GLOBALS['smarty']->display('str:' . $template['template_content']);
 
                     /* 发送确认重置密码的确认邮件 */
                     if (send_mail(

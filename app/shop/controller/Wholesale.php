@@ -93,7 +93,7 @@ class Wholesale extends Init
             assign_dynamic('wholesale');
 
             /* 显示模板 */
-            return $GLOBALS['smarty']->display('wholesale_list.dwt');
+            return $this->fetch('wholesale_list');
         }
 
         /*------------------------------------------------------ */
@@ -349,7 +349,7 @@ class Wholesale extends Init
                 $this->assign('order', $order);
                 $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
                 $this->assign('send_date', date($GLOBALS['_CFG']['time_format']));
-                $content = $GLOBALS['smarty']->fetch('str:' . $tpl['template_content']);
+                $content = $GLOBALS['smarty']->display('str:' . $tpl['template_content']);
                 send_mail($GLOBALS['_CFG']['shop_name'], $GLOBALS['_CFG']['service_email'], $tpl['template_subject'], $content, $tpl['is_html']);
             }
 

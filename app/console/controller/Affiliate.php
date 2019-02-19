@@ -19,12 +19,12 @@ class Affiliate extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['affiliate']);
             $this->assign('config', $config);
-            return $GLOBALS['smarty']->display('affiliate.htm');
+            return $this->fetch('affiliate');
         }
         if ($_REQUEST['act'] == 'query') {
             $this->assign('ur_here', $GLOBALS['_LANG']['affiliate']);
             $this->assign('config', $config);
-            return make_json_result($GLOBALS['smarty']->fetch('affiliate.htm'), '', null);
+            return make_json_result($GLOBALS['smarty']->display('affiliate'), '', null);
         }
         /*------------------------------------------------------ */
         //-- 增加下线分配方案

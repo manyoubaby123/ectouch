@@ -265,7 +265,7 @@ class OrderStats extends Init
                 $this->assign('action_link', ['text' => $GLOBALS['_LANG']['down_order_statistics'], 'href' => 'order_stats.php?act=download&start_date=' . $start_date . '&end_date=' . $end_date . '&filename=' . $filename]);
             }
 
-            return $GLOBALS['smarty']->display('order_stats.htm');
+            return $this->fetch('order_stats');
         } elseif ($act = 'download') {
             $filename = !empty($_REQUEST['filename']) ? trim($_REQUEST['filename']) : '';
 

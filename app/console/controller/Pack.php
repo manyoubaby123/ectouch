@@ -28,7 +28,7 @@ class Pack extends Init
             $this->assign('record_count', $packs_list['record_count']);
             $this->assign('page_count', $packs_list['page_count']);
 
-            return $GLOBALS['smarty']->display('pack_list.htm');
+            return $this->fetch('pack_list');
         }
         /*------------------------------------------------------ */
         //-- ajax 列表
@@ -43,7 +43,7 @@ class Pack extends Init
             $sort_flag = sort_flag($packs_list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return make_json_result($GLOBALS['smarty']->fetch('pack_list.htm'), '', ['filter' => $packs_list['filter'], 'page_count' => $packs_list['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('pack_list'), '', ['filter' => $packs_list['filter'], 'page_count' => $packs_list['page_count']]);
         }
         /*------------------------------------------------------ */
         //-- 添加新包装
@@ -60,7 +60,7 @@ class Pack extends Init
             $this->assign('form_action', 'insert');
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['06_pack_list'], 'href' => 'pack.php?act=list']);
 
-            return $GLOBALS['smarty']->display('pack_info.htm');
+            return $this->fetch('pack_info');
         }
         if ($_REQUEST['act'] == 'insert') {
             /* 权限判断 */
@@ -111,7 +111,7 @@ class Pack extends Init
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['06_pack_list'], 'href' => 'pack.php?act=list&' . list_link_postfix()]);
             $this->assign('pack', $pack);
             $this->assign('form_action', 'update');
-            return $GLOBALS['smarty']->display('pack_info.htm');
+            return $this->fetch('pack_info');
         }
         if ($_REQUEST['act'] == 'update') {
             /* 权限判断 */

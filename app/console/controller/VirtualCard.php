@@ -32,7 +32,7 @@ class VirtualCard extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['replenish']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'virtual_card.php?act=card&goods_id=' . $card['goods_id']]);
-            return $GLOBALS['smarty']->display('replenish_info.htm');
+            return $this->fetch('replenish_info');
         }
 
         /*------------------------------------------------------ */
@@ -60,7 +60,7 @@ class VirtualCard extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['replenish']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'virtual_card.php?act=card&goods_id=' . $card['goods_id']]);
             $this->assign('card', $card);
-            return $GLOBALS['smarty']->display('replenish_info.htm');
+            return $this->fetch('replenish_info');
         }
         if ($_REQUEST['act'] == 'action') {
             /* 检查权限 */
@@ -154,7 +154,7 @@ class VirtualCard extends Init
             $sort_flag = sort_flag($list['filter']);
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
-            return $GLOBALS['smarty']->display('replenish_list.htm');
+            return $this->fetch('replenish_list');
         }
 
         /*------------------------------------------------------ */
@@ -173,7 +173,7 @@ class VirtualCard extends Init
             $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
-                $GLOBALS['smarty']->fetch('replenish_list.htm'),
+                $GLOBALS['smarty']->display('replenish_list'),
                 '',
                 ['filter' => $list['filter'], 'page_count' => $list['page_count']]
             );
@@ -199,7 +199,7 @@ class VirtualCard extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['batch_card_add']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['virtual_card_list'], 'href' => 'goods.php?act=list&extension_code=virtual_card']);
             $this->assign('goods_id', $_REQUEST['goods_id']);
-            return $GLOBALS['smarty']->display('batch_card_info.htm');
+            return $this->fetch('batch_card_info');
         }
         if ($_REQUEST['act'] == 'batch_confirm') {
             /* 检查上传是否成功 */
@@ -235,7 +235,7 @@ class VirtualCard extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['batch_card_add']);
             $this->assign('action_link', ['text' => $GLOBALS['_LANG']['batch_card_add'], 'href' => 'virtual_card.php?act=batch_card_add&goods_id=' . $_REQUEST['goods_id']]);
             $this->assign('list', $rec);
-            return $GLOBALS['smarty']->display('batch_card_confirm.htm');
+            return $this->fetch('batch_card_confirm');
         } /* 批量上传处理 */
         if ($_REQUEST['act'] == 'batch_insert') {
             /* 检查权限 */
@@ -270,7 +270,7 @@ class VirtualCard extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['virtual_card_change']);
 
-            return $GLOBALS['smarty']->display('virtual_card_change.htm');
+            return $this->fetch('virtual_card_change');
         }
 
         /*------------------------------------------------------ */

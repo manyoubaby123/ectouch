@@ -25,7 +25,7 @@ class Integrate extends Init
             $this->assign('ur_here', $GLOBALS['_LANG']['06_list_integrate']);
             $this->assign('modules', $modules);
 
-            return $GLOBALS['smarty']->display('integrates_list.htm');
+            return $this->fetch('integrates_list');
         }
 
         /*------------------------------------------------------ */
@@ -82,7 +82,7 @@ class Integrate extends Init
                 $this->assign('set_list', get_charset_list());
                 $this->assign('ur_here', $GLOBALS['_LANG']['integrate_setup']);
                 $this->assign('code', $_GET['code']);
-                return $GLOBALS['smarty']->display('integrates_setup.htm');
+                return $this->fetch('integrates_setup');
             }
         }
 
@@ -125,7 +125,7 @@ class Integrate extends Init
                 $this->assign('ur_here', $GLOBALS['_LANG']['integrate_setup']);
                 $this->assign('code', $_GET['code']);
                 $this->assign('cfg', $cfg);
-                return $GLOBALS['smarty']->display('integrates_setup.htm');
+                return $this->fetch('integrates_setup');
             }
         }
 
@@ -214,7 +214,7 @@ class Integrate extends Init
             $this->assign('domain', '@ectouch');
             $this->assign('lang_total', sprintf($GLOBALS['_LANG']['shop_user_total'], $total));
             $this->assign('size', $size);
-            return $GLOBALS['smarty']->display('integrates_check.htm');
+            return $this->fetch('integrates_check');
         }
 
         /*------------------------------------------------------ */
@@ -317,7 +317,7 @@ class Integrate extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['ucenter_import_username']);
             $this->assign('user_startid_intro', sprintf($GLOBALS['_LANG']['user_startid_intro'], $maxuid, $maxuid));
-            return $GLOBALS['smarty']->display('integrates_uc_import.htm');
+            return $this->fetch('integrates_uc_import');
         }
 
         /*------------------------------------------------------ */
@@ -511,7 +511,7 @@ class Integrate extends Init
             $this->assign('page_count', $arr['page_count']);
             $this->assign('full_page', 1);
 
-            return $GLOBALS['smarty']->display('integrates_modify.htm');
+            return $this->fetch('integrates_modify');
         }
 
         /*------------------------------------------------------ */
@@ -524,7 +524,7 @@ class Integrate extends Init
             $this->assign('record_count', $arr['record_count']);
             $this->assign('page_count', $arr['page_count']);
             $this->assign('full_page', 0);
-            return make_json_result($GLOBALS['smarty']->fetch('integrates_modify.htm'), '', ['filter' => $arr['filter'], 'page_count' => $arr['page_count']]);
+            return make_json_result($GLOBALS['smarty']->display('integrates_modify'), '', ['filter' => $arr['filter'], 'page_count' => $arr['page_count']]);
         }
 
         /*------------------------------------------------------ */
@@ -650,7 +650,7 @@ class Integrate extends Init
             $this->assign('tasks', $tasks);
             $this->assign('ur_here', $GLOBALS['_LANG']['user_sync']);
             $this->assign('size', $size);
-            return $GLOBALS['smarty']->display('integrates_sync.htm');
+            return $this->fetch('integrates_sync');
         }
 
         /*------------------------------------------------------ */
@@ -889,7 +889,7 @@ class Integrate extends Init
             $this->assign('integral_name', $GLOBALS['_CFG']['integral_name']);
             $this->assign('full_page', 1);
             $this->assign('points', $points);
-            return $GLOBALS['smarty']->display('integrates_points.htm');
+            return $this->fetch('integrates_points');
         }
 
         if ($_REQUEST['act'] == 'edit_points') {

@@ -118,6 +118,6 @@ class ShopService
 
         $GLOBALS['smarty']->assign('auto_redirect', $auto_redirect);
         $GLOBALS['smarty']->assign('message', $msg);
-        return $GLOBALS['smarty']->display('message.dwt');
+        return $GLOBALS['smarty']->fetch('message.dwt');
     }
 }

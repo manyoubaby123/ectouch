@@ -33,12 +33,12 @@ class Sms extends Init
                     }
 
                     $this->assign('send_rank', $send_rank);
-                    return $GLOBALS['smarty']->display('sms_send_ui.htm');
+                    return $this->fetch('sms_send_ui');
                 } else {
                     $this->assign('ur_here', $GLOBALS['_LANG']['register_sms']);
                     $this->assign('sms_site_info', $sms->get_site_info());
 
-                    return $GLOBALS['smarty']->display('sms_register_ui.htm');
+                    return $this->fetch('sms_register_ui');
                 }
 
                 break;
@@ -66,12 +66,12 @@ class Sms extends Init
                     $default_sms_sign = $GLOBALS['db']->getRow($sql);
                     $this->assign('default_sign', $default_sms_sign['value']);
 
-                    return $GLOBALS['smarty']->display('sms_sign.htm');
+                    return $this->fetch('sms_sign');
                 } else {
                     $this->assign('ur_here', $GLOBALS['_LANG']['register_sms']);
                     $this->assign('sms_site_info', $sms->get_site_info());
 
-                    return $GLOBALS['smarty']->display('sms_register_ui.htm');
+                    return $this->fetch('sms_register_ui');
                 }
                 break;
 
@@ -138,7 +138,7 @@ class Sms extends Init
                     $this->assign('ur_here', $GLOBALS['_LANG']['register_sms']);
                     $this->assign('sms_site_info', $sms->get_site_info());
 
-                    return $GLOBALS['smarty']->display('sms_register_ui.htm');
+                    return $this->fetch('sms_register_ui');
                 }
                 break;
 
@@ -212,7 +212,7 @@ class Sms extends Init
                     $this->assign('ur_here', $GLOBALS['_LANG']['register_sms']);
                     $this->assign('sms_site_info', $sms->get_site_info());
 
-                    return $GLOBALS['smarty']->display('sms_register_ui.htm');
+                    return $this->fetch('sms_register_ui');
                 }
                 break;
 
@@ -250,7 +250,7 @@ class Sms extends Init
                     $this->assign('ur_here', $GLOBALS['_LANG']['register_sms']);
                     $this->assign('sms_site_info', $sms->get_site_info());
 
-                    return $GLOBALS['smarty']->display('sms_register_ui.htm');
+                    return $this->fetch('sms_register_ui');
                 }
                 break;
 

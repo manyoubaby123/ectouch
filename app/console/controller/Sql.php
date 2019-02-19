@@ -22,7 +22,7 @@ class Sql extends Init
             $this->assign('type', -1);
             $this->assign('ur_here', $GLOBALS['_LANG']['04_sql_query']);
 
-            return $GLOBALS['smarty']->display('sql.htm');
+            return $this->fetch('sql');
         }
 
         if ($_REQUEST['act'] == 'query') {
@@ -42,7 +42,7 @@ class Sql extends Init
 
             $this->assign('ur_here', $GLOBALS['_LANG']['04_sql_query']);
 
-            return $GLOBALS['smarty']->display('sql.htm');
+            return $this->fetch('sql');
         }
     }
 

@@ -28,7 +28,7 @@ class GenGoodsScript extends Init
 
             /* 显示模板 */
 
-            return $GLOBALS['smarty']->display('gen_goods_script.htm');
+            return $this->fetch('gen_goods_script');
         }
     }
 }

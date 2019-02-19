@@ -45,7 +45,7 @@ class Privilege extends Init
                 $this->assign('random', mt_rand());
             }
 
-            return $GLOBALS['smarty']->display('login.htm');
+            return $this->fetch('login');
         }
 
         /*------------------------------------------------------ */
@@ -134,7 +134,7 @@ class Privilege extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('privilege_list.htm');
+            return $this->fetch('privilege_list');
         }
 
         /*------------------------------------------------------ */
@@ -143,7 +143,7 @@ class Privilege extends Init
         if ($_REQUEST['act'] == 'query') {
             $this->assign('admin_list', $this->get_admin_userlist());
 
-            return make_json_result($GLOBALS['smarty']->fetch('privilege_list.htm'));
+            return make_json_result($GLOBALS['smarty']->display('privilege_list'));
         }
 
         /*------------------------------------------------------ */
@@ -162,7 +162,7 @@ class Privilege extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('privilege_info.htm');
+            return $this->fetch('privilege_info');
         }
 
         /*------------------------------------------------------ */
@@ -270,7 +270,7 @@ class Privilege extends Init
             $this->assign('form_act', 'update');
             $this->assign('action', 'edit');
 
-            return $GLOBALS['smarty']->display('privilege_info.htm');
+            return $this->fetch('privilege_info');
         }
 
         /*------------------------------------------------------ */
@@ -470,7 +470,7 @@ class Privilege extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('privilege_info.htm');
+            return $this->fetch('privilege_info');
         }
 
         /*------------------------------------------------------ */
@@ -528,7 +528,7 @@ class Privilege extends Init
 
             /* 显示页面 */
 
-            return $GLOBALS['smarty']->display('privilege_allot.htm');
+            return $this->fetch('privilege_allot');
         }
 
         /*------------------------------------------------------ */

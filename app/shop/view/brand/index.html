@@ -1,18 +1,17 @@
-<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+{layout name="layout" /}
 
 <div class="AreaR">
-    <!-- TemplateBeginEditable name="通栏广告区域（宽750px）" -->
-    <!-- TemplateEndEditable -->
+
     <div class="blank5"></div>
     <h3 class="border"><span><!--{$lang.all_brand}--></span></h3>
     <div id="brandList" class="clearfix">
-        <!-- {foreach from=$brand_list name="brand_list_foreach" item=brand_data} -->
+        <!-- {foreach $brand_list as $brand_data} -->
         <div class="brandBox">
             <h4><span>{$brand_data.brand_name}</span>({$brand_data.goods_num})</h4>
             <!-- {if $brand_data.brand_logo} -->
             <div class="brandLogo">
                 <a href="{$brand_data.url}"><img src="data/brandlogo/{$brand_data.brand_logo}"
-                                                 alt="{$brand_data.brand_name|escape:html} ({$brand_data.goods_num})"/></a>
+                                                 alt="{$brand_data.brand_name} ({$brand_data.goods_num})"/></a>
             </div>
             <!-- {/if} -->
             <p title="{$brand_data.brand_desc}">{$brand_data.brand_desc}</p>

@@ -1,21 +1,21 @@
 <?php
 
-namespace app\console\Commands;
+namespace app\command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use think\console\Command;
+use think\console\Input;
+use think\console\Output;
 
 class AutoManage extends Command
 {
-    protected static $defaultName = 'app:auto-manage';
-
     protected function configure()
     {
-
+        // 指令配置
+        $this->setName('app:auto-manage')
+            ->setDescription('Auto manage');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(Input $input, Output $output)
     {
         $time = gmtime();
         $limit = !empty($cron['auto_manage_count']) ? $cron['auto_manage_count'] : 5;

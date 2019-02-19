@@ -8,27 +8,29 @@ class Brand extends Init
     {
         /* 获得请求的分类 ID */
         if (!empty($_REQUEST['id'])) {
-            $brand_id = intval($_REQUEST['id']);
+            $brand_id = $this->request->get('id', null, 'intval');
         }
         if (!empty($_REQUEST['brand'])) {
-            $brand_id = intval($_REQUEST['brand']);
+            $brand_id = $this->request->get('brand', null, 'intval');
         }
+
+        /**
+         * 品牌列表
+         */
         if (empty($brand_id)) {
-            /* 缓存编号 */
-            $cache_id = sprintf('%X', crc32($GLOBALS['_CFG']['lang']));
-            if (!$GLOBALS['smarty']->is_cached('brand_list.dwt', $cache_id)) {
-                $this->shopService->assign_template();
-                $position = assign_ur_here('', $GLOBALS['_LANG']['all_brand']);
-                $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
-                $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置
+            $this->assign_template();
 
-                $GLOBALS['smarty']->assign('categories', get_categories_tree()); // 分类树
-                $GLOBALS['smarty']->assign('helps', get_shop_help());       // 网店帮助
-                $GLOBALS['smarty']->assign('top_goods', get_top10());           // 销售排行
+            $position = assign_ur_here('', $GLOBALS['_LANG']['all_brand']);
+            $this->assign('page_title', $position['title']);    // 页面标题
+            $this->assign('ur_here', $position['ur_here']);  // 当前位置
 
-                $GLOBALS['smarty']->assign('brand_list', get_brands());
-            }
-            return $GLOBALS['smarty']->display('brand_list.dwt', $cache_id);
+            $this->assign('categories', get_categories_tree()); // 分类树
+            $this->assign('helps', get_shop_help());       // 网店帮助
+            $this->assign('top_goods', get_top10());           // 销售排行
+
+            $this->assign('brand_list', get_brands());
+
+            return $this->fetch('index');
         }
 
         /* 初始化分页信息 */
@@ -61,36 +63,36 @@ class Brand extends Init
                 return ecs_header("Location: ./\n");
             }
 
-            $GLOBALS['smarty']->assign('data_dir', DATA_DIR);
-            $GLOBALS['smarty']->assign('keywords', htmlspecialchars($brand_info['brand_desc']));
-            $GLOBALS['smarty']->assign('description', htmlspecialchars($brand_info['brand_desc']));
+            $this->assign('data_dir', DATA_DIR);
+            $this->assign('keywords', htmlspecialchars($brand_info['brand_desc']));
+            $this->assign('description', htmlspecialchars($brand_info['brand_desc']));
 
             /* 赋值固定内容 */
-            $this->shopService->assign_template();
+            $this->assign_template();
             $position = assign_ur_here($cate, $brand_info['brand_name']);
-            $GLOBALS['smarty']->assign('page_title', $position['title']);   // 页面标题
-            $GLOBALS['smarty']->assign('ur_here', $position['ur_here']); // 当前位置
-            $GLOBALS['smarty']->assign('brand_id', $brand_id);
-            $GLOBALS['smarty']->assign('category', $cate);
+            $this->assign('page_title', $position['title']);   // 页面标题
+            $this->assign('ur_here', $position['ur_here']); // 当前位置
+            $this->assign('brand_id', $brand_id);
+            $this->assign('category', $cate);
 
-            $GLOBALS['smarty']->assign('categories', get_categories_tree());        // 分类树
-            $GLOBALS['smarty']->assign('helps', get_shop_help());              // 网店帮助
-            $GLOBALS['smarty']->assign('top_goods', get_top10());                  // 销售排行
-            $GLOBALS['smarty']->assign('show_marketprice', $GLOBALS['_CFG']['show_marketprice']);
-            $GLOBALS['smarty']->assign('brand_cat_list', $this->brand_related_cat($brand_id)); // 相关分类
-            $GLOBALS['smarty']->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-b$brand_id.xml" : 'feed.php?brand=' . $brand_id);
+            $this->assign('categories', get_categories_tree());        // 分类树
+            $this->assign('helps', get_shop_help());              // 网店帮助
+            $this->assign('top_goods', get_top10());                  // 销售排行
+            $this->assign('show_marketprice', $GLOBALS['_CFG']['show_marketprice']);
+            $this->assign('brand_cat_list', $this->brand_related_cat($brand_id)); // 相关分类
+            $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-b$brand_id.xml" : 'feed.php?brand=' . $brand_id);
 
             /* 调查 */
             $vote = get_vote();
             if (!empty($vote)) {
-                $GLOBALS['smarty']->assign('vote_id', $vote['id']);
-                $GLOBALS['smarty']->assign('vote', $vote['content']);
+                $this->assign('vote_id', $vote['id']);
+                $this->assign('vote', $vote['content']);
             }
 
-            $GLOBALS['smarty']->assign('best_goods', $this->brand_recommend_goods('best', $brand_id, $cate));
-            $GLOBALS['smarty']->assign('promotion_goods', $this->brand_recommend_goods('promote', $brand_id, $cate));
-            $GLOBALS['smarty']->assign('brand', $brand_info);
-            $GLOBALS['smarty']->assign('promotion_info', get_promotion_info());
+            $this->assign('best_goods', $this->brand_recommend_goods('best', $brand_id, $cate));
+            $this->assign('promotion_goods', $this->brand_recommend_goods('promote', $brand_id, $cate));
+            $this->assign('brand', $brand_info);
+            $this->assign('promotion_info', get_promotion_info());
 
             $count = $this->goods_count_by_brand($brand_id, $cate);
 
@@ -101,8 +103,8 @@ class Brand extends Init
                     $goodslist[] = [];
                 }
             }
-            $GLOBALS['smarty']->assign('goods_list', $goodslist);
-            $GLOBALS['smarty']->assign('script_name', 'brand');
+            $this->assign('goods_list', $goodslist);
+            $this->assign('script_name', 'brand');
 
             assign_pager('brand', $cate, $count, $size, $sort, $order, $page, '', $brand_id, 0, 0, $display); // 分页
             assign_dynamic('brand'); // 动态内容
@@ -147,13 +149,13 @@ class Brand extends Init
             }
 
             $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, " .
+                "IFNULL(mp.user_price, g.shop_price * '" . session('discount') . "') AS shop_price, " .
                 'promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, ' .
                 'b.brand_name, g.is_best, g.is_new, g.is_hot, g.is_promote ' .
                 'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
                 'LEFT JOIN ' . $GLOBALS['ecs']->table('member_price') . ' AS mp ' .
-                "ON mp.goods_id = g.goods_id AND mp.user_rank = '". session('user_rank') ."' " .
+                "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . session('user_rank') . "' " .
                 "WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND g.brand_id = '$brand' AND " .
                 "(g.is_best = 1 OR (g.is_promote = 1 AND promote_start_date <= '$time' AND " .
                 "promote_end_date >= '$time')) $cat_where" .
@@ -235,11 +237,11 @@ class Brand extends Init
 
         /* 获得商品列表 */
         $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, ' .
-            "IFNULL(mp.user_price, g.shop_price * '". session('discount') ."') AS shop_price, g.promote_price, " .
+            "IFNULL(mp.user_price, g.shop_price * '" . session('discount') . "') AS shop_price, g.promote_price, " .
             'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img ' .
             'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
             'LEFT JOIN ' . $GLOBALS['ecs']->table('member_price') . ' AS mp ' .
-            "ON mp.goods_id = g.goods_id AND mp.user_rank = '". session('user_rank') ."' " .
+            "ON mp.goods_id = g.goods_id AND mp.user_rank = '" . session('user_rank') . "' " .
             "WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND g.brand_id = '$brand_id' $cate_where" .
             "ORDER BY $sort $order";
 

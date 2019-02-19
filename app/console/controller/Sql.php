@@ -19,8 +19,8 @@ class Sql extends Init
         if ($_REQUEST['act'] == 'main') {
             admin_priv('sql_query');
 
-            $GLOBALS['smarty']->assign('type', -1);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['04_sql_query']);
+            $this->assign('type', -1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['04_sql_query']);
 
             return $GLOBALS['smarty']->display('sql.htm');
         }
@@ -40,7 +40,7 @@ class Sql extends Init
 
             $this->assign_sql($_POST['sql']);
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['04_sql_query']);
+            $this->assign('ur_here', $GLOBALS['_LANG']['04_sql_query']);
 
             return $GLOBALS['smarty']->display('sql.htm');
         }
@@ -57,7 +57,7 @@ class Sql extends Init
     private function assign_sql($sql)
     {
         $sql = stripslashes($sql);
-        $GLOBALS['smarty']->assign('sql', $sql);
+        $this->assign('sql', $sql);
 
         /* 解析查询项 */
         $sql = str_replace("\r", '', $sql);
@@ -71,10 +71,10 @@ class Sql extends Init
         if (count($query_items) > 1) {
             foreach ($query_items as $key => $value) {
                 if ($GLOBALS['db']->query($value, 'SILENT')) {
-                    $GLOBALS['smarty']->assign('type', 1);
+                    $this->assign('type', 1);
                 } else {
-                    $GLOBALS['smarty']->assign('type', 0);
-                    $GLOBALS['smarty']->assign('error', $GLOBALS['db']->error());
+                    $this->assign('type', 0);
+                    $this->assign('error', $GLOBALS['db']->error());
                     return;
                 }
             }
@@ -84,16 +84,16 @@ class Sql extends Init
         /* 单独一条sql语句处理 */
         if (preg_match("/^(?:UPDATE|DELETE|TRUNCATE|ALTER|DROP|FLUSH|INSERT|REPLACE|SET|CREATE)\\s+/i", $sql)) {
             if ($GLOBALS['db']->query($sql, 'SILENT')) {
-                $GLOBALS['smarty']->assign('type', 1);
+                $this->assign('type', 1);
             } else {
-                $GLOBALS['smarty']->assign('type', 0);
-                $GLOBALS['smarty']->assign('error', $GLOBALS['db']->error());
+                $this->assign('type', 0);
+                $this->assign('error', $GLOBALS['db']->error());
             }
         } else {
             $data = $GLOBALS['db']->getAll($sql);
             if ($data === false) {
-                $GLOBALS['smarty']->assign('type', 0);
-                $GLOBALS['smarty']->assign('error', $GLOBALS['db']->error());
+                $this->assign('type', 0);
+                $this->assign('error', $GLOBALS['db']->error());
             } else {
                 $result = '';
                 if (is_array($data) && isset($data[0]) === true) {
@@ -115,8 +115,8 @@ class Sql extends Init
                     $result = "<center><h3>" . $GLOBALS['_LANG']['no_data'] . "</h3></center>";
                 }
 
-                $GLOBALS['smarty']->assign('type', 2);
-                $GLOBALS['smarty']->assign('result', $result);
+                $this->assign('type', 2);
+                $this->assign('result', $result);
             }
         }
     }

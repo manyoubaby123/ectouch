@@ -40,8 +40,8 @@ class Cron extends Init
                 }
             }
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['07_cron_schcron']);
-            $GLOBALS['smarty']->assign('modules', $modules);
+            $this->assign('ur_here', $GLOBALS['_LANG']['07_cron_schcron']);
+            $this->assign('modules', $modules);
             return $GLOBALS['smarty']->display('cron_list.htm');
         }
         if ($_REQUEST['act'] == 'install') {
@@ -84,11 +84,11 @@ class Cron extends Init
                     'search' => 0,
                 ];
 
-                $GLOBALS['smarty']->assign('days', $day);
-                $GLOBALS['smarty']->assign('page_list', $page_list);
-                $GLOBALS['smarty']->assign('week', $week);
-                $GLOBALS['smarty']->assign('hours', $hours);
-                $GLOBALS['smarty']->assign('cron', $cron);
+                $this->assign('days', $day);
+                $this->assign('page_list', $page_list);
+                $this->assign('week', $week);
+                $this->assign('hours', $hours);
+                $this->assign('cron', $cron);
                 return $GLOBALS['smarty']->display('cron_edit.htm');
             } elseif ($_POST['step'] == 2) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];
@@ -198,12 +198,12 @@ class Cron extends Init
                     }
                 }
 
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit'] . $GLOBALS['_LANG']['cron_code']);
-                $GLOBALS['smarty']->assign('cron', $cron);
-                $GLOBALS['smarty']->assign('days', $day);
-                $GLOBALS['smarty']->assign('week', $week);
-                $GLOBALS['smarty']->assign('hours', $hours);
-                $GLOBALS['smarty']->assign('page_list', $page_list);
+                $this->assign('ur_here', $GLOBALS['_LANG']['edit'] . $GLOBALS['_LANG']['cron_code']);
+                $this->assign('cron', $cron);
+                $this->assign('days', $day);
+                $this->assign('week', $week);
+                $this->assign('hours', $hours);
+                $this->assign('page_list', $page_list);
                 return $GLOBALS['smarty']->display('cron_edit.htm');
             } elseif ($_POST['step'] == 2) {
                 $links[] = ['text' => $GLOBALS['_LANG']['back_list'], 'href' => 'cron.php?act=list'];

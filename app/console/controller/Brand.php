@@ -17,16 +17,16 @@ class Brand extends Init
         //-- 品牌列表
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['06_goods_brand_list']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['07_brand_add'], 'href' => 'brand.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['06_goods_brand_list']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['07_brand_add'], 'href' => 'brand.php?act=add']);
+            $this->assign('full_page', 1);
 
             $brand_list = $this->get_brandlist();
 
-            $GLOBALS['smarty']->assign('brand_list', $brand_list['brand']);
-            $GLOBALS['smarty']->assign('filter', $brand_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $brand_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $brand_list['page_count']);
+            $this->assign('brand_list', $brand_list['brand']);
+            $this->assign('filter', $brand_list['filter']);
+            $this->assign('record_count', $brand_list['record_count']);
+            $this->assign('page_count', $brand_list['page_count']);
 
             return $GLOBALS['smarty']->display('brand_list.htm');
         }
@@ -38,11 +38,11 @@ class Brand extends Init
             /* 权限判断 */
             admin_priv('brand_manage');
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['07_brand_add']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['06_goods_brand_list'], 'href' => 'brand.php?act=list']);
-            $GLOBALS['smarty']->assign('form_action', 'insert');
+            $this->assign('ur_here', $GLOBALS['_LANG']['07_brand_add']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['06_goods_brand_list'], 'href' => 'brand.php?act=list']);
+            $this->assign('form_action', 'insert');
 
-            $GLOBALS['smarty']->assign('brand', ['sort_order' => 50, 'is_show' => 1]);
+            $this->assign('brand', ['sort_order' => 50, 'is_show' => 1]);
             return $GLOBALS['smarty']->display('brand_info.htm');
         }
         if ($_REQUEST['act'] == 'insert') {
@@ -98,10 +98,10 @@ class Brand extends Init
                 "FROM " . $GLOBALS['ecs']->table('brand') . " WHERE brand_id='$_REQUEST[id]'";
             $brand = $GLOBALS['db']->getRow($sql);
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['brand_edit']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['06_goods_brand_list'], 'href' => 'brand.php?act=list&' . list_link_postfix()]);
-            $GLOBALS['smarty']->assign('brand', $brand);
-            $GLOBALS['smarty']->assign('form_action', 'updata');
+            $this->assign('ur_here', $GLOBALS['_LANG']['brand_edit']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['06_goods_brand_list'], 'href' => 'brand.php?act=list&' . list_link_postfix()]);
+            $this->assign('brand', $brand);
+            $this->assign('form_action', 'updata');
 
             return $GLOBALS['smarty']->display('brand_info.htm');
         }
@@ -271,10 +271,10 @@ class Brand extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
             $brand_list = $this->get_brandlist();
-            $GLOBALS['smarty']->assign('brand_list', $brand_list['brand']);
-            $GLOBALS['smarty']->assign('filter', $brand_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $brand_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $brand_list['page_count']);
+            $this->assign('brand_list', $brand_list['brand']);
+            $this->assign('filter', $brand_list['filter']);
+            $this->assign('record_count', $brand_list['record_count']);
+            $this->assign('page_count', $brand_list['page_count']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('brand_list.htm'),

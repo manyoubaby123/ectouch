@@ -23,10 +23,10 @@ class Articlecat extends Init
             foreach ($articlecat as $key => $cat) {
                 $articlecat[$key]['type_name'] = $GLOBALS['_LANG']['type_name'][$cat['cat_type']];
             }
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['02_articlecat_list']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['articlecat_add'], 'href' => 'articlecat.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('articlecat', $articlecat);
+            $this->assign('ur_here', $GLOBALS['_LANG']['02_articlecat_list']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['articlecat_add'], 'href' => 'articlecat.php?act=add']);
+            $this->assign('full_page', 1);
+            $this->assign('articlecat', $articlecat);
 
             return $GLOBALS['smarty']->display('articlecat_list.htm');
         }
@@ -39,7 +39,7 @@ class Articlecat extends Init
             foreach ($articlecat as $key => $cat) {
                 $articlecat[$key]['type_name'] = $GLOBALS['_LANG']['type_name'][$cat['cat_type']];
             }
-            $GLOBALS['smarty']->assign('articlecat', $articlecat);
+            $this->assign('articlecat', $articlecat);
 
             return make_json_result($GLOBALS['smarty']->fetch('articlecat_list.htm'));
         }
@@ -51,10 +51,10 @@ class Articlecat extends Init
             /* 权限判断 */
             admin_priv('article_cat');
 
-            $GLOBALS['smarty']->assign('cat_select', article_cat_list(0));
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['articlecat_add']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['02_articlecat_list'], 'href' => 'articlecat.php?act=list']);
-            $GLOBALS['smarty']->assign('form_action', 'insert');
+            $this->assign('cat_select', article_cat_list(0));
+            $this->assign('ur_here', $GLOBALS['_LANG']['articlecat_add']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_articlecat_list'], 'href' => 'articlecat.php?act=list']);
+            $this->assign('form_action', 'insert');
 
             return $GLOBALS['smarty']->display('articlecat_info.htm');
         }
@@ -115,7 +115,7 @@ class Articlecat extends Init
             $cat = $GLOBALS['db']->getRow($sql);
 
             if ($cat['cat_type'] == 2 || $cat['cat_type'] == 3 || $cat['cat_type'] ==4) {
-                $GLOBALS['smarty']->assign('disabled', 1);
+                $this->assign('disabled', 1);
             }
             $options    =   article_cat_list(0, $cat['parent_id'], false);
             $select     =   '';
@@ -134,11 +134,11 @@ class Articlecat extends Init
                 $select .= htmlspecialchars($var['cat_name']) . '</option>';
             }
             unset($options);
-            $GLOBALS['smarty']->assign('cat', $cat);
-            $GLOBALS['smarty']->assign('cat_select', $select);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['articlecat_edit']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['02_articlecat_list'], 'href' => 'articlecat.php?act=list']);
-            $GLOBALS['smarty']->assign('form_action', 'update');
+            $this->assign('cat', $cat);
+            $this->assign('cat_select', $select);
+            $this->assign('ur_here', $GLOBALS['_LANG']['articlecat_edit']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_articlecat_list'], 'href' => 'articlecat.php?act=list']);
+            $this->assign('form_action', 'update');
 
             return $GLOBALS['smarty']->display('articlecat_info.htm');
         }

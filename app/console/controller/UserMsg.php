@@ -31,11 +31,11 @@ class UserMsg extends Init
                 $msg_list[$key]['msg_time'] = local_date($GLOBALS['_CFG']['time_format'], $val['msg_time']);
             }
 
-            $GLOBALS['smarty']->assign('ur_here', sprintf($GLOBALS['_LANG']['msg_for_order'], $order_sn));
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['order_detail'], 'href' => 'order.php?act=info&order_id=' . $order_id]);
-            $GLOBALS['smarty']->assign('msg_list', $msg_list);
-            $GLOBALS['smarty']->assign('order_id', $_GET['order_id']);
-            $GLOBALS['smarty']->assign('user_id', $_GET['user_id']);
+            $this->assign('ur_here', sprintf($GLOBALS['_LANG']['msg_for_order'], $order_sn));
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['order_detail'], 'href' => 'order.php?act=info&order_id=' . $order_id]);
+            $this->assign('msg_list', $msg_list);
+            $this->assign('order_id', $_GET['order_id']);
+            $this->assign('user_id', $_GET['user_id']);
             return $GLOBALS['smarty']->display('msg_add.htm');
         }
 
@@ -97,15 +97,15 @@ class UserMsg extends Init
         if ($_REQUEST['act'] == 'list_all') {
             $msg_list = $this->msg_list();
 
-            $GLOBALS['smarty']->assign('msg_list', $msg_list['msg_list']);
-            $GLOBALS['smarty']->assign('filter', $msg_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $msg_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $msg_list['page_count']);
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('sort_msg_id', '<img src="images/sort_desc.gif">');
+            $this->assign('msg_list', $msg_list['msg_list']);
+            $this->assign('filter', $msg_list['filter']);
+            $this->assign('record_count', $msg_list['record_count']);
+            $this->assign('page_count', $msg_list['page_count']);
+            $this->assign('full_page', 1);
+            $this->assign('sort_msg_id', '<img src="images/sort_desc.gif">');
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['08_unreply_msg']);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['08_unreply_msg']);
+            $this->assign('full_page', 1);
             return $GLOBALS['smarty']->display('msg_list.htm');
         }
 
@@ -115,13 +115,13 @@ class UserMsg extends Init
         if ($_REQUEST['act'] == 'query') {
             $msg_list = $this->msg_list();
 
-            $GLOBALS['smarty']->assign('msg_list', $msg_list['msg_list']);
-            $GLOBALS['smarty']->assign('filter', $msg_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $msg_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $msg_list['page_count']);
+            $this->assign('msg_list', $msg_list['msg_list']);
+            $this->assign('filter', $msg_list['filter']);
+            $this->assign('record_count', $msg_list['record_count']);
+            $this->assign('page_count', $msg_list['page_count']);
 
             $sort_flag = sort_flag($msg_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result($GLOBALS['smarty']->fetch('msg_list.htm'), '', ['filter' => $msg_list['filter'], 'page_count' => $msg_list['page_count']]);
         }
@@ -195,10 +195,10 @@ class UserMsg extends Init
         //-- 回复留言
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'view') {
-            $GLOBALS['smarty']->assign('send_fail', !empty($_REQUEST['send_ok']));
-            $GLOBALS['smarty']->assign('msg', $this->get_feedback_detail(intval($_REQUEST['id'])));
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['reply']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['08_unreply_msg'], 'href' => 'user_msg.php?act=list_all']);
+            $this->assign('send_fail', !empty($_REQUEST['send_ok']));
+            $this->assign('msg', $this->get_feedback_detail(intval($_REQUEST['id'])));
+            $this->assign('ur_here', $GLOBALS['_LANG']['reply']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['08_unreply_msg'], 'href' => 'user_msg.php?act=list_all']);
 
             return $GLOBALS['smarty']->display('msg_info.htm');
         }
@@ -227,11 +227,11 @@ class UserMsg extends Init
                 $template = get_mail_template('user_message');
                 $message_content = $message_info['msg_title'] . "\r\n" . $message_info['msg_content'];
 
-                $GLOBALS['smarty']->assign('user_name', $message_info['user_name']);
-                $GLOBALS['smarty']->assign('message_note', $_POST['msg_content']);
-                $GLOBALS['smarty']->assign('message_content', $message_content);
-                $GLOBALS['smarty']->assign('shop_name', "<a href='" . $GLOBALS['ecs']->url() . "'>" . $GLOBALS['_CFG']['shop_name'] . '</a>');
-                $GLOBALS['smarty']->assign('send_date', date('Y-m-d'));
+                $this->assign('user_name', $message_info['user_name']);
+                $this->assign('message_note', $_POST['msg_content']);
+                $this->assign('message_content', $message_content);
+                $this->assign('shop_name', "<a href='" . $GLOBALS['ecs']->url() . "'>" . $GLOBALS['_CFG']['shop_name'] . '</a>');
+                $this->assign('send_date', date('Y-m-d'));
 
                 $content = $GLOBALS['smarty']->fetch('str:' . $template['template_content']);
 

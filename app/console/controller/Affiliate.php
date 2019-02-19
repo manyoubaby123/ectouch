@@ -14,16 +14,16 @@ class Affiliate extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
             if (empty($_REQUEST['is_ajax'])) {
-                $GLOBALS['smarty']->assign('full_page', 1);
+                $this->assign('full_page', 1);
             }
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['affiliate']);
-            $GLOBALS['smarty']->assign('config', $config);
+            $this->assign('ur_here', $GLOBALS['_LANG']['affiliate']);
+            $this->assign('config', $config);
             return $GLOBALS['smarty']->display('affiliate.htm');
         }
         if ($_REQUEST['act'] == 'query') {
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['affiliate']);
-            $GLOBALS['smarty']->assign('config', $config);
+            $this->assign('ur_here', $GLOBALS['_LANG']['affiliate']);
+            $this->assign('config', $config);
             return make_json_result($GLOBALS['smarty']->fetch('affiliate.htm'), '', null);
         }
         /*------------------------------------------------------ */

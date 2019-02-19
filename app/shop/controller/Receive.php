@@ -36,17 +36,17 @@ class Receive extends Init
         }
 
         /* 显示模板 */
-        $this->shopService->assign_template();
+        $this->assign_template();
         $position = assign_ur_here();
-        $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
-        $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置
+        $this->assign('page_title', $position['title']);    // 页面标题
+        $this->assign('ur_here', $position['ur_here']);  // 当前位置
 
-        $GLOBALS['smarty']->assign('categories', get_categories_tree()); // 分类树
-        $GLOBALS['smarty']->assign('helps', get_shop_help());       // 网店帮助
+        $this->assign('categories', get_categories_tree()); // 分类树
+        $this->assign('helps', get_shop_help());       // 网店帮助
 
         assign_dynamic('receive');
 
-        $GLOBALS['smarty']->assign('msg', $msg);
+        $this->assign('msg', $msg);
         return $GLOBALS['smarty']->display('receive.dwt');
     }
 }

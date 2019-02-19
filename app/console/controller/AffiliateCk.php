@@ -18,15 +18,15 @@ class AffiliateCk extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
             $logdb = $this->get_affiliate_ck();
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['affiliate_ck']);
-            $GLOBALS['smarty']->assign('on', $separate_on);
-            $GLOBALS['smarty']->assign('logdb', $logdb['logdb']);
-            $GLOBALS['smarty']->assign('filter', $logdb['filter']);
-            $GLOBALS['smarty']->assign('record_count', $logdb['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $logdb['page_count']);
+            $this->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['affiliate_ck']);
+            $this->assign('on', $separate_on);
+            $this->assign('logdb', $logdb['logdb']);
+            $this->assign('filter', $logdb['filter']);
+            $this->assign('record_count', $logdb['record_count']);
+            $this->assign('page_count', $logdb['page_count']);
             if (!empty($_GET['auid'])) {
-                $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['back_note'], 'href' => "users.php?act=edit&id=$_GET[auid]"]);
+                $this->assign('action_link', ['text' => $GLOBALS['_LANG']['back_note'], 'href' => "users.php?act=edit&id=$_GET[auid]"]);
             }
 
             return $GLOBALS['smarty']->display('affiliate_ck_list.htm');
@@ -36,14 +36,14 @@ class AffiliateCk extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
             $logdb = $this->get_affiliate_ck();
-            $GLOBALS['smarty']->assign('logdb', $logdb['logdb']);
-            $GLOBALS['smarty']->assign('on', $separate_on);
-            $GLOBALS['smarty']->assign('filter', $logdb['filter']);
-            $GLOBALS['smarty']->assign('record_count', $logdb['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $logdb['page_count']);
+            $this->assign('logdb', $logdb['logdb']);
+            $this->assign('on', $separate_on);
+            $this->assign('filter', $logdb['filter']);
+            $this->assign('record_count', $logdb['record_count']);
+            $this->assign('page_count', $logdb['page_count']);
 
             $sort_flag = sort_flag($logdb['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result($GLOBALS['smarty']->fetch('affiliate_ck_list.htm'), '', ['filter' => $logdb['filter'], 'page_count' => $logdb['page_count']]);
         } /*

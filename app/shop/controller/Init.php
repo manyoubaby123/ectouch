@@ -2,15 +2,16 @@
 
 namespace app\shop\controller;
 
-use think\Controller;
 use app\libraries\Error;
 use app\libraries\Mysql;
 use app\libraries\Shop;
-use app\libraries\Template;
+use app\services\CategoryService;
 use app\services\ConfigService;
+use app\services\LicenseService;
 use app\services\ShopService;
 use app\services\StatService;
 use app\services\UserService;
+use think\Controller;
 
 class Init extends Controller
 {
@@ -20,9 +21,19 @@ class Init extends Controller
     protected $shopService;
 
     /**
+     * @var CategoryService
+     */
+    protected $categoryService;
+
+    /**
      * @var UserService
      */
     protected $userService;
+
+    /**
+     * @var LicenseService
+     */
+    protected $licenseService;
 
     protected function initialize()
     {
@@ -89,35 +100,12 @@ class Init extends Controller
             $_SERVER['PHP_SELF'] = htmlspecialchars($_SERVER['PHP_SELF']);
         }
 
-        if (!defined('INIT_NO_SMARTY')) {
-            header('Cache-control: private');
-            header('Content-type: text/html; charset=' . EC_CHARSET);
-
-            /* 创建 Smarty 对象。*/
-            $GLOBALS['smarty'] = new Template();
-
-            $template_dir = 'mobile'; // $this->request->isMobile() ? 'mobile' : $GLOBALS['_CFG']['template'];
-
-            $GLOBALS['smarty']->cache_lifetime = $GLOBALS['_CFG']['cache_time'];
-            $GLOBALS['smarty']->template_dir = resource_path('views/' . $template_dir);
-            $GLOBALS['smarty']->cache_dir = storage_path('temp/caches');
-            $GLOBALS['smarty']->compile_dir = storage_path('temp/compiled');
-
-            if (config('app_debug')) {
-                $GLOBALS['smarty']->direct_output = true;
-                $GLOBALS['smarty']->force_compile = true;
-            } else {
-                $GLOBALS['smarty']->direct_output = false;
-                $GLOBALS['smarty']->force_compile = false;
-            }
-
-            $GLOBALS['smarty']->assign('lang', $GLOBALS['_LANG']);
-            $GLOBALS['smarty']->assign('ecs_charset', EC_CHARSET);
-            if (!empty($GLOBALS['_CFG']['stylename'])) {
-                $GLOBALS['smarty']->assign('ecs_css_path', asset('themes/' . $GLOBALS['_CFG']['template'] . '/style_' . $GLOBALS['_CFG']['stylename'] . '.css'));
-            } else {
-                $GLOBALS['smarty']->assign('ecs_css_path', asset('themes/' . $GLOBALS['_CFG']['template'] . '/style.css'));
-            }
+        $this->assign('lang', $GLOBALS['_LANG']);
+        $this->assign('ecs_charset', EC_CHARSET);
+        if (!empty($GLOBALS['_CFG']['stylename'])) {
+            $this->assign('ecs_css_path', asset('themes/' . $GLOBALS['_CFG']['template'] . '/style_' . $GLOBALS['_CFG']['stylename'] . '.css'));
+        } else {
+            $this->assign('ecs_css_path', asset('themes/' . $GLOBALS['_CFG']['template'] . '/style.css'));
         }
 
         if (!defined('INIT_NO_USERS')) {
@@ -187,5 +175,45 @@ class Init extends Controller
         }
 
         $this->shopService = new ShopService();
+    }
+
+    /**
+     * 模板公共变量赋值
+     * @param string $cType
+     * @param array $catList
+     */
+    protected function assign_template($cType = '', $catList = [])
+    {
+        $this->licenseService = new LicenseService();
+        $this->categoryService = new CategoryService();
+
+        $this->assign('image_width', $GLOBALS['_CFG']['image_width']);
+        $this->assign('image_height', $GLOBALS['_CFG']['image_height']);
+        $this->assign('points_name', $GLOBALS['_CFG']['integral_name']);
+        $this->assign('qq', explode(',', $GLOBALS['_CFG']['qq']));
+        $this->assign('ww', explode(',', $GLOBALS['_CFG']['ww']));
+        $this->assign('ym', explode(',', $GLOBALS['_CFG']['ym']));
+        $this->assign('msn', explode(',', $GLOBALS['_CFG']['msn']));
+        $this->assign('skype', explode(',', $GLOBALS['_CFG']['skype']));
+        $this->assign('stats_code', $GLOBALS['_CFG']['stats_code']);
+        $this->assign('copyright', sprintf($GLOBALS['_LANG']['copyright'], date('Y'), $GLOBALS['_CFG']['shop_name']));
+        $this->assign('shop_name', $GLOBALS['_CFG']['shop_name']);
+        $this->assign('service_email', $GLOBALS['_CFG']['service_email']);
+        $this->assign('service_phone', $GLOBALS['_CFG']['service_phone']);
+        $this->assign('shop_address', $GLOBALS['_CFG']['shop_address']);
+        $this->assign('licensed', $this->licenseService->license_info());
+        $this->assign('ecs_version', VERSION);
+        $this->assign('icp_number', $GLOBALS['_CFG']['icp_number']);
+        $this->assign('username', !empty(session('user_name')) ? session('user_name') : '');
+        $this->assign('category_list', $this->categoryService->cat_list(0, 0, true, 2, false));
+        $this->assign('catalog_list', $this->categoryService->cat_list(0, 0, false, 1, false));
+        $this->assign('navigator_list', $this->shopService->get_navigator($cType, $catList));  //自定义导航栏
+
+        if (!empty($GLOBALS['_CFG']['search_keywords'])) {
+            $searchkeywords = explode(',', trim($GLOBALS['_CFG']['search_keywords']));
+        } else {
+            $searchkeywords = [];
+        }
+        $this->assign('searchkeywords', $searchkeywords);
     }
 }

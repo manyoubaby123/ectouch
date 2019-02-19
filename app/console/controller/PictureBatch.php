@@ -15,9 +15,9 @@ class PictureBatch extends Init
         admin_priv('picture_batch');
 
         if (empty($_GET['is_ajax'])) {
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['12_batch_pic']);
-            $GLOBALS['smarty']->assign('cat_list', cat_list(0, 0));
-            $GLOBALS['smarty']->assign('brand_list', get_brand_list());
+            $this->assign('ur_here', $GLOBALS['_LANG']['12_batch_pic']);
+            $this->assign('cat_list', cat_list(0, 0));
+            $this->assign('brand_list', get_brand_list());
             return $GLOBALS['smarty']->display('picture_batch.htm');
         } elseif (!empty($_GET['get_goods'])) {
             $brand_id = intval($_GET['brand_id']);

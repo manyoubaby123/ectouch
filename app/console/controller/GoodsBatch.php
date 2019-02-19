@@ -19,7 +19,7 @@ class GoodsBatch extends Init
             admin_priv('goods_batch');
 
             /* 取得分类列表 */
-            $GLOBALS['smarty']->assign('cat_list', cat_list());
+            $this->assign('cat_list', cat_list());
 
             /* 取得可选语言 */
             $dir = opendir(resource_path('lang'));
@@ -38,13 +38,13 @@ class GoodsBatch extends Init
             $data_format_array = [
                 'ectouch' => $GLOBALS['_LANG']['export_ectouch'],
             ];
-            $GLOBALS['smarty']->assign('data_format', $data_format_array);
-            $GLOBALS['smarty']->assign('lang_list', $lang_list);
-            $GLOBALS['smarty']->assign('download_list', $download_list);
+            $this->assign('data_format', $data_format_array);
+            $this->assign('lang_list', $lang_list);
+            $this->assign('download_list', $download_list);
 
             /* 参数赋值 */
             $ur_here = $GLOBALS['_LANG']['13_batch_add'];
-            $GLOBALS['smarty']->assign('ur_here', $ur_here);
+            $this->assign('ur_here', $ur_here);
 
             /* 显示模板 */
             return $GLOBALS['smarty']->display('goods_batch_add.htm');
@@ -137,17 +137,17 @@ class GoodsBatch extends Init
                 }
             }
 
-            $GLOBALS['smarty']->assign('goods_class', $GLOBALS['_LANG']['g_class']);
-            $GLOBALS['smarty']->assign('goods_list', $goods_list);
+            $this->assign('goods_class', $GLOBALS['_LANG']['g_class']);
+            $this->assign('goods_list', $goods_list);
 
             // 字段名称列表
-            $GLOBALS['smarty']->assign('title_list', $GLOBALS['_LANG']['upload_goods']);
+            $this->assign('title_list', $GLOBALS['_LANG']['upload_goods']);
 
             // 显示的字段列表
-            $GLOBALS['smarty']->assign('field_show', ['goods_name' => true, 'goods_sn' => true, 'brand_name' => true, 'market_price' => true, 'shop_price' => true]);
+            $this->assign('field_show', ['goods_name' => true, 'goods_sn' => true, 'brand_name' => true, 'market_price' => true, 'shop_price' => true]);
 
             /* 参数赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['goods_upload_confirm']);
+            $this->assign('ur_here', $GLOBALS['_LANG']['goods_upload_confirm']);
 
             /* 显示模板 */
             return $GLOBALS['smarty']->display('goods_batch_confirm.htm');
@@ -351,14 +351,14 @@ class GoodsBatch extends Init
             admin_priv('goods_batch');
 
             /* 取得分类列表 */
-            $GLOBALS['smarty']->assign('cat_list', cat_list());
+            $this->assign('cat_list', cat_list());
 
             /* 取得品牌列表 */
-            $GLOBALS['smarty']->assign('brand_list', get_brand_list());
+            $this->assign('brand_list', get_brand_list());
 
             /* 参数赋值 */
             $ur_here = $GLOBALS['_LANG']['15_batch_edit'];
-            $GLOBALS['smarty']->assign('ur_here', $ur_here);
+            $this->assign('ur_here', $ur_here);
 
             /* 显示模板 */
 
@@ -384,7 +384,7 @@ class GoodsBatch extends Init
                 $where = " WHERE goods_id " . db_create_in($goods_ids);
             }
             $sql = "SELECT DISTINCT goods_id, goods_sn, goods_name, market_price, shop_price, goods_number, integral, give_integral, brand_id, is_real FROM " . $GLOBALS['ecs']->table('goods') . $where;
-            $GLOBALS['smarty']->assign('goods_list', $GLOBALS['db']->getAll($sql));
+            $this->assign('goods_list', $GLOBALS['db']->getAll($sql));
 
             /* 取编辑商品的货品列表 */
             $product_exists = false;
@@ -407,13 +407,13 @@ class GoodsBatch extends Init
 
                     $_product_list[$value['goods_id']][] = $value;
                 }
-                $GLOBALS['smarty']->assign('product_list', $_product_list);
+                $this->assign('product_list', $_product_list);
 
                 //释放资源
                 unset($product_list, $sql, $_product_list);
             }
 
-            $GLOBALS['smarty']->assign('product_exists', $product_exists);
+            $this->assign('product_exists', $product_exists);
 
             /* 取得会员价格 */
             $member_price_list = [];
@@ -422,23 +422,23 @@ class GoodsBatch extends Init
             foreach ($res as $row) {
                 $member_price_list[$row['goods_id']][$row['user_rank']] = $row['user_price'];
             }
-            $GLOBALS['smarty']->assign('member_price_list', $member_price_list);
+            $this->assign('member_price_list', $member_price_list);
 
             /* 取得会员等级 */
             $sql = "SELECT rank_id, rank_name, discount " .
                 "FROM " . $GLOBALS['ecs']->table('user_rank') .
                 " ORDER BY discount DESC";
-            $GLOBALS['smarty']->assign('rank_list', $GLOBALS['db']->getAll($sql));
+            $this->assign('rank_list', $GLOBALS['db']->getAll($sql));
 
             /* 取得品牌列表 */
-            $GLOBALS['smarty']->assign('brand_list', get_brand_list());
+            $this->assign('brand_list', get_brand_list());
 
             /* 赋值编辑方式 */
-            $GLOBALS['smarty']->assign('edit_method', $_POST['edit_method']);
+            $this->assign('edit_method', $_POST['edit_method']);
 
             /* 参数赋值 */
             $ur_here = $GLOBALS['_LANG']['15_batch_edit'];
-            $GLOBALS['smarty']->assign('ur_here', $ur_here);
+            $this->assign('ur_here', $ur_here);
 
             /* 显示模板 */
 

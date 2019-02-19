@@ -18,9 +18,9 @@ class Sitemap extends Init
             /*------------------------------------------------------ */
 
             $config = unserialize($GLOBALS['_CFG']['sitemap']);
-            $GLOBALS['smarty']->assign('config', $config);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['sitemap']);
-            $GLOBALS['smarty']->assign('arr_changefreq', [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]);
+            $this->assign('config', $config);
+            $this->assign('ur_here', $GLOBALS['_LANG']['sitemap']);
+            $this->assign('arr_changefreq', [1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1]);
             return $GLOBALS['smarty']->display('sitemap.htm');
         } else {
             /*------------------------------------------------------ */

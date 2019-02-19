@@ -42,7 +42,7 @@ class Adsense extends Init
 
                 $ads_stats[] = $rows;
             }
-            $GLOBALS['smarty']->assign('ads_stats', $ads_stats);
+            $this->assign('ads_stats', $ads_stats);
 
             /* 站外JS投放商品的统计数据 */
             $goods_stats = [];
@@ -73,13 +73,13 @@ class Adsense extends Init
                 }
                 echo ecs_iconv(EC_CHARSET, 'GB2312', $data);
             }
-            $GLOBALS['smarty']->assign('goods_stats', $goods_stats);
+            $this->assign('goods_stats', $goods_stats);
 
             /* 赋值给模板 */
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'ads.php?act=list', 'text' => $GLOBALS['_LANG']['ad_list']]);
-            $GLOBALS['smarty']->assign('action_link2', ['href' => 'adsense.php?act=download', 'text' => $GLOBALS['_LANG']['download_ad_statistics']]);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['adsense_js_stats']);
-            $GLOBALS['smarty']->assign('lang', $GLOBALS['_LANG']);
+            $this->assign('action_link', ['href' => 'ads.php?act=list', 'text' => $GLOBALS['_LANG']['ad_list']]);
+            $this->assign('action_link2', ['href' => 'adsense.php?act=download', 'text' => $GLOBALS['_LANG']['download_ad_statistics']]);
+            $this->assign('ur_here', $GLOBALS['_LANG']['adsense_js_stats']);
+            $this->assign('lang', $GLOBALS['_LANG']);
 
             /* 显示页面 */
 

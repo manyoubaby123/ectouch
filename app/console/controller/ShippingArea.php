@@ -17,13 +17,13 @@ class ShippingArea extends Init
             $shipping_id = intval($_REQUEST['shipping']);
 
             $list = $this->get_shipping_area_list($shipping_id);
-            $GLOBALS['smarty']->assign('areas', $list);
+            $this->assign('areas', $list);
 
-            $GLOBALS['smarty']->assign('ur_here', '<a href="shipping.php?act=list">' .
+            $this->assign('ur_here', '<a href="shipping.php?act=list">' .
                 $GLOBALS['_LANG']['03_shipping_list'] . '</a> - ' . $GLOBALS['_LANG']['shipping_area_list'] . '</a>');
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'shipping_area.php?act=add&shipping=' . $shipping_id,
+            $this->assign('action_link', ['href' => 'shipping_area.php?act=add&shipping=' . $shipping_id,
                 'text' => $GLOBALS['_LANG']['new_area']]);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('full_page', 1);
 
             return $GLOBALS['smarty']->display('shipping_area_list.htm');
         }
@@ -62,12 +62,12 @@ class ShippingArea extends Init
             $shipping_area['shipping_id'] = 0;
             $shipping_area['free_money'] = 0;
 
-            $GLOBALS['smarty']->assign('ur_here', $shipping['shipping_name'] . ' - ' . $GLOBALS['_LANG']['new_area']);
-            $GLOBALS['smarty']->assign('shipping_area', ['shipping_id' => $_REQUEST['shipping'], 'shipping_code' => $shipping['shipping_code']]);
-            $GLOBALS['smarty']->assign('fields', $fields);
-            $GLOBALS['smarty']->assign('form_action', 'insert');
-            $GLOBALS['smarty']->assign('countries', get_regions());
-            $GLOBALS['smarty']->assign('default_country', $GLOBALS['_CFG']['shop_country']);
+            $this->assign('ur_here', $shipping['shipping_name'] . ' - ' . $GLOBALS['_LANG']['new_area']);
+            $this->assign('shipping_area', ['shipping_id' => $_REQUEST['shipping'], 'shipping_code' => $shipping['shipping_code']]);
+            $this->assign('fields', $fields);
+            $this->assign('form_action', 'insert');
+            $this->assign('countries', get_regions());
+            $this->assign('default_country', $GLOBALS['_CFG']['shop_country']);
 
             return $GLOBALS['smarty']->display('shipping_area_info.htm');
         }
@@ -175,7 +175,7 @@ class ShippingArea extends Init
                     $item_fee = 1;
                 }
                 if ($val['name'] == 'fee_compute_mode') {
-                    $GLOBALS['smarty']->assign('fee_compute_mode', $val['value']);
+                    $this->assign('fee_compute_mode', $val['value']);
                     unset($fields[$key]);
                 } else {
                     $fields[$key]['name'] = $val['name'];
@@ -199,14 +199,14 @@ class ShippingArea extends Init
                 $regions[$arr['region_id']] = $arr['region_name'];
             }
 
-            $GLOBALS['smarty']->assign('ur_here', $row['shipping_name'] . ' - ' . $GLOBALS['_LANG']['edit_area']);
-            $GLOBALS['smarty']->assign('id', $_REQUEST['id']);
-            $GLOBALS['smarty']->assign('fields', $fields);
-            $GLOBALS['smarty']->assign('shipping_area', $row);
-            $GLOBALS['smarty']->assign('regions', $regions);
-            $GLOBALS['smarty']->assign('form_action', 'update');
-            $GLOBALS['smarty']->assign('countries', get_regions());
-            $GLOBALS['smarty']->assign('default_country', 1);
+            $this->assign('ur_here', $row['shipping_name'] . ' - ' . $GLOBALS['_LANG']['edit_area']);
+            $this->assign('id', $_REQUEST['id']);
+            $this->assign('fields', $fields);
+            $this->assign('shipping_area', $row);
+            $this->assign('regions', $regions);
+            $this->assign('form_action', 'update');
+            $this->assign('countries', get_regions());
+            $this->assign('default_country', 1);
             return $GLOBALS['smarty']->display('shipping_area_info.htm');
         }
         if ($_REQUEST['act'] == 'update') {
@@ -367,7 +367,7 @@ class ShippingArea extends Init
             admin_log($name, 'remove', 'shipping_area');
 
             $list = $this->get_shipping_area_list($shipping_id);
-            $GLOBALS['smarty']->assign('areas', $list);
+            $this->assign('areas', $list);
             return make_json_result($GLOBALS['smarty']->fetch('shipping_area_list.htm'));
         }
     }

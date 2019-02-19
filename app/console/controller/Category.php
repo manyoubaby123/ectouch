@@ -25,11 +25,11 @@ class Category extends Init
             $cat_list = cat_list(0, 0, false);
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['03_category_list']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'category.php?act=add', 'text' => $GLOBALS['_LANG']['04_category_add']]);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['03_category_list']);
+            $this->assign('action_link', ['href' => 'category.php?act=add', 'text' => $GLOBALS['_LANG']['04_category_add']]);
+            $this->assign('full_page', 1);
 
-            $GLOBALS['smarty']->assign('cat_info', $cat_list);
+            $this->assign('cat_info', $cat_list);
 
             /* 列表页面 */
 
@@ -41,7 +41,7 @@ class Category extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
             $cat_list = cat_list(0, 0, false);
-            $GLOBALS['smarty']->assign('cat_info', $cat_list);
+            $this->assign('cat_info', $cat_list);
 
             return make_json_result($GLOBALS['smarty']->fetch('category_list.htm'));
         }
@@ -53,15 +53,15 @@ class Category extends Init
             admin_priv('cat_manage');
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['04_category_add']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'category.php?act=list', 'text' => $GLOBALS['_LANG']['03_category_list']]);
+            $this->assign('ur_here', $GLOBALS['_LANG']['04_category_add']);
+            $this->assign('action_link', ['href' => 'category.php?act=list', 'text' => $GLOBALS['_LANG']['03_category_list']]);
 
-            $GLOBALS['smarty']->assign('goods_type_list', goods_type_list(0)); // 取得商品类型
-            $GLOBALS['smarty']->assign('attr_list', $this->get_attr_list()); // 取得商品属性
+            $this->assign('goods_type_list', goods_type_list(0)); // 取得商品类型
+            $this->assign('attr_list', $this->get_attr_list()); // 取得商品属性
 
-            $GLOBALS['smarty']->assign('cat_select', cat_list(0, 0, true));
-            $GLOBALS['smarty']->assign('form_act', 'insert');
-            $GLOBALS['smarty']->assign('cat_info', ['is_show' => 1]);
+            $this->assign('cat_select', cat_list(0, 0, true));
+            $this->assign('form_act', 'insert');
+            $this->assign('cat_info', ['is_show' => 1]);
 
             /* 显示页面 */
 
@@ -157,16 +157,16 @@ class Category extends Init
                     $filter_attr_list[$k]['option'] = $attr_option;
                 }
 
-                $GLOBALS['smarty']->assign('filter_attr_list', $filter_attr_list);
+                $this->assign('filter_attr_list', $filter_attr_list);
             } else {
                 $attr_cat_id = 0;
             }
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('attr_list', $attr_list); // 取得商品属性
-            $GLOBALS['smarty']->assign('attr_cat_id', $attr_cat_id);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['category_edit']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['03_category_list'], 'href' => 'category.php?act=list']);
+            $this->assign('attr_list', $attr_list); // 取得商品属性
+            $this->assign('attr_cat_id', $attr_cat_id);
+            $this->assign('ur_here', $GLOBALS['_LANG']['category_edit']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['03_category_list'], 'href' => 'category.php?act=list']);
 
             //分类是否存在首页推荐
             $res = $GLOBALS['db']->getAll("SELECT recommend_type FROM " . $GLOBALS['ecs']->table("cat_recommend") . " WHERE cat_id=" . $cat_id);
@@ -175,13 +175,13 @@ class Category extends Init
                 foreach ($res as $data) {
                     $cat_recommend[$data['recommend_type']] = 1;
                 }
-                $GLOBALS['smarty']->assign('cat_recommend', $cat_recommend);
+                $this->assign('cat_recommend', $cat_recommend);
             }
 
-            $GLOBALS['smarty']->assign('cat_info', $cat_info);
-            $GLOBALS['smarty']->assign('form_act', 'update');
-            $GLOBALS['smarty']->assign('cat_select', cat_list(0, $cat_info['parent_id'], true));
-            $GLOBALS['smarty']->assign('goods_type_list', goods_type_list(0)); // 取得商品类型
+            $this->assign('cat_info', $cat_info);
+            $this->assign('form_act', 'update');
+            $this->assign('cat_select', cat_list(0, $cat_info['parent_id'], true));
+            $this->assign('goods_type_list', goods_type_list(0)); // 取得商品类型
 
             /* 显示页面 */
 
@@ -306,11 +306,11 @@ class Category extends Init
             $cat_id = !empty($_REQUEST['cat_id']) ? intval($_REQUEST['cat_id']) : 0;
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['move_goods']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'category.php?act=list', 'text' => $GLOBALS['_LANG']['03_category_list']]);
+            $this->assign('ur_here', $GLOBALS['_LANG']['move_goods']);
+            $this->assign('action_link', ['href' => 'category.php?act=list', 'text' => $GLOBALS['_LANG']['03_category_list']]);
 
-            $GLOBALS['smarty']->assign('cat_select', cat_list(0, $cat_id, true));
-            $GLOBALS['smarty']->assign('form_act', 'move_cat');
+            $this->assign('cat_select', cat_list(0, $cat_id, true));
+            $this->assign('form_act', 'move_cat');
 
             /* 显示页面 */
 

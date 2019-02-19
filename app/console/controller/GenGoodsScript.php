@@ -19,12 +19,12 @@ class GenGoodsScript extends Init
 
             /* 参数赋值 */
             $ur_here = $GLOBALS['_LANG']['16_goods_script'];
-            $GLOBALS['smarty']->assign('ur_here', $ur_here);
-            $GLOBALS['smarty']->assign('cat_list', cat_list());
-            $GLOBALS['smarty']->assign('brand_list', get_brand_list());
-            $GLOBALS['smarty']->assign('intro_list', $GLOBALS['_LANG']['intro']);
-            $GLOBALS['smarty']->assign('url', $GLOBALS['ecs']->url());
-            $GLOBALS['smarty']->assign('lang_list', $lang_list);
+            $this->assign('ur_here', $ur_here);
+            $this->assign('cat_list', cat_list());
+            $this->assign('brand_list', get_brand_list());
+            $this->assign('intro_list', $GLOBALS['_LANG']['intro']);
+            $this->assign('url', $GLOBALS['ecs']->url());
+            $this->assign('lang_list', $lang_list);
 
             /* 显示模板 */
 

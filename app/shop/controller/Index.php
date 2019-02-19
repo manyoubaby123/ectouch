@@ -45,8 +45,8 @@ class Index extends Init
             $result = ['error' => 0, 'content' => '', 'type' => $rec_type, 'cat_id' => $cat_id];
 
             $children = get_children($cat_id);
-            $GLOBALS['smarty']->assign($rec_array[$rec_type] . '_goods', get_category_recommend_goods($rec_array[$rec_type], $children));    // 推荐商品
-            $GLOBALS['smarty']->assign('cat_rec_sign', 1);
+            $this->assign($rec_array[$rec_type] . '_goods', get_category_recommend_goods($rec_array[$rec_type], $children));    // 推荐商品
+            $this->assign('cat_rec_sign', 1);
             $result['content'] = $GLOBALS['smarty']->fetch('library/recommend_' . $rec_array[$rec_type] . '.lbi');
             return json_encode($result);
         }
@@ -58,49 +58,49 @@ class Index extends Init
         $cache_id = sprintf('%X', crc32(session('user_rank') . '-' . $GLOBALS['_CFG']['lang']));
 
         if (!$GLOBALS['smarty']->is_cached('index.dwt', $cache_id)) {
-            $this->shopService->assign_template();
+            $this->assign_template();
 
             $position = assign_ur_here();
-            $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
-            $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置
+            $this->assign('page_title', $position['title']);    // 页面标题
+            $this->assign('ur_here', $position['ur_here']);  // 当前位置
 
             /* meta information */
-            $GLOBALS['smarty']->assign('keywords', htmlspecialchars($GLOBALS['_CFG']['shop_keywords']));
-            $GLOBALS['smarty']->assign('description', htmlspecialchars($GLOBALS['_CFG']['shop_desc']));
-            $GLOBALS['smarty']->assign('flash_theme', $GLOBALS['_CFG']['flash_theme']);  // Flash轮播图片模板
+            $this->assign('keywords', htmlspecialchars($GLOBALS['_CFG']['shop_keywords']));
+            $this->assign('description', htmlspecialchars($GLOBALS['_CFG']['shop_desc']));
+            $this->assign('flash_theme', $GLOBALS['_CFG']['flash_theme']);  // Flash轮播图片模板
 
-            $GLOBALS['smarty']->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? 'feed.xml' : 'feed.php'); // RSS URL
+            $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? 'feed.xml' : 'feed.php'); // RSS URL
 
-            $GLOBALS['smarty']->assign('categories', $this->categoryService->get_categories_tree()); // 分类树
-            $GLOBALS['smarty']->assign('helps', $this->articleService->get_shop_help());       // 网店帮助
-            $GLOBALS['smarty']->assign('top_goods', $this->goodsService->get_top10());           // 销售排行
+            $this->assign('categories', $this->categoryService->get_categories_tree()); // 分类树
+            $this->assign('helps', $this->articleService->get_shop_help());       // 网店帮助
+            $this->assign('top_goods', $this->goodsService->get_top10());           // 销售排行
 
-            $GLOBALS['smarty']->assign('best_goods', get_recommend_goods('best'));    // 推荐商品
-            $GLOBALS['smarty']->assign('new_goods', get_recommend_goods('new'));     // 最新商品
-            $GLOBALS['smarty']->assign('hot_goods', get_recommend_goods('hot'));     // 热点文章
-            $GLOBALS['smarty']->assign('promotion_goods', get_promote_goods()); // 特价商品
-            $GLOBALS['smarty']->assign('brand_list', get_brands());
-            $GLOBALS['smarty']->assign('promotion_info', get_promotion_info()); // 增加一个动态显示所有促销信息的标签栏
+            $this->assign('best_goods', get_recommend_goods('best'));    // 推荐商品
+            $this->assign('new_goods', get_recommend_goods('new'));     // 最新商品
+            $this->assign('hot_goods', get_recommend_goods('hot'));     // 热点文章
+            $this->assign('promotion_goods', get_promote_goods()); // 特价商品
+            $this->assign('brand_list', get_brands());
+            $this->assign('promotion_info', get_promotion_info()); // 增加一个动态显示所有促销信息的标签栏
 
-            $GLOBALS['smarty']->assign('invoice_list', $this->index_get_invoice_query());  // 发货查询
-            $GLOBALS['smarty']->assign('new_articles', $this->index_get_new_articles());   // 最新文章
-            $GLOBALS['smarty']->assign('group_buy_goods', $this->index_get_group_buy());      // 团购商品
-            $GLOBALS['smarty']->assign('auction_list', $this->index_get_auction());        // 拍卖活动
-            $GLOBALS['smarty']->assign('shop_notice', $GLOBALS['_CFG']['shop_notice']);       // 商店公告
+            $this->assign('invoice_list', $this->index_get_invoice_query());  // 发货查询
+            $this->assign('new_articles', $this->index_get_new_articles());   // 最新文章
+            $this->assign('group_buy_goods', $this->index_get_group_buy());      // 团购商品
+            $this->assign('auction_list', $this->index_get_auction());        // 拍卖活动
+            $this->assign('shop_notice', $GLOBALS['_CFG']['shop_notice']);       // 商店公告
 
             /* 首页主广告设置 */
-            $GLOBALS['smarty']->assign('index_ad', $GLOBALS['_CFG']['index_ad']);
+            $this->assign('index_ad', $GLOBALS['_CFG']['index_ad']);
             if ($GLOBALS['_CFG']['index_ad'] == 'cus') {
                 $sql = 'SELECT ad_type, content, url FROM ' . $GLOBALS['ecs']->table("ad_custom") . ' WHERE ad_status = 1';
                 $ad = $GLOBALS['db']->getRow($sql, true);
-                $GLOBALS['smarty']->assign('ad', $ad);
+                $this->assign('ad', $ad);
             }
 
             /* links */
             $links = $this->index_get_links();
-            $GLOBALS['smarty']->assign('img_links', $links['img']);
-            $GLOBALS['smarty']->assign('txt_links', $links['txt']);
-            $GLOBALS['smarty']->assign('data_dir', DATA_DIR);       // 数据目录
+            $this->assign('img_links', $links['img']);
+            $this->assign('txt_links', $links['txt']);
+            $this->assign('data_dir', DATA_DIR);       // 数据目录
 
             /* 首页推荐分类 */
             $cat_recommend_res = $GLOBALS['db']->getAll("SELECT c.cat_id, c.cat_name, cr.recommend_type FROM " . $GLOBALS['ecs']->table("cat_recommend") . " AS cr INNER JOIN " . $GLOBALS['ecs']->table("category") . " AS c ON cr.cat_id=c.cat_id");
@@ -109,7 +109,7 @@ class Index extends Init
                 foreach ($cat_recommend_res as $cat_recommend_data) {
                     $cat_rec[$cat_recommend_data['recommend_type']][] = ['cat_id' => $cat_recommend_data['cat_id'], 'cat_name' => $cat_recommend_data['cat_name']];
                 }
-                $GLOBALS['smarty']->assign('cat_rec', $cat_rec);
+                $this->assign('cat_rec', $cat_rec);
             }
 
             /* 页面中的动态内容 */

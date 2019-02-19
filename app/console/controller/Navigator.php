@@ -16,16 +16,16 @@ class Navigator extends Init
         //-- 自定义导航栏列表
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['navigator']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['add_new'], 'href' => 'navigator.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['navigator']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['add_new'], 'href' => 'navigator.php?act=add']);
+            $this->assign('full_page', 1);
 
             $navdb = $this->get_nav();
 
-            $GLOBALS['smarty']->assign('navdb', $navdb['navdb']);
-            $GLOBALS['smarty']->assign('filter', $navdb['filter']);
-            $GLOBALS['smarty']->assign('record_count', $navdb['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $navdb['page_count']);
+            $this->assign('navdb', $navdb['navdb']);
+            $this->assign('filter', $navdb['filter']);
+            $this->assign('record_count', $navdb['record_count']);
+            $this->assign('page_count', $navdb['page_count']);
 
             return $GLOBALS['smarty']->display('navigator.htm');
         }
@@ -34,13 +34,13 @@ class Navigator extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
             $navdb = $this->get_nav();
-            $GLOBALS['smarty']->assign('navdb', $navdb['navdb']);
-            $GLOBALS['smarty']->assign('filter', $navdb['filter']);
-            $GLOBALS['smarty']->assign('record_count', $navdb['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $navdb['page_count']);
+            $this->assign('navdb', $navdb['navdb']);
+            $this->assign('filter', $navdb['filter']);
+            $this->assign('record_count', $navdb['record_count']);
+            $this->assign('page_count', $navdb['page_count']);
 
             $sort_flag = sort_flag($navdb['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result($GLOBALS['smarty']->fetch('navigator.htm'), '', ['filter' => $navdb['filter'], 'page_count' => $navdb['page_count']]);
         }
@@ -53,11 +53,11 @@ class Navigator extends Init
 
                 $sysmain = $this->get_sysnav();
 
-                $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'navigator.php?act=list']);
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['navigator']);
+                $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'navigator.php?act=list']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['navigator']);
 
-                $GLOBALS['smarty']->assign('sysmain', $sysmain);
-                $GLOBALS['smarty']->assign('rt', $rt);
+                $this->assign('sysmain', $sysmain);
+                $this->assign('rt', $rt);
                 return $GLOBALS['smarty']->display('navigator_add.htm');
             } elseif ($_REQUEST['step'] == 2) {
                 $item_name = $_REQUEST['item_name'];
@@ -108,11 +108,11 @@ class Navigator extends Init
 
                 $sysmain = $this->get_sysnav();
 
-                $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'navigator.php?act=list']);
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['navigator']);
+                $this->assign('action_link', ['text' => $GLOBALS['_LANG']['go_list'], 'href' => 'navigator.php?act=list']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['navigator']);
 
-                $GLOBALS['smarty']->assign('sysmain', $sysmain);
-                $GLOBALS['smarty']->assign('rt', $rt);
+                $this->assign('sysmain', $sysmain);
+                $this->assign('rt', $rt);
                 return $GLOBALS['smarty']->display('navigator_add.htm');
             } elseif ($_REQUEST['step'] == 2) {
                 $item_name = $_REQUEST['item_name'];

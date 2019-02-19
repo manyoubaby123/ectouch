@@ -43,13 +43,13 @@ class MailTemplate extends Init
             /* 创建 html editor */
             // $content['template_content']; // content
             $FCKeditor = $content['template_content'];
-            $GLOBALS['smarty']->assign('FCKeditor', $FCKeditor);
-            $GLOBALS['smarty']->assign('tpl', $cur);
-            $GLOBALS['smarty']->assign('cur', $cur);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['mail_template_manage']);
-            $GLOBALS['smarty']->assign('templates', $templates);
-            $GLOBALS['smarty']->assign('template', $content);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('FCKeditor', $FCKeditor);
+            $this->assign('tpl', $cur);
+            $this->assign('cur', $cur);
+            $this->assign('ur_here', $GLOBALS['_LANG']['mail_template_manage']);
+            $this->assign('templates', $templates);
+            $this->assign('template', $content);
+            $this->assign('full_page', 1);
             return $GLOBALS['smarty']->display('mail_template.htm');
         }
 
@@ -86,17 +86,17 @@ class MailTemplate extends Init
             if (($mail_type == -1 && $content['is_html'] == 1) || $mail_type == 1) {
                 /* 创建 html editor */
                 // $content['template_content'] content
-                $GLOBALS['smarty']->assign('FCKeditor', '');
+                $this->assign('FCKeditor', '');
 
                 $content['is_html'] = 1;
             } elseif ($mail_type == 0) {
                 $content['is_html'] = 0;
             }
 
-            $GLOBALS['smarty']->assign('tpl', $tpl);
-            $GLOBALS['smarty']->assign('cur', $tpl);
-            $GLOBALS['smarty']->assign('templates', $templates);
-            $GLOBALS['smarty']->assign('template', $content);
+            $this->assign('tpl', $tpl);
+            $this->assign('cur', $tpl);
+            $this->assign('templates', $templates);
+            $this->assign('template', $content);
 
             return make_json_result($GLOBALS['smarty']->fetch('mail_template.htm'));
         }

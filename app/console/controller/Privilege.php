@@ -41,8 +41,8 @@ class Privilege extends Init
             header("Pragma: no-cache");
 
             if ((intval($GLOBALS['_CFG']['captcha']) & CAPTCHA_ADMIN) && gd_version() > 0) {
-                $GLOBALS['smarty']->assign('gd_version', gd_version());
-                $GLOBALS['smarty']->assign('random', mt_rand());
+                $this->assign('gd_version', gd_version());
+                $this->assign('random', mt_rand());
             }
 
             return $GLOBALS['smarty']->display('login.htm');
@@ -127,10 +127,10 @@ class Privilege extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['admin_list']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'privilege.php?act=add', 'text' => $GLOBALS['_LANG']['admin_add']]);
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('admin_list', $this->get_admin_userlist());
+            $this->assign('ur_here', $GLOBALS['_LANG']['admin_list']);
+            $this->assign('action_link', ['href' => 'privilege.php?act=add', 'text' => $GLOBALS['_LANG']['admin_add']]);
+            $this->assign('full_page', 1);
+            $this->assign('admin_list', $this->get_admin_userlist());
 
             /* 显示页面 */
 
@@ -141,7 +141,7 @@ class Privilege extends Init
         //-- 查询
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
-            $GLOBALS['smarty']->assign('admin_list', $this->get_admin_userlist());
+            $this->assign('admin_list', $this->get_admin_userlist());
 
             return make_json_result($GLOBALS['smarty']->fetch('privilege_list.htm'));
         }
@@ -154,11 +154,11 @@ class Privilege extends Init
             admin_priv('admin_manage');
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['admin_add']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'privilege.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list']]);
-            $GLOBALS['smarty']->assign('form_act', 'insert');
-            $GLOBALS['smarty']->assign('action', 'add');
-            $GLOBALS['smarty']->assign('select_role', $this->get_role_list());
+            $this->assign('ur_here', $GLOBALS['_LANG']['admin_add']);
+            $this->assign('action_link', ['href' => 'privilege.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list']]);
+            $this->assign('form_act', 'insert');
+            $this->assign('action', 'add');
+            $this->assign('select_role', $this->get_role_list());
 
             /* 显示页面 */
 
@@ -256,19 +256,19 @@ class Privilege extends Init
             }
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['admin_edit']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['admin_list'], 'href' => 'privilege.php?act=list']);
-            $GLOBALS['smarty']->assign('user', $user_info);
+            $this->assign('ur_here', $GLOBALS['_LANG']['admin_edit']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['admin_list'], 'href' => 'privilege.php?act=list']);
+            $this->assign('user', $user_info);
 
             /* 获得该管理员的权限 */
             $priv_str = $GLOBALS['db']->getOne("SELECT action_list FROM " . $GLOBALS['ecs']->table('admin_user') . " WHERE user_id = '$_GET[id]'");
 
             /* 如果被编辑的管理员拥有了all这个权限，将不能编辑 */
             if ($priv_str != 'all') {
-                $GLOBALS['smarty']->assign('select_role', $this->get_role_list());
+                $this->assign('select_role', $this->get_role_list());
             }
-            $GLOBALS['smarty']->assign('form_act', 'update');
-            $GLOBALS['smarty']->assign('action', 'edit');
+            $this->assign('form_act', 'update');
+            $this->assign('action', 'edit');
 
             return $GLOBALS['smarty']->display('privilege_info.htm');
         }
@@ -458,15 +458,15 @@ class Privilege extends Init
             }
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('lang', $GLOBALS['_LANG']);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['modif_info']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['admin_list'], 'href' => 'privilege.php?act=list']);
-            $GLOBALS['smarty']->assign('user', $user_info);
-            $GLOBALS['smarty']->assign('menus', $modules);
-            $GLOBALS['smarty']->assign('nav_arr', $nav_lst);
+            $this->assign('lang', $GLOBALS['_LANG']);
+            $this->assign('ur_here', $GLOBALS['_LANG']['modif_info']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['admin_list'], 'href' => 'privilege.php?act=list']);
+            $this->assign('user', $user_info);
+            $this->assign('menus', $modules);
+            $this->assign('nav_arr', $nav_lst);
 
-            $GLOBALS['smarty']->assign('form_act', 'update_self');
-            $GLOBALS['smarty']->assign('action', 'modif');
+            $this->assign('form_act', 'update_self');
+            $this->assign('action', 'modif');
 
             /* 显示页面 */
 
@@ -519,12 +519,12 @@ class Privilege extends Init
             }
 
             /* 赋值 */
-            $GLOBALS['smarty']->assign('lang', $GLOBALS['_LANG']);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['allot_priv'] . ' [ ' . $_GET['user'] . ' ] ');
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'privilege.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list']]);
-            $GLOBALS['smarty']->assign('priv_arr', $priv_arr);
-            $GLOBALS['smarty']->assign('form_act', 'update_allot');
-            $GLOBALS['smarty']->assign('user_id', $_GET['id']);
+            $this->assign('lang', $GLOBALS['_LANG']);
+            $this->assign('ur_here', $GLOBALS['_LANG']['allot_priv'] . ' [ ' . $_GET['user'] . ' ] ');
+            $this->assign('action_link', ['href' => 'privilege.php?act=list', 'text' => $GLOBALS['_LANG']['admin_list']]);
+            $this->assign('priv_arr', $priv_arr);
+            $this->assign('form_act', 'update_allot');
+            $this->assign('user_id', $_GET['id']);
 
             /* 显示页面 */
 

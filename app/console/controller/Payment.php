@@ -49,9 +49,9 @@ class Payment extends Init
                 }
             }
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['02_payment_list']);
-            $GLOBALS['smarty']->assign('modules', $modules);
-            $GLOBALS['smarty']->assign('tenpayc2c', $tenpayc2c);
+            $this->assign('ur_here', $GLOBALS['_LANG']['02_payment_list']);
+            $this->assign('modules', $modules);
+            $this->assign('tenpayc2c', $tenpayc2c);
             return $GLOBALS['smarty']->display('payment_list.htm');
         }
 
@@ -93,8 +93,8 @@ class Payment extends Init
                 }
             }
 
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['02_payment_list'], 'href' => 'payment.php?act=list']);
-            $GLOBALS['smarty']->assign('pay', $pay);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_payment_list'], 'href' => 'payment.php?act=list']);
+            $this->assign('pay', $pay);
             return $GLOBALS['smarty']->display('payment_edit.htm');
         }
         if ($_REQUEST['act'] == 'get_config') {
@@ -203,9 +203,9 @@ class Payment extends Init
                 }
             }
 
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['02_payment_list'], 'href' => 'payment.php?act=list']);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit'] . $GLOBALS['_LANG']['payment']);
-            $GLOBALS['smarty']->assign('pay', $pay);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['02_payment_list'], 'href' => 'payment.php?act=list']);
+            $this->assign('ur_here', $GLOBALS['_LANG']['edit'] . $GLOBALS['_LANG']['payment']);
+            $this->assign('pay', $pay);
             return $GLOBALS['smarty']->display('payment_edit.htm');
         }
 

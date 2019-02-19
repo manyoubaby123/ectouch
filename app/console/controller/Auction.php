@@ -21,19 +21,19 @@ class Auction extends Init
             admin_priv('auction');
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['auction_list']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'auction.php?act=add', 'text' => $GLOBALS['_LANG']['add_auction']]);
+            $this->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['auction_list']);
+            $this->assign('action_link', ['href' => 'auction.php?act=add', 'text' => $GLOBALS['_LANG']['add_auction']]);
 
             $list = $this->auction_list();
 
-            $GLOBALS['smarty']->assign('auction_list', $list['item']);
-            $GLOBALS['smarty']->assign('filter', $list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $list['page_count']);
+            $this->assign('auction_list', $list['item']);
+            $this->assign('filter', $list['filter']);
+            $this->assign('record_count', $list['record_count']);
+            $this->assign('page_count', $list['page_count']);
 
             $sort_flag = sort_flag($list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             /* 显示商品列表页面 */
 
@@ -47,13 +47,13 @@ class Auction extends Init
         if ($_REQUEST['act'] == 'query') {
             $list = $this->auction_list();
 
-            $GLOBALS['smarty']->assign('auction_list', $list['item']);
-            $GLOBALS['smarty']->assign('filter', $list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $list['page_count']);
+            $this->assign('auction_list', $list['item']);
+            $this->assign('filter', $list['filter']);
+            $this->assign('record_count', $list['record_count']);
+            $this->assign('page_count', $list['page_count']);
 
             $sort_flag = sort_flag($list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('auction_list.htm'),
@@ -144,14 +144,14 @@ class Auction extends Init
             if (empty($auction)) {
                 return sys_msg($GLOBALS['_LANG']['auction_not_exist']);
             }
-            $GLOBALS['smarty']->assign('auction', auction_info($id));
+            $this->assign('auction', auction_info($id));
 
             /* 出价记录 */
-            $GLOBALS['smarty']->assign('auction_log', auction_log($id));
+            $this->assign('auction_log', auction_log($id));
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['auction_log']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'auction.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['auction_list']]);
+            $this->assign('ur_here', $GLOBALS['_LANG']['auction_log']);
+            $this->assign('action_link', ['href' => 'auction.php?act=list&' . list_link_postfix(), 'text' => $GLOBALS['_LANG']['auction_list']]);
 
             return $GLOBALS['smarty']->display('auction_log.htm');
         }
@@ -166,7 +166,7 @@ class Auction extends Init
 
             /* 是否添加 */
             $is_add = $_REQUEST['act'] == 'add';
-            $GLOBALS['smarty']->assign('form_action', $is_add ? 'insert' : 'update');
+            $this->assign('form_action', $is_add ? 'insert' : 'update');
 
             /* 初始化、取得拍卖活动信息 */
             if ($is_add) {
@@ -194,23 +194,23 @@ class Auction extends Init
                     return sys_msg($GLOBALS['_LANG']['auction_not_exist']);
                 }
                 $auction['status'] = $GLOBALS['_LANG']['auction_status'][$auction['status_no']];
-                $GLOBALS['smarty']->assign('bid_user_count', sprintf($GLOBALS['_LANG']['bid_user_count'], $auction['bid_user_count']));
+                $this->assign('bid_user_count', sprintf($GLOBALS['_LANG']['bid_user_count'], $auction['bid_user_count']));
             }
-            $GLOBALS['smarty']->assign('auction', $auction);
+            $this->assign('auction', $auction);
 
             /* 赋值时间控件的语言 */
-            $GLOBALS['smarty']->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
+            $this->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
 
             /* 商品货品表 */
-            $GLOBALS['smarty']->assign('good_products_select', get_good_products_select($auction['goods_id']));
+            $this->assign('good_products_select', get_good_products_select($auction['goods_id']));
 
             /* 显示模板 */
             if ($is_add) {
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['add_auction']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['add_auction']);
             } else {
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit_auction']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['edit_auction']);
             }
-            $GLOBALS['smarty']->assign('action_link', $this->list_link($is_add));
+            $this->assign('action_link', $this->list_link($is_add));
 
             return $GLOBALS['smarty']->display('auction_info.htm');
         }

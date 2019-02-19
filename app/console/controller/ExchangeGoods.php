@@ -21,20 +21,20 @@ class ExchangeGoods extends Init
 
             /* 取得过滤条件 */
             $filter = [];
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['15_exchange_goods_list']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['exchange_goods_add'], 'href' => 'exchange_goods.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('filter', $filter);
+            $this->assign('ur_here', $GLOBALS['_LANG']['15_exchange_goods_list']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['exchange_goods_add'], 'href' => 'exchange_goods.php?act=add']);
+            $this->assign('full_page', 1);
+            $this->assign('filter', $filter);
 
             $goods_list = $this->get_exchange_goodslist();
 
-            $GLOBALS['smarty']->assign('goods_list', $goods_list['arr']);
-            $GLOBALS['smarty']->assign('filter', $goods_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $goods_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $goods_list['page_count']);
+            $this->assign('goods_list', $goods_list['arr']);
+            $this->assign('filter', $goods_list['filter']);
+            $this->assign('record_count', $goods_list['record_count']);
+            $this->assign('page_count', $goods_list['page_count']);
 
             $sort_flag = sort_flag($goods_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return $GLOBALS['smarty']->display('exchange_goods_list.htm');
         }
@@ -47,13 +47,13 @@ class ExchangeGoods extends Init
 
             $goods_list = $this->get_exchange_goodslist();
 
-            $GLOBALS['smarty']->assign('goods_list', $goods_list['arr']);
-            $GLOBALS['smarty']->assign('filter', $goods_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $goods_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $goods_list['page_count']);
+            $this->assign('goods_list', $goods_list['arr']);
+            $this->assign('filter', $goods_list['filter']);
+            $this->assign('record_count', $goods_list['record_count']);
+            $this->assign('page_count', $goods_list['page_count']);
 
             $sort_flag = sort_flag($goods_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('exchange_goods_list.htm'),
@@ -75,10 +75,10 @@ class ExchangeGoods extends Init
             $goods['is_hot'] = 0;
             $goods['option'] = '<option value="0">' . $GLOBALS['_LANG']['make_option'] . '</option>';
 
-            $GLOBALS['smarty']->assign('goods', $goods);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['exchange_goods_add']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['15_exchange_goods_list'], 'href' => 'exchange_goods.php?act=list']);
-            $GLOBALS['smarty']->assign('form_action', 'insert');
+            $this->assign('goods', $goods);
+            $this->assign('ur_here', $GLOBALS['_LANG']['exchange_goods_add']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['15_exchange_goods_list'], 'href' => 'exchange_goods.php?act=list']);
+            $this->assign('form_action', 'insert');
 
             return $GLOBALS['smarty']->display('exchange_goods_info.htm');
         }
@@ -134,10 +134,10 @@ class ExchangeGoods extends Init
             $goods = $GLOBALS['db']->getRow($sql);
             $goods['option'] = '<option value="' . $goods['goods_id'] . '">' . $goods['goods_name'] . '</option>';
 
-            $GLOBALS['smarty']->assign('goods', $goods);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['exchange_goods_add']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['15_exchange_goods_list'], 'href' => 'exchange_goods.php?act=list&' . list_link_postfix()]);
-            $GLOBALS['smarty']->assign('form_action', 'update');
+            $this->assign('goods', $goods);
+            $this->assign('ur_here', $GLOBALS['_LANG']['exchange_goods_add']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['15_exchange_goods_list'], 'href' => 'exchange_goods.php?act=list&' . list_link_postfix()]);
+            $this->assign('form_action', 'update');
 
             return $GLOBALS['smarty']->display('exchange_goods_info.htm');
         }

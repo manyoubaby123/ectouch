@@ -24,16 +24,16 @@ class Vote extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['list_vote']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['add_vote'], 'href' => 'vote.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['list_vote']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['add_vote'], 'href' => 'vote.php?act=add']);
+            $this->assign('full_page', 1);
 
             $vote_list = $this->get_votelist();
 
-            $GLOBALS['smarty']->assign('list', $vote_list['list']);
-            $GLOBALS['smarty']->assign('filter', $vote_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $vote_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $vote_list['page_count']);
+            $this->assign('list', $vote_list['list']);
+            $this->assign('filter', $vote_list['filter']);
+            $this->assign('record_count', $vote_list['record_count']);
+            $this->assign('page_count', $vote_list['page_count']);
 
             /* 显示页面 */
 
@@ -46,10 +46,10 @@ class Vote extends Init
         if ($_REQUEST['act'] == 'query') {
             $vote_list = $this->get_votelist();
 
-            $GLOBALS['smarty']->assign('list', $vote_list['list']);
-            $GLOBALS['smarty']->assign('filter', $vote_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $vote_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $vote_list['page_count']);
+            $this->assign('list', $vote_list['list']);
+            $this->assign('filter', $vote_list['filter']);
+            $this->assign('record_count', $vote_list['record_count']);
+            $this->assign('page_count', $vote_list['page_count']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('vote_list.htm'),
@@ -69,13 +69,13 @@ class Vote extends Init
             $vote = ['start_time' => local_date('Y-m-d'), 'end_time' => local_date('Y-m-d', local_strtotime('+2 weeks'))];
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['add_vote']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
+            $this->assign('ur_here', $GLOBALS['_LANG']['add_vote']);
+            $this->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
 
-            $GLOBALS['smarty']->assign('action', 'add');
-            $GLOBALS['smarty']->assign('form_act', 'insert');
-            $GLOBALS['smarty']->assign('vote_arr', $vote);
-            $GLOBALS['smarty']->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
+            $this->assign('action', 'add');
+            $this->assign('form_act', 'insert');
+            $this->assign('vote_arr', $vote);
+            $this->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
 
             /* 显示页面 */
 
@@ -132,10 +132,10 @@ class Vote extends Init
             $vote_arr['end_time'] = local_date('Y-m-d', $vote_arr['end_time']);
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit_vote']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
-            $GLOBALS['smarty']->assign('form_act', 'update');
-            $GLOBALS['smarty']->assign('vote_arr', $vote_arr);
+            $this->assign('ur_here', $GLOBALS['_LANG']['edit_vote']);
+            $this->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
+            $this->assign('form_act', 'update');
+            $this->assign('vote_arr', $vote_arr);
 
             return $GLOBALS['smarty']->display('vote_info.htm');
         }
@@ -170,12 +170,12 @@ class Vote extends Init
             $id = !empty($_REQUEST['id']) ? intval($_REQUEST['id']) : 0;
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['list_vote_option']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['list_vote_option']);
+            $this->assign('action_link', ['href' => 'vote.php?act=list', 'text' => $GLOBALS['_LANG']['list_vote']]);
+            $this->assign('full_page', 1);
 
-            $GLOBALS['smarty']->assign('id', $id);
-            $GLOBALS['smarty']->assign('option_arr', $this->get_optionlist($id));
+            $this->assign('id', $id);
+            $this->assign('option_arr', $this->get_optionlist($id));
 
             /* 显示页面 */
 
@@ -188,8 +188,8 @@ class Vote extends Init
         if ($_REQUEST['act'] == 'query_option') {
             $id = intval($_GET['vid']);
 
-            $GLOBALS['smarty']->assign('id', $id);
-            $GLOBALS['smarty']->assign('option_arr', $this->get_optionlist($id));
+            $this->assign('id', $id);
+            $this->assign('option_arr', $this->get_optionlist($id));
 
             return make_json_result($GLOBALS['smarty']->fetch('vote_option.htm'));
         }

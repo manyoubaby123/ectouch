@@ -20,19 +20,19 @@ class Favourable extends Init
             admin_priv('favourable');
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['favourable_list']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'favourable.php?act=add', 'text' => $GLOBALS['_LANG']['add_favourable']]);
+            $this->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['favourable_list']);
+            $this->assign('action_link', ['href' => 'favourable.php?act=add', 'text' => $GLOBALS['_LANG']['add_favourable']]);
 
             $list = $this->favourable_list();
 
-            $GLOBALS['smarty']->assign('favourable_list', $list['item']);
-            $GLOBALS['smarty']->assign('filter', $list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $list['page_count']);
+            $this->assign('favourable_list', $list['item']);
+            $this->assign('filter', $list['filter']);
+            $this->assign('record_count', $list['record_count']);
+            $this->assign('page_count', $list['page_count']);
 
             $sort_flag = sort_flag($list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             /* 显示商品列表页面 */
 
@@ -46,13 +46,13 @@ class Favourable extends Init
         if ($_REQUEST['act'] == 'query') {
             $list = $this->favourable_list();
 
-            $GLOBALS['smarty']->assign('favourable_list', $list['item']);
-            $GLOBALS['smarty']->assign('filter', $list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $list['page_count']);
+            $this->assign('favourable_list', $list['item']);
+            $this->assign('filter', $list['filter']);
+            $this->assign('record_count', $list['record_count']);
+            $this->assign('page_count', $list['page_count']);
 
             $sort_flag = sort_flag($list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('favourable_list.htm'),
@@ -144,7 +144,7 @@ class Favourable extends Init
 
             /* 是否添加 */
             $is_add = $_REQUEST['act'] == 'add';
-            $GLOBALS['smarty']->assign('form_action', $is_add ? 'insert' : 'update');
+            $this->assign('form_action', $is_add ? 'insert' : 'update');
 
             /* 初始化、取得优惠活动信息 */
             if ($is_add) {
@@ -172,7 +172,7 @@ class Favourable extends Init
                     return sys_msg($GLOBALS['_LANG']['favourable_not_exist']);
                 }
             }
-            $GLOBALS['smarty']->assign('favourable', $favourable);
+            $this->assign('favourable', $favourable);
 
             /* 取得用户等级 */
             $user_rank_list = [];
@@ -187,7 +187,7 @@ class Favourable extends Init
                 $row['checked'] = strpos(',' . $favourable['user_rank'] . ',', ',' . $row['rank_id'] . ',') !== false;
                 $user_rank_list[] = $row;
             }
-            $GLOBALS['smarty']->assign('user_rank_list', $user_rank_list);
+            $this->assign('user_rank_list', $user_rank_list);
 
             /* 取得优惠范围 */
             $act_range_ext = [];
@@ -204,22 +204,22 @@ class Favourable extends Init
                 }
                 $act_range_ext = $GLOBALS['db']->getAll($sql);
             }
-            $GLOBALS['smarty']->assign('act_range_ext', $act_range_ext);
+            $this->assign('act_range_ext', $act_range_ext);
 
             /* 赋值时间控件的语言 */
-            $GLOBALS['smarty']->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
+            $this->assign('cfg_lang', $GLOBALS['_CFG']['lang']);
 
             /* 显示模板 */
             if ($is_add) {
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['add_favourable']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['add_favourable']);
             } else {
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit_favourable']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['edit_favourable']);
             }
             $href = 'favourable.php?act=list';
             if (!$is_add) {
                 $href .= '&' . list_link_postfix();
             }
-            $GLOBALS['smarty']->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['favourable_list']]);
+            $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['favourable_list']]);
 
             return $GLOBALS['smarty']->display('favourable_info.htm');
         }

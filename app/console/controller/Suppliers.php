@@ -18,16 +18,16 @@ class Suppliers extends Init
             $result = $this->suppliers_list();
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['suppliers_list']); // 当前导航
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'suppliers.php?act=add', 'text' => $GLOBALS['_LANG']['add_suppliers']]);
+            $this->assign('ur_here', $GLOBALS['_LANG']['suppliers_list']); // 当前导航
+            $this->assign('action_link', ['href' => 'suppliers.php?act=add', 'text' => $GLOBALS['_LANG']['add_suppliers']]);
 
-            $GLOBALS['smarty']->assign('full_page', 1); // 翻页参数
+            $this->assign('full_page', 1); // 翻页参数
 
-            $GLOBALS['smarty']->assign('suppliers_list', $result['result']);
-            $GLOBALS['smarty']->assign('filter', $result['filter']);
-            $GLOBALS['smarty']->assign('record_count', $result['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $result['page_count']);
-            $GLOBALS['smarty']->assign('sort_suppliers_id', '<img src="images/sort_desc.gif">');
+            $this->assign('suppliers_list', $result['result']);
+            $this->assign('filter', $result['filter']);
+            $this->assign('record_count', $result['record_count']);
+            $this->assign('page_count', $result['page_count']);
+            $this->assign('sort_suppliers_id', '<img src="images/sort_desc.gif">');
 
             /* 显示模板 */
 
@@ -42,14 +42,14 @@ class Suppliers extends Init
 
             $result = $this->suppliers_list();
 
-            $GLOBALS['smarty']->assign('suppliers_list', $result['result']);
-            $GLOBALS['smarty']->assign('filter', $result['filter']);
-            $GLOBALS['smarty']->assign('record_count', $result['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $result['page_count']);
+            $this->assign('suppliers_list', $result['result']);
+            $this->assign('filter', $result['filter']);
+            $this->assign('record_count', $result['record_count']);
+            $this->assign('page_count', $result['page_count']);
 
             /* 排序标记 */
             $sort_flag = sort_flag($result['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('suppliers_list.htm'),
@@ -260,11 +260,11 @@ class Suppliers extends Init
                 AND action_list <> 'all'";
                 $suppliers['admin_list'] = $GLOBALS['db']->getAll($sql);
 
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['add_suppliers']);
-                $GLOBALS['smarty']->assign('action_link', ['href' => 'suppliers.php?act=list', 'text' => $GLOBALS['_LANG']['suppliers_list']]);
+                $this->assign('ur_here', $GLOBALS['_LANG']['add_suppliers']);
+                $this->assign('action_link', ['href' => 'suppliers.php?act=list', 'text' => $GLOBALS['_LANG']['suppliers_list']]);
 
-                $GLOBALS['smarty']->assign('form_action', 'insert');
-                $GLOBALS['smarty']->assign('suppliers', $suppliers);
+                $this->assign('form_action', 'insert');
+                $this->assign('suppliers', $suppliers);
 
                 return $GLOBALS['smarty']->display('suppliers_info.htm');
             }
@@ -291,11 +291,11 @@ class Suppliers extends Init
                 AND action_list <> 'all'";
                 $suppliers['admin_list'] = $GLOBALS['db']->getAll($sql);
 
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit_suppliers']);
-                $GLOBALS['smarty']->assign('action_link', ['href' => 'suppliers.php?act=list', 'text' => $GLOBALS['_LANG']['suppliers_list']]);
+                $this->assign('ur_here', $GLOBALS['_LANG']['edit_suppliers']);
+                $this->assign('action_link', ['href' => 'suppliers.php?act=list', 'text' => $GLOBALS['_LANG']['suppliers_list']]);
 
-                $GLOBALS['smarty']->assign('form_action', 'update');
-                $GLOBALS['smarty']->assign('suppliers', $suppliers);
+                $this->assign('form_action', 'update');
+                $this->assign('suppliers', $suppliers);
 
                 return $GLOBALS['smarty']->display('suppliers_info.htm');
             }

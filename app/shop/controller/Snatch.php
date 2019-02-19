@@ -32,11 +32,11 @@ class Snatch extends Init
                 $position = assign_ur_here(0, $goods['snatch_name']);
                 if ($goods['is_end']) {
                     //如果活动已经结束,获取活动结果
-                    $GLOBALS['smarty']->assign('result', get_snatch_result($id));
+                    $this->assign('result', get_snatch_result($id));
                 }
-                $GLOBALS['smarty']->assign('id', $id);
-                $GLOBALS['smarty']->assign('snatch_goods', $goods); // 竞价商品
-                $GLOBALS['smarty']->assign('myprice', $this->get_myprice($id));
+                $this->assign('id', $id);
+                $this->assign('snatch_goods', $goods); // 竞价商品
+                $this->assign('myprice', $this->get_myprice($id));
                 if ($goods['product_id'] > 0) {
                     $goods_specifications = get_specifications_list($goods['goods_id']);
 
@@ -47,7 +47,7 @@ class Snatch extends Init
                     foreach ($_good_products as $value) {
                         $products_info .= ' ' . $goods_specifications[$value]['attr_name'] . '：' . $goods_specifications[$value]['attr_value'];
                     }
-                    $GLOBALS['smarty']->assign('products_info', $products_info);
+                    $this->assign('products_info', $products_info);
                     unset($goods_specifications, $good_products, $_good_products, $products_info);
                 }
             } else {
@@ -57,26 +57,26 @@ class Snatch extends Init
             /* 调查 */
             $vote = get_vote();
             if (!empty($vote)) {
-                $GLOBALS['smarty']->assign('vote_id', $vote['id']);
-                $GLOBALS['smarty']->assign('vote', $vote['content']);
+                $this->assign('vote_id', $vote['id']);
+                $this->assign('vote', $vote['content']);
             }
 
-            $this->shopService->assign_template();
+            $this->assign_template();
             assign_dynamic('snatch');
-            $GLOBALS['smarty']->assign('page_title', $position['title']);
-            $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);
-            $GLOBALS['smarty']->assign('categories', get_categories_tree()); // 分类树
-            $GLOBALS['smarty']->assign('helps', get_shop_help());       // 网店帮助
-            $GLOBALS['smarty']->assign('snatch_list', $this->get_snatch_list());     //所有有效的夺宝奇兵列表
-            $GLOBALS['smarty']->assign('price_list', $this->get_price_list($id));
-            $GLOBALS['smarty']->assign('promotion_info', get_promotion_info());
-            $GLOBALS['smarty']->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-typesnatch.xml" : 'feed.php?type=snatch'); // RSS URL
+            $this->assign('page_title', $position['title']);
+            $this->assign('ur_here', $position['ur_here']);
+            $this->assign('categories', get_categories_tree()); // 分类树
+            $this->assign('helps', get_shop_help());       // 网店帮助
+            $this->assign('snatch_list', $this->get_snatch_list());     //所有有效的夺宝奇兵列表
+            $this->assign('price_list', $this->get_price_list($id));
+            $this->assign('promotion_info', get_promotion_info());
+            $this->assign('feed_url', ($GLOBALS['_CFG']['rewrite'] == 1) ? "feed-typesnatch.xml" : 'feed.php?type=snatch'); // RSS URL
             return $GLOBALS['smarty']->display('snatch.dwt');
         }
 
         /* 最新出价列表 */
         if ($_REQUEST['act'] == 'new_price_list') {
-            $GLOBALS['smarty']->assign('price_list', $this->get_price_list($id));
+            $this->assign('price_list', $this->get_price_list($id));
             return $GLOBALS['smarty']->display('library/snatch_price.lbi');
         }
 
@@ -148,8 +148,8 @@ class Snatch extends Init
                 "('$id', '" . session('user_id') . "', '" . $price . "', " . gmtime() . ")";
             $GLOBALS['db']->query($sql);
 
-            $GLOBALS['smarty']->assign('myprice', $this->get_myprice($id));
-            $GLOBALS['smarty']->assign('id', $id);
+            $this->assign('myprice', $this->get_myprice($id));
+            $this->assign('id', $id);
             $result['content'] = $GLOBALS['smarty']->fetch('library/snatch.lbi');
             return json_encode($result);
         }

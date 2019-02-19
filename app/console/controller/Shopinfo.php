@@ -14,10 +14,10 @@ class Shopinfo extends Init
         //-- 文章列表
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['shop_info']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_add'], 'href' => 'shopinfo.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
-            $GLOBALS['smarty']->assign('list', $this->shopinfo_article_list());
+            $this->assign('ur_here', $GLOBALS['_LANG']['shop_info']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_add'], 'href' => 'shopinfo.php?act=add']);
+            $this->assign('full_page', 1);
+            $this->assign('list', $this->shopinfo_article_list());
 
             return $GLOBALS['smarty']->display('shopinfo_list.htm');
         }
@@ -26,7 +26,7 @@ class Shopinfo extends Init
         //-- 查询
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
-            $GLOBALS['smarty']->assign('list', $this->shopinfo_article_list());
+            $this->assign('list', $this->shopinfo_article_list());
 
             return make_json_result($GLOBALS['smarty']->fetch('shopinfo_list.htm'));
         }
@@ -44,9 +44,9 @@ class Shopinfo extends Init
             /* 初始化 */
             $article['article_type'] = 0;
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['shopinfo_add']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_list'], 'href' => 'shopinfo.php?act=list']);
-            $GLOBALS['smarty']->assign('form_action', 'insert');
+            $this->assign('ur_here', $GLOBALS['_LANG']['shopinfo_add']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_list'], 'href' => 'shopinfo.php?act=list']);
+            $this->assign('form_action', 'insert');
 
             return $GLOBALS['smarty']->display('shopinfo_info.htm');
         }
@@ -93,10 +93,10 @@ class Shopinfo extends Init
             /* 创建 html editor */
             create_html_editor('FCKeditor1', $article['content']);
 
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['article_add']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_list'], 'href' => 'shopinfo.php?act=list']);
-            $GLOBALS['smarty']->assign('article', $article);
-            $GLOBALS['smarty']->assign('form_action', 'update');
+            $this->assign('ur_here', $GLOBALS['_LANG']['article_add']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['shopinfo_list'], 'href' => 'shopinfo.php?act=list']);
+            $this->assign('article', $article);
+            $this->assign('form_action', 'update');
             return $GLOBALS['smarty']->display('shopinfo_info.htm');
         }
         if ($_REQUEST['act'] == 'update') {

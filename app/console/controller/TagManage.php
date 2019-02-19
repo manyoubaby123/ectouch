@@ -20,18 +20,18 @@ class TagManage extends Init
             admin_priv('tag_manage');
 
             /* 模板赋值 */
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['tag_list']);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'tag_manage.php?act=add', 'text' => $GLOBALS['_LANG']['add_tag']]);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['tag_list']);
+            $this->assign('action_link', ['href' => 'tag_manage.php?act=add', 'text' => $GLOBALS['_LANG']['add_tag']]);
+            $this->assign('full_page', 1);
 
             $tag_list = $this->get_tag_list();
-            $GLOBALS['smarty']->assign('tag_list', $tag_list['tags']);
-            $GLOBALS['smarty']->assign('filter', $tag_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $tag_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $tag_list['page_count']);
+            $this->assign('tag_list', $tag_list['tags']);
+            $this->assign('filter', $tag_list['filter']);
+            $this->assign('record_count', $tag_list['record_count']);
+            $this->assign('page_count', $tag_list['page_count']);
 
             $sort_flag = sort_flag($tag_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             /* 页面显示 */
 
@@ -46,7 +46,7 @@ class TagManage extends Init
             admin_priv('tag_manage');
 
             $is_add = $_REQUEST['act'] == 'add';
-            $GLOBALS['smarty']->assign('insert_or_update', $is_add ? 'insert' : 'update');
+            $this->assign('insert_or_update', $is_add ? 'insert' : 'update');
 
             if ($is_add) {
                 $tag = [
@@ -55,15 +55,15 @@ class TagManage extends Init
                     'goods_id' => 0,
                     'goods_name' => $GLOBALS['_LANG']['pls_select_goods']
                 ];
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['add_tag']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['add_tag']);
             } else {
                 $tag_id = $_GET['id'];
                 $tag = $this->get_tag_info($tag_id);
                 $tag['tag_words'] = htmlspecialchars($tag['tag_words']);
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['tag_edit']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['tag_edit']);
             }
-            $GLOBALS['smarty']->assign('tag', $tag);
-            $GLOBALS['smarty']->assign('action_link', ['href' => 'tag_manage.php?act=list', 'text' => $GLOBALS['_LANG']['tag_list']]);
+            $this->assign('tag', $tag);
+            $this->assign('action_link', ['href' => 'tag_manage.php?act=list', 'text' => $GLOBALS['_LANG']['tag_list']]);
 
             return $GLOBALS['smarty']->display('tag_edit.htm');
         }
@@ -123,13 +123,13 @@ class TagManage extends Init
             return check_authz_json('tag_manage');
 
             $tag_list = $this->get_tag_list();
-            $GLOBALS['smarty']->assign('tag_list', $tag_list['tags']);
-            $GLOBALS['smarty']->assign('filter', $tag_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $tag_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $tag_list['page_count']);
+            $this->assign('tag_list', $tag_list['tags']);
+            $this->assign('filter', $tag_list['filter']);
+            $this->assign('record_count', $tag_list['record_count']);
+            $this->assign('page_count', $tag_list['page_count']);
 
             $sort_flag = sort_flag($tag_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('tag_manage.htm'),

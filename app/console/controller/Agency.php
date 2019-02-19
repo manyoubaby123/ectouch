@@ -14,19 +14,19 @@ class Agency extends Init
         //-- 办事处列表
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'list') {
-            $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['agency_list']);
-            $GLOBALS['smarty']->assign('action_link', ['text' => $GLOBALS['_LANG']['add_agency'], 'href' => 'agency.php?act=add']);
-            $GLOBALS['smarty']->assign('full_page', 1);
+            $this->assign('ur_here', $GLOBALS['_LANG']['agency_list']);
+            $this->assign('action_link', ['text' => $GLOBALS['_LANG']['add_agency'], 'href' => 'agency.php?act=add']);
+            $this->assign('full_page', 1);
 
             $agency_list = $this->get_agencylist();
-            $GLOBALS['smarty']->assign('agency_list', $agency_list['agency']);
-            $GLOBALS['smarty']->assign('filter', $agency_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $agency_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $agency_list['page_count']);
+            $this->assign('agency_list', $agency_list['agency']);
+            $this->assign('filter', $agency_list['filter']);
+            $this->assign('record_count', $agency_list['record_count']);
+            $this->assign('page_count', $agency_list['page_count']);
 
             /* 排序标记 */
             $sort_flag = sort_flag($agency_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return $GLOBALS['smarty']->display('agency_list.htm');
         }
@@ -36,14 +36,14 @@ class Agency extends Init
         /*------------------------------------------------------ */
         if ($_REQUEST['act'] == 'query') {
             $agency_list = $this->get_agencylist();
-            $GLOBALS['smarty']->assign('agency_list', $agency_list['agency']);
-            $GLOBALS['smarty']->assign('filter', $agency_list['filter']);
-            $GLOBALS['smarty']->assign('record_count', $agency_list['record_count']);
-            $GLOBALS['smarty']->assign('page_count', $agency_list['page_count']);
+            $this->assign('agency_list', $agency_list['agency']);
+            $this->assign('filter', $agency_list['filter']);
+            $this->assign('record_count', $agency_list['record_count']);
+            $this->assign('page_count', $agency_list['page_count']);
 
             /* 排序标记 */
             $sort_flag = sort_flag($agency_list['filter']);
-            $GLOBALS['smarty']->assign($sort_flag['tag'], $sort_flag['img']);
+            $this->assign($sort_flag['tag'], $sort_flag['img']);
 
             return make_json_result(
                 $GLOBALS['smarty']->fetch('agency_list.htm'),
@@ -149,7 +149,7 @@ class Agency extends Init
 
             /* 是否添加 */
             $is_add = $_REQUEST['act'] == 'add';
-            $GLOBALS['smarty']->assign('form_action', $is_add ? 'insert' : 'update');
+            $this->assign('form_action', $is_add ? 'insert' : 'update');
 
             /* 初始化、取得办事处信息 */
             if ($is_add) {
@@ -186,24 +186,24 @@ class Agency extends Init
                 "FROM " . $GLOBALS['ecs']->table('admin_user');
             $agency['admin_list'] = $GLOBALS['db']->getAll($sql);
 
-            $GLOBALS['smarty']->assign('agency', $agency);
+            $this->assign('agency', $agency);
 
             /* 取得地区 */
             $country_list = get_regions();
-            $GLOBALS['smarty']->assign('countries', $country_list);
+            $this->assign('countries', $country_list);
 
             /* 显示模板 */
             if ($is_add) {
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['add_agency']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['add_agency']);
             } else {
-                $GLOBALS['smarty']->assign('ur_here', $GLOBALS['_LANG']['edit_agency']);
+                $this->assign('ur_here', $GLOBALS['_LANG']['edit_agency']);
             }
             if ($is_add) {
                 $href = 'agency.php?act=list';
             } else {
                 $href = 'agency.php?act=list&' . list_link_postfix();
             }
-            $GLOBALS['smarty']->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['agency_list']]);
+            $this->assign('action_link', ['href' => $href, 'text' => $GLOBALS['_LANG']['agency_list']]);
 
             return $GLOBALS['smarty']->display('agency_info.htm');
         }

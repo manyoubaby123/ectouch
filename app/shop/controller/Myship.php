@@ -23,27 +23,27 @@ class Myship extends Init
             $choose['district'] = isset($_POST['district']) ? intval($_POST['district']) : 417;
         }
 
-        $this->shopService->assign_template();
+        $this->assign_template();
         assign_dynamic('myship');
         $position = assign_ur_here(0, $GLOBALS['_LANG']['shopping_myship']);
-        $GLOBALS['smarty']->assign('page_title', $position['title']);    // 页面标题
-        $GLOBALS['smarty']->assign('ur_here', $position['ur_here']);  // 当前位置
+        $this->assign('page_title', $position['title']);    // 页面标题
+        $this->assign('ur_here', $position['ur_here']);  // 当前位置
 
-        $GLOBALS['smarty']->assign('helps', get_shop_help());       // 网店帮助
-        $GLOBALS['smarty']->assign('lang', $GLOBALS['_LANG']);
+        $this->assign('helps', get_shop_help());       // 网店帮助
+        $this->assign('lang', $GLOBALS['_LANG']);
 
-        $GLOBALS['smarty']->assign('choose', $choose);
+        $this->assign('choose', $choose);
 
         $province_list[null] = get_regions(1, $choose['country']);
         $city_list[null] = get_regions(2, $choose['province']);
         $district_list[null] = get_regions(3, $choose['city']);
 
-        $GLOBALS['smarty']->assign('province_list', $province_list);
-        $GLOBALS['smarty']->assign('city_list', $city_list);
-        $GLOBALS['smarty']->assign('district_list', $district_list);
+        $this->assign('province_list', $province_list);
+        $this->assign('city_list', $city_list);
+        $this->assign('district_list', $district_list);
 
         /* 取得国家列表、商店所在国家、商店所在国家的省列表 */
-        $GLOBALS['smarty']->assign('country_list', get_regions());
+        $this->assign('country_list', get_regions());
 
         /* 取得配送列表 */
         $region = [$choose['country'], $choose['province'], $choose['city'], $choose['district']];
@@ -66,7 +66,7 @@ class Myship extends Init
                 price_format($val['insure'], false) : $val['insure'];
         }
 
-        $GLOBALS['smarty']->assign('shipping_list', $shipping_list);
+        $this->assign('shipping_list', $shipping_list);
 
         return $GLOBALS['smarty']->display('myship.dwt');
     }

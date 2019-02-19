@@ -9,7 +9,7 @@
                     <p style="font-size: 14px; font-weight:bold; color: red;">{$message.content}</p>
                     <div class="blank"></div>
                     <!-- {if $message.url_info} -->
-                    <!--{foreach from=$message.url_info key=info item=url}-->
+                    <!--{foreach $message.url_info as $info => $url}-->
                     <p><a href="{$url}">{$info}</a></p>
                     <!--{/foreach}-->
                     <!--{/if}-->

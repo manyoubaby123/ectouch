@@ -6,7 +6,7 @@
   <a href="{$articles_cat.url}"><img src="../images/more.gif" alt="more" /></a>
   </h3>
   <div class="boxCenterList RelaArticle">
-  <!--{foreach from=$articles item=article_item}-->
+  <!--{foreach $articles as $article_item}-->
   <a href="{$article_item.url}" title="{$article_item.title|escape:html}">{$article_item.short_title}</a> {$article_item.add_time}<br />
   <!--{/foreach}-->
   </div>

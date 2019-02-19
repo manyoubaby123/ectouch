@@ -9,7 +9,7 @@
             <h3><span>{$lang.auction_goods}</span></h3>
             <div class="boxCenterList">
                 <!-- {if $auction_list} 如果有拍卖活动 -->
-                <!-- {foreach from=$auction_list item=auction} 循环拍卖活动开始 -->
+                <!-- {foreach $auction_list as $auction} 循环拍卖活动开始 -->
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$auction.url}"><img src="{$auction.goods_thumb}" border="0"

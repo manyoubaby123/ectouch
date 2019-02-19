@@ -69,7 +69,7 @@
             <th align="left" bgcolor="#ffffff">&nbsp;&nbsp;{$val}</th>
             <!-- {foreach name="goods_list" from=$goods_list item=goods} -->
             <td bgcolor="#ffffff">&nbsp;&nbsp;
-                <!-- {foreach from=$goods.properties item=property key=k} -->
+                <!-- {foreach $goods.properties as $k => $property} -->
                 <!-- {if $k eq $key} -->
                 {$property.value}
                 <!-- {/if} -->

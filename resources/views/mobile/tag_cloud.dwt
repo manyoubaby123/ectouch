@@ -7,7 +7,7 @@
             <div class="boxCenterList RelaArticle">
                 <p class="f_red" style="text-decoration:none;">&nbsp;&nbsp; {$lang.tag_cloud_desc} &nbsp;&nbsp;</p>
                 <!-- {if $tags} -->
-                <!-- 标签云开始 {foreach from=$tags item=tag}-->
+                <!-- 标签云开始 {foreach $tags as $tag}-->
                 <span style="font-size:{$tag.size}; line-height:36px;"> <a href="{$tag.url}" style="color:{$tag.color}">
           {if $tag.bold}
           <b>{$tag.tag_words|escape:html}</b>

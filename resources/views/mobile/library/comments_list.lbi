@@ -6,7 +6,7 @@
       <div class="boxCenterList clearfix" style="height:1%;">
        <ul class="comments">
        <!-- {if $comments} -->
-       <!-- {foreach from=$comments item=comment} -->
+       <!-- {foreach $comments as $comment} -->
         <li class="word">
         <font class="f2"><!-- {if $comment.username} -->{$comment.username|escape:html}<!-- {else} -->{$lang.anonymous}<!-- {/if} --></font> <font class="f3">( {$comment.add_time} )</font><br />
         <img src="../images/stars{$comment.rank}.gif" alt="{$comment.comment_rank}" />
@@ -26,7 +26,7 @@
         <!-- {if $pager.styleid eq 0 } -->
         <div id="pager">
           {$lang.pager_1}{$pager.record_count}{$lang.pager_2}{$lang.pager_3}{$pager.page_count}{$lang.pager_4} <span> <a href="{$pager.page_first}">{$lang.page_first}</a> <a href="{$pager.page_prev}">{$lang.page_prev}</a> <a href="{$pager.page_next}">{$lang.page_next}</a> <a href="{$pager.page_last}">{$lang.page_last}</a> </span>
-            <!--{foreach from=$pager.search key=key item=item}-->
+            <!--{foreach $pager.search as $key => $item}-->
             <input type="hidden" name="{$key}" value="{$item}" />
             <!--{/foreach}-->
         </div>
@@ -37,7 +37,7 @@
           <span class="f_l f6" style="margin-right:10px;">{$lang.total} <b>{$pager.record_count}</b> {$lang.user_comment_num}</span>
           <!-- {if $pager.page_first} --><a href="{$pager.page_first}">1 ...</a><!-- {/if} -->
           <!-- {if $pager.page_prev} --><a class="prev" href="{$pager.page_prev}">{$lang.page_prev}</a><!-- {/if} -->
-          <!--{foreach from=$pager.page_number key=key item=item}-->
+          <!--{foreach $pager.page_number as $key => $item}-->
                 <!-- {if $pager.page eq $key} -->
                 <span class="page_now">{$key}</span>
                 <!-- {else} -->
@@ -48,7 +48,7 @@
           <!-- {if $pager.page_next} --><a class="next" href="{$pager.page_next}">{$lang.page_next}</a><!-- {/if} -->
           <!-- {if $pager.page_last} --><a class="last" href="{$pager.page_last}">...{$pager.page_count}</a><!-- {/if} -->
           <!-- {if $pager.page_kbd} -->
-            <!--{foreach from=$pager.search key=key item=item}-->
+            <!--{foreach $pager.search as $key => $item}-->
             <input type="hidden" name="{$key}" value="{$item}" />
             <!--{/foreach}-->
             <kbd style="float:left; margin-left:8px; position:relative; bottom:3px;"><input type="text" name="page" onkeydown="if(event.keyCode==13)selectPage(this)" size="3" class="B_blue" /></kbd>
@@ -125,7 +125,7 @@
   <!--用户评论 END-->
 <script type="text/javascript">
 //<![CDATA[
-{foreach from=$lang.cmt_lang item=item key=key}
+{foreach $lang.cmt_lang as $key => $item}
 var {$key} = "{$item}";
 {/foreach}
 {literal}

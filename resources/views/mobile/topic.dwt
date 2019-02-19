@@ -29,12 +29,12 @@
 
     <!-- {if $topic.title_pic eq ''} -->
 
-    <!-- {foreach from=$sort_goods_arr item=sort key=sort_name} -->
+    <!-- {foreach $sort_goods_arr as $sort_name => $sort} -->
     <div class="box">
         <div class="box_1 clearfix">
             <h3><span>{$sort_name}</span></h3>
             <div class="centerPadd">
-                <!-- {foreach from=$sort item=goods} -->
+                <!-- {foreach $sort as $goods} -->
                 <div class="goodsItem">
                     <a href="{$goods.url}"><img src="{$goods.goods_thumb}" alt="{$goods.name|escape:html}"
                                                 class="goodsimg"/></a><br/>
@@ -55,11 +55,11 @@
     <!-- {else} -->
 
 
-    <!-- {foreach from=$sort_goods_arr item=sort key=sort_name} -->
+    <!-- {foreach $sort_goods_arr as $sort_name => $sort} -->
     <div class="clearfix">
         <h6>{$sort_name}</h6>
         <div class="sort_box">
-            <!-- {foreach from=$sort item=goods} -->
+            <!-- {foreach $sort as $goods} -->
             <div class="goodsbox">
                 <div class="imgbox"><a href="{$goods.url}"><img src="{$goods.goods_thumb}"
                                                                 alt="{$goods.name|escape:html}"/></a></div>

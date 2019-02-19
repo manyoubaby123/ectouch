@@ -34,7 +34,7 @@
                     <th bgcolor="#ffffff">{$lang.subtotal}</th>
                     <th bgcolor="#ffffff">{$lang.handle}</th>
                 </tr>
-                <!-- {foreach from=$goods_list item=goods} -->
+                <!-- {foreach $goods_list as $goods} -->
                 <tr>
                     <td bgcolor="#ffffff" align="center">
                         <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 -->
@@ -60,7 +60,7 @@
                         <a href="javascript:void(0)" onclick="setSuitShow({$goods.goods_id})" class="f6">{$goods.goods_name}<span
                             style="color:#FF0000;">（{$lang.remark_package}）</span></a>
                         <div id="suit_{$goods.goods_id}" style="display:none">
-                            <!-- {foreach from=$goods.package_goods_list item=package_goods_list} -->
+                            <!-- {foreach $goods.package_goods_list as $package_goods_list} -->
                             <a href="goods.php?id={$package_goods_list.goods_id}" target="_blank" class="f6">{$package_goods_list.goods_name}</a><br/>
                             <!-- {/foreach} -->
                         </div>
@@ -157,7 +157,7 @@
     <div class="flowBox">
         <h6><span>{$lang.label_collection}</span></h6>
         <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
-            <!-- {foreach from=$collection_goods item=goods} -->
+            <!-- {foreach $collection_goods as $goods} -->
             <tr>
                 <td bgcolor="#ffffff"><a href="goods.php?id={$goods.goods_id}" class="f6">{$goods.goods_name}</a></td>
                 <td bgcolor="#ffffff" align="center" width="100"><a href="javascript:addToCart({$goods.goods_id})"
@@ -206,7 +206,7 @@
             <h6><span>{$lang.goods_fittings}</span></h6>
             <form action="flow.php" method="post">
                 <div class="flowGoodsFittings clearfix">
-                    <!-- {foreach from=$fittings_list item=fittings} -->
+                    <!-- {foreach $fittings_list as $fittings} -->
                     <ul class="clearfix">
                         <li class="goodsimg">
                             <a href="{$fittings.url}" target="_blank"><img src="{$fittings.goods_thumb}"
@@ -234,7 +234,7 @@
     <div class="block">
         <div class="flowBox">
             <h6><span>{$lang.label_favourable}</span></h6>
-            <!-- {foreach from=$favourable_list item=favourable} -->
+            <!-- {foreach $favourable_list as $favourable} -->
             <form action="flow.php" method="post">
                 <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                     <tr>
@@ -261,7 +261,7 @@
                         <td bgcolor="#ffffff">
                             <span class="STYLE1">{$favourable.act_type_desc}</span>
                             <!-- {if $favourable.act_type eq 0} -->
-                            <!-- {foreach from=$favourable.gift item=gift} --><br/>
+                            <!-- {foreach $favourable.gift as $gift} --><br/>
                             <input type="checkbox" value="{$gift.id}" name="gift[]"/>
                             <a href="goods.php?id={$gift.id}" target="_blank" class="f6">{$gift.name}</a>
                             [{$gift.formated_price}]
@@ -312,7 +312,7 @@
                 /literal}
     </script>
     <!-- 如果有收货地址，循环显示用户的收获地址 -->
-    <!-- {foreach from=$consignee_list item=consignee key=sn} -->
+    <!-- {foreach $consignee_list as $sn => $consignee} -->
     <form action="flow.php" method="post" name="theForm" id="theForm" onsubmit="return checkConsignee(this)">
         <!-- #BeginLibraryItem "/Library/consignee.lbi" --><!-- #EndLibraryItem -->
     </form>
@@ -340,14 +340,14 @@
                     <th bgcolor="#ffffff">{$lang.number}</th>
                     <th bgcolor="#ffffff">{$lang.subtotal}</th>
                 </tr>
-                <!-- {foreach from=$goods_list item=goods} -->
+                <!-- {foreach $goods_list as $goods} -->
                 <tr>
                     <td bgcolor="#ffffff">
                         <!-- {if $goods.goods_id gt 0 && $goods.extension_code eq 'package_buy'} -->
                         <a href="javascript:void(0)" onclick="setSuitShow({$goods.goods_id})" class="f6">{$goods.goods_name}<span
                             style="color:#FF0000;">（{$lang.remark_package}）</span></a>
                         <div id="suit_{$goods.goods_id}" style="display:none">
-                            <!-- {foreach from=$goods.package_goods_list item=package_goods_list} -->
+                            <!-- {foreach $goods.package_goods_list as $package_goods_list} -->
                             <a href="goods.php?id={$package_goods_list.goods_id}" target="_blank" class="f6">{$package_goods_list.goods_name}</a><br/>
                             <!-- {/foreach} -->
                         </div>
@@ -429,7 +429,7 @@
                     <th bgcolor="#ffffff" width="15%">{$lang.free_money}</th>
                     <th bgcolor="#ffffff" width="15%">{$lang.insure_fee}</th>
                 </tr>
-                <!-- {foreach from=$shipping_list item=shipping} 循环配送方式 -->
+                <!-- {foreach $shipping_list as $shipping} 循环配送方式 -->
                 <tr>
                     <td bgcolor="#ffffff" valign="top"><input name="shipping" type="radio"
                                                               value="{$shipping.shipping_id}" {if $order.shipping_id eq
@@ -470,7 +470,7 @@
                     <th bgcolor="#ffffff">{$lang.describe}</th>
                     <th bgcolor="#ffffff" width="15%">{$lang.pay_fee}</th>
                 </tr>
-                <!-- {foreach from=$payment_list item=payment} -->
+                <!-- {foreach $payment_list as $payment} -->
                 <!-- 循环支付方式 -->
                 <tr>
                     <td valign="top" bgcolor="#ffffff"><input type="radio" name="payment" value="{$payment.pay_id}" {if
@@ -510,7 +510,7 @@
                     <td valign="top" bgcolor="#ffffff">&nbsp;</td>
                     <td valign="top" bgcolor="#ffffff">&nbsp;</td>
                 </tr>
-                <!-- {foreach from=$pack_list item=pack} 循环包装 -->
+                <!-- {foreach $pack_list as $pack} 循环包装 -->
                 <tr>
                     <td valign="top" bgcolor="#ffffff"><input type="radio" name="pack" value="{$pack.pack_id}" {if
                                                               $order.pack_id eq $pack.pack_id}checked="true" {/if}
@@ -554,7 +554,7 @@
                     <td bgcolor="#ffffff" valign="top">&nbsp;</td>
                     <td bgcolor="#ffffff" valign="top">&nbsp;</td>
                 </tr>
-                <!-- {foreach from=$card_list item=card} 循环贺卡 -->
+                <!-- {foreach $card_list as $card} 循环贺卡 -->
                 <tr>
                     <td valign="top" bgcolor="#ffffff"><input type="radio" name="card" value="{$card.card_id}" {if
                                                               $order.card_id eq $card.card_id}checked="true" {/if}
@@ -617,7 +617,7 @@
                                 style="border:1px solid #ccc;">
                             <option value="0" {if $order.bonus_id eq 0}selected{
                             /if}>{$lang.please_select}</option>
-                            <!-- {foreach from=$bonus_list item=bonus} -->
+                            <!-- {foreach $bonus_list as $bonus} -->
                             <option value="{$bonus.bonus_id}" {if $order.bonus_id eq $bonus.bonus_id}selected{
                             /if}>{$bonus.type_name}[{$bonus.bonus_money_formated}]</option>
                             <!-- {/foreach} -->
@@ -666,7 +666,7 @@
                 <!-- {if $how_oos_list} 是否使用缺货处理 -->
                 <tr>
                     <td bgcolor="#ffffff"><strong>{$lang.booking_process}:</strong></td>
-                    <td bgcolor="#ffffff"><!-- {foreach from=$how_oos_list key=how_oos_id item=how_oos_name} -->
+                    <td bgcolor="#ffffff"><!-- {foreach $how_oos_list as $how_oos_id => $how_oos_name} -->
                         <label>
                             <input name="how_oos" type="radio" value="{$how_oos_id}" {if $order.how_oos eq
                                    $how_oos_id}checked{/if} onclick="changeOOS(this)" />
@@ -716,9 +716,9 @@
         <!--{if $virtual_card}-->
         <div
             style="text-align:center;overflow:hidden;border:1px solid #E2C822;background:#FFF9D7;margin:10px;padding:10px 50px 30px;">
-            <!--{foreach from=$virtual_card item=vgoods}-->
+            <!--{foreach $virtual_card as $vgoods}-->
             <h3 style="color:#2359B1; font-size:12px;">{$vgoods.goods_name}</h3>
-            <!--{foreach from=$vgoods.info item=card}-->
+            <!--{foreach $vgoods.info as $card}-->
             <ul style="list-style:none;padding:0;margin:0;clear:both">
                 <!--{if $card.card_sn}-->
                 <li style="margin-right:50px;float:left;">

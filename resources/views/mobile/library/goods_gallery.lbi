@@ -6,7 +6,7 @@
         <div id="demo">
           <div id="demo1" style="float:left">
             <ul>
-             <!-- {foreach from=$pictures item=picture}-->
+             <!-- {foreach $pictures as $picture}-->
             <li><a href="gallery.php?id={$id}&amp;img={$picture.img_id}" target="_blank"><img src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt="{$goods.goods_name}" class="B_blue" /></a>
             </li>
             <!--{/foreach}-->

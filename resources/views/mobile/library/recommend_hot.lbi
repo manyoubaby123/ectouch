@@ -6,14 +6,14 @@
   <div class="itemTit Hot" id="itemHot">
       {if $cat_rec[3]}
       <h2><a href="javascript:void(0)" onclick="change_tab_style('itemHot', 'h2', this);get_cat_recommend(3, 0);">{$lang.all_goods}</a></h2>
-      {foreach from=$cat_rec[3] item=rec_data}
+      {foreach $cat_rec[3] as $rec_data}
       <h2 class="h2bg"><a href="javascript:void(0)" onclick="change_tab_style('itemHot', 'h2', this);get_cat_recommend(3, {$rec_data.cat_id})">{$rec_data.cat_name}</a></h2>
       {/foreach}
       {/if}
   </div>
   <div id="show_hot_area" class="clearfix goodsBox">
   <!-- {/if} -->
-  <!--{foreach from=$hot_goods item=goods}-->
+  <!--{foreach $hot_goods as $goods}-->
   <div class="goodsItem">
          <span class="hot"></span>
            <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></a><br />

@@ -4,7 +4,7 @@
  <div class="box_1">
   <h3><span>{$lang.price_grade}</span></h3>
   <div class="boxCenterList RelaArticle">
-    <!-- {foreach from=$price_grade item=grade} -->
+    <!-- {foreach $price_grade as $grade} -->
     <!-- {if $grade.selected} -->
     <img src="../images/alone.gif" style=" margin-right:8px;"><font class="f1 f5">{$grade.start} - {$grade.end} {if $grade.goods_num}({$grade.goods_num}){/if}</font><br />
     <!-- {else} -->

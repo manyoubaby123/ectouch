@@ -69,7 +69,7 @@
     <!-- {elseif $pager.display == 'grid'} -->
     <div class="centerPadd">
     <div class="clearfix goodsBox" style="border:none;">
-    <!--{foreach from=$goods_list item=goods}-->
+    <!--{foreach $goods_list as $goods}-->
     <!-- {if $goods.goods_id} -->
      <div class="goodsItem">
            <a href="{$goods.url}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}" class="goodsimg" /></a><br />
@@ -92,7 +92,7 @@
     </div>
     <!-- {elseif $pager.display == 'text'} -->
     <div class="goodsList">
-    <!--{foreach from=$goods_list item=goods}-->
+    <!--{foreach $goods_list as $goods}-->
      <ul class="clearfix bgcolor"<!--{if $smarty.foreach.goods_list.index mod 2 eq 0}-->id=""<!--{else}-->id="bgcolor"<!--{/if}-->>
     <li style="margin-right:15px;">
     <a href="javascript:;" id="compareLink" onClick="Compare.add({$goods.goods_id},'{$goods.goods_name|escape:"html"}','{$goods.type}')" class="f6">{$lang.compare}</a>
@@ -150,7 +150,7 @@ window.onload = function()
   Compare.init();
   fixpng();
 }
-{foreach from=$lang.compare_js item=item key=key}
+{foreach $lang.compare_js as $key => $item}
 {if $key neq 'button_compare'}
 var {$key} = "{$item}";
 {else}

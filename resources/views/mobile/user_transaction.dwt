@@ -47,7 +47,7 @@
                                                                                   class="inputBg"/><span
                                 style="color:#FF0000"> *</span></td>
                         </tr>
-                        {foreach from=$extend_info_list item=field}
+                        {foreach $extend_info_list as $field}
                         <!-- {if $field.id eq 6} -->
                         <tr>
                             <td width="28%" align="right" bgcolor="#FFFFFF">{$lang.passwd_question}：</td>
@@ -140,7 +140,7 @@
                         <th align="center" bgcolor="#FFFFFF">{$lang.bonus_status}</th>
                     </tr>
                     <!-- {if $bonus} -->
-                    <!--{foreach from=$bonus item=item}-->
+                    <!--{foreach $bonus as $item}-->
                     <tr>
                         <td align="center" bgcolor="#FFFFFF">{$item.bonus_sn|default:N/A}</td>
                         <td align="center" bgcolor="#FFFFFF">{$item.type_name}</td>
@@ -183,7 +183,7 @@
                         <td bgcolor="#ffffff">{$lang.order_status}</td>
                         <td bgcolor="#ffffff">{$lang.handle}</td>
                     </tr>
-                    <!--{foreach from=$orders item=item}-->
+                    <!--{foreach $orders as $item}-->
                     <tr>
                         <td align="center" bgcolor="#ffffff"><a
                             href="user.php?act=order_detail&order_id={$item.order_id}" class="f6">{$item.order_sn}</a>
@@ -250,7 +250,7 @@
                         <td bgcolor="#ffffff">{$lang.order_number}</td>
                         <td bgcolor="#ffffff">{$lang.handle}</td>
                     </tr>
-                    <!--{foreach from=$orders item=item}-->
+                    <!--{foreach $orders as $item}-->
                     <tr>
                         <td align="center" bgcolor="#ffffff"><a
                             href="user.php?act=order_detail&order_id={$item.order_id}">{$item.order_sn}</a></td>
@@ -318,8 +318,8 @@
                     <tr>
                         <td align="right" bgcolor="#ffffff">{$lang.virtual_card_info}：</td>
                         <td colspan="3" align="left" bgcolor="#ffffff">
-                            <!--{foreach from=$virtual_card item=vgoods}-->
-                            <!--{foreach from=$vgoods.info item=card}-->
+                            <!--{foreach $virtual_card as $vgoods}-->
+                            <!--{foreach $vgoods.info as $card}-->
                             <!--{if $card.card_sn}-->{$lang.card_sn}:<span style="color:red;">{$card.card_sn}</span>
                             <!--{/if}-->
                             <!--{if $card.card_password}-->{$lang.card_password}:<span style="color:red;">{$card.card_password}</span>
@@ -349,7 +349,7 @@
                         <th width="9%" align="center" bgcolor="#ffffff">{$lang.number}</th>
                         <th width="20%" align="center" bgcolor="#ffffff">{$lang.subtotal}</th>
                     </tr>
-                    <!-- {foreach from=$goods_list item=goods} -->
+                    <!-- {foreach $goods_list as $goods} -->
                     <tr>
                         <td bgcolor="#ffffff">
                             <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 -->
@@ -363,7 +363,7 @@
                             <a href="javascript:void(0)" onclick="setSuitShow({$goods.goods_id})" class="f6">{$goods.goods_name}<span
                                 style="color:#FF0000;">（礼包）</span></a>
                             <div id="suit_{$goods.goods_id}" style="display:none">
-                                <!-- {foreach from=$goods.package_goods_list item=package_goods_list} -->
+                                <!-- {foreach $goods.package_goods_list as $package_goods_list} -->
                                 <a href="goods.php?id={$package_goods_list.goods_id}" target="_blank" class="f6">{$package_goods_list.goods_name}</a><br/>
                                 <!-- {/foreach} -->
                             </div>
@@ -556,7 +556,7 @@
                             <form name="payment" method="post" action="user.php">
                                 {$lang.change_payment}:
                                 <select name="pay_id">
-                                    <!--{foreach from=$payment_list item=payment}-->
+                                    <!--{foreach $payment_list as $payment}-->
                                     <option value="{$payment.pay_id}">
                                         {$payment.pay_name}({$lang.pay_fee}:{$payment.format_pay_fee})
                                     </option>
@@ -711,7 +711,7 @@
                             <td bgcolor="#ffffff" width="60%">{$lang.pay_desc}</td>
                             <td bgcolor="#ffffff" width="17%">{$lang.pay_fee}</td>
                         </tr>
-                        <!-- {foreach from=$payment item=list} -->
+                        <!-- {foreach $payment as $list} -->
                         <tr>
                             <td bgcolor="#ffffff" align="left">
                                 <input type="radio" name="payment_id" value="{$list.pay_id}"/>{$list.pay_name}
@@ -763,7 +763,7 @@
                         <td bgcolor="#ffffff">{$lang.money}</td>
                         <td bgcolor="#ffffff">{$lang.change_desc}</td>
                     </tr>
-                    <!--{foreach from=$account_log item=item}-->
+                    <!--{foreach $account_log as $item}-->
                     <tr>
                         <td align="center" bgcolor="#ffffff">{$item.change_time}</td>
                         <td align="center" bgcolor="#ffffff">{$item.type}</td>
@@ -790,7 +790,7 @@
                         <td bgcolor="#ffffff">{$lang.is_paid}</td>
                         <td bgcolor="#ffffff">{$lang.handle}</td>
                     </tr>
-                    <!--{foreach from=$account_log item=item}-->
+                    <!--{foreach $account_log as $item}-->
                     <tr>
                         <td align="center" bgcolor="#ffffff">{$item.add_time}</td>
                         <td align="left" bgcolor="#ffffff">{$item.type}</td>
@@ -841,7 +841,7 @@
                         {
                             /literal}
                 </script>
-                <!-- {foreach from=$consignee_list item=consignee key=sn} -->
+                <!-- {foreach $consignee_list as $sn => $consignee} -->
                 <form action="user.php" method="post" name="theForm" onsubmit="return checkConsignee(this)">
                     <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                         <tr>
@@ -850,7 +850,7 @@
                                                                                    id="selCountries_{$sn}"
                                                                                    onchange="region.changed(this, 1, 'selProvinces_{$sn}')">
                                 <option value="0">{$lang.please_select}{$name_of_region[0]}</option>
-                                <!-- {foreach from=$country_list item=country} -->
+                                <!-- {foreach $country_list as $country} -->
                                 <option value="{$country.region_id}" {if $consignee.country eq
                                         $country.region_id}selected{
                                 /if}>{$country.region_name}</option>
@@ -859,7 +859,7 @@
                                 <select name="province" id="selProvinces_{$sn}"
                                         onchange="region.changed(this, 2, 'selCities_{$sn}')">
                                     <option value="0">{$lang.please_select}{$name_of_region[1]}</option>
-                                    <!-- {foreach from=$province_list.$sn item=province} -->
+                                    <!-- {foreach $province_list.$sn as $province} -->
                                     <option value="{$province.region_id}" {if $consignee.province eq
                                             $province.region_id}selected{
                                     /if}>{$province.region_name}</option>
@@ -868,7 +868,7 @@
                                 <select name="city" id="selCities_{$sn}"
                                         onchange="region.changed(this, 3, 'selDistricts_{$sn}')">
                                     <option value="0">{$lang.please_select}{$name_of_region[2]}</option>
-                                    <!-- {foreach from=$city_list.$sn item=city} -->
+                                    <!-- {foreach $city_list.$sn as $city} -->
                                     <option value="{$city.region_id}" {if $consignee.city eq $city.region_id}selected{
                                     /if}>{$city.region_name}</option>
                                     <!-- {/foreach} -->
@@ -876,7 +876,7 @@
                                 <select name="district" id="selDistricts_{$sn}" {if
                                         !$district_list.$sn}style="display:none" {/if}>
                                 <option value="0">{$lang.please_select}{$name_of_region[3]}</option>
-                                <!-- {foreach from=$district_list.$sn item=district} -->
+                                <!-- {foreach $district_list.$sn as $district} -->
                                 <option value="{$district.region_id}" {if $consignee.district eq
                                         $district.region_id}selected{
                                 /if}>{$district.region_name}</option>
@@ -1079,7 +1079,7 @@
                     <tr>
                         <td width="30%" valign="top" bgcolor="#FFFFFF">
                             <table border="0">
-                                <!--{foreach from=$bbs_points item=points}-->
+                                <!--{foreach $bbs_points as $points}-->
                                 <tr>
                                     <th>{$points.title}:</th>
                                     <td width="120" style="border-bottom:1px solid #DADADA;">{$points.value}</td>
@@ -1107,7 +1107,7 @@
                 <br/>
                 <b>{$lang.rule_list}:</b>
                 <ul class="point clearfix">
-                    <!-- {foreach from=$rule_list item=rule} -->
+                    <!-- {foreach $rule_list as $rule} -->
                     <li><font class="f1">·</font>"{$rule.from}" {$lang.transform} "{$rule.to}" {$lang.rate_is}
                         {$rule.rate}
                         <!-- {/foreach} -->
@@ -1124,7 +1124,7 @@
                         <tr>
                             <td>
                                 <select name="rule_index" onchange="changeRule()">
-                                    <!--{foreach from=$rule_list item=rule key=key}-->
+                                    <!--{foreach $rule_list as $key => $rule}-->
                                     <option value="{$key}">{$rule.from}->{$rule.to}</option>
                                     <!--{/foreach}-->
                                 </select>

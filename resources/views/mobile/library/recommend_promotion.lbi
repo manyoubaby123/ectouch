@@ -3,7 +3,7 @@
 <div id="sales" class="f_l clearfix">
       <h1><a href="../search.php?intro=promotion"><img src="images/more.gif" /></a></h1>
        <div class="clearfix goodBox">
-         <!--{foreach from=$promotion_goods item=goods name="promotion_foreach"}-->
+         <!--{foreach $promotion_goods as $goods name="promotion_foreach"}-->
          {if $smarty.foreach.promotion_foreach.index <= 3}
            <div class="goodList">
            <a href="{$goods.url}"><img src="{$goods.thumb}" border="0" alt="{$goods.name|escape:html}"/></a><br />

@@ -9,7 +9,7 @@
             <h3><span>{$lang.gb_goods_name}</span></h3>
             <div class="boxCenterList">
                 <!-- {if $gb_list} 如果有团购活动 -->
-                <!-- {foreach from=$gb_list item=group_buy} 循环团购活动开始 -->
+                <!-- {foreach $gb_list as $group_buy} 循环团购活动开始 -->
                 <ul class="group clearfix">
                     <li style="margin-right:8px; text-align:center;">
                         <a href="{$group_buy.url}"><img src="{$group_buy.goods_thumb}" border="0"
@@ -26,7 +26,7 @@
                                 <th width="29%" bgcolor="#FFFFFF">{$lang.gb_ladder_amount}</th>
                                 <th width="71%" bgcolor="#FFFFFF">{$lang.gb_ladder_price}</th>
                             </tr>
-                            <!-- {foreach from=$group_buy.price_ladder item=item} -->
+                            <!-- {foreach $group_buy.price_ladder as $item} -->
                             <tr>
                                 <td width="29%" bgcolor="#FFFFFF">{$item.amount}</td>
                                 <td width="71%" bgcolor="#FFFFFF">{$item.formated_price}</td>

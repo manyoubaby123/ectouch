@@ -9,7 +9,7 @@
             <!--{if $brands.1}-->
             <div class="screeBox">
                 <strong>{$lang.brand}：</strong>
-                <!--{foreach from=$brands item=brand}-->
+                <!--{foreach $brands as $brand}-->
                 <!-- {if $brand.selected} -->
                 <span>{$brand.brand_name}</span>
                 <!-- {else} -->
@@ -21,7 +21,7 @@
             <!--{if $price_grade.1}-->
             <div class="screeBox">
                 <strong>{$lang.price}：</strong>
-                <!--{foreach from=$price_grade item=grade}-->
+                <!--{foreach $price_grade as $grade}-->
                 <!-- {if $grade.selected} -->
                 <span>{$grade.price_range}</span>
                 <!-- {else} -->
@@ -30,10 +30,10 @@
                 <!--{/foreach}-->
             </div>
             <!--{/if}-->
-            <!--{foreach from=$filter_attr_list item=filter_attr}-->
+            <!--{foreach $filter_attr_list as $filter_attr}-->
             <div class="screeBox">
                 <strong>{$filter_attr.filter_attr_name|escape:html} :</strong>
-                <!--{foreach from=$filter_attr.attr_list item=attr}-->
+                <!--{foreach $filter_attr.attr_list as $attr}-->
                 <!-- {if $attr.selected} -->
                 <span>{$attr.attr_value}</span>
                 <!-- {else} -->
@@ -59,7 +59,7 @@
                 <h2><a href="javascript:void(0)"
                        onclick="change_tab_style('itemBest', 'h2', this);get_cat_recommend(1, 0);">{$lang.all_goods}</a>
                 </h2>
-                {foreach from=$cat_rec[1] item=rec_data}
+                {foreach $cat_rec[1] as $rec_data}
                 <h2 class="h2bg"><a href="javascript:void(0)"
                                     onclick="change_tab_style('itemBest', 'h2', this);get_cat_recommend(1, {$rec_data.cat_id})">{$rec_data.cat_name}</a>
                 </h2>
@@ -68,7 +68,7 @@
             </div>
             <div id="show_best_area" class="clearfix goodsBox">
                 <!-- {/if} -->
-                <!--{foreach from=$best_goods item=goods}-->
+                <!--{foreach $best_goods as $goods}-->
                 <div class="goodsItem">
                     <span class="best"></span>
                     <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg"/></a><br/>

@@ -5,7 +5,7 @@
   <div class="boxCenterList">
     {$info}<br>
     {if $member}
-    {foreach from=$member item=val}
+    {foreach $member as $val}
       {$val.user_name} 
     {/foreach}
     {/if}

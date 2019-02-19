@@ -33,13 +33,13 @@
                 <div class="f_r" style="width:350px;">
                     <h5><span>{$lang.your_notice}</span></h5>
                     <div class="blank"></div>
-                    <!--{foreach from=$prompt item=item}-->
+                    <!--{foreach $prompt as $item}-->
                     {$item.text}<br/>
                     <!--{/foreach}-->
                     {$lang.last_month_order}{$info.order_count}{$lang.order_unit}<br/>
                     <!-- {if $info.shipped_order} -->
                     {$lang.please_received}<br/>
-                    <!-- {foreach from=$info.shipped_order item=item}-->
+                    <!-- {foreach $info.shipped_order as $item}-->
                     <a href="user.php?act=order_detail&order_id={$item.order_id}" style="color:#006bd0;">{$item.order_sn}</a>
                     <!-- {/foreach} -->
                     <!-- {/if}-->
@@ -50,7 +50,7 @@
                 <!-- {if $action eq 'message_list'} -->
                 <h5><span>{$lang.label_message}</span></h5>
                 <div class="blank"></div>
-                <!--{foreach from=$message_list item=message key=key} -->
+                <!--{foreach $message_list as $key => $message} -->
                 <div class="f_l">
                     <b>{$message.msg_type}:</b>&nbsp;&nbsp;<font class="f4">{$message.msg_title}</font>
                     ({$message.msg_time})
@@ -142,7 +142,7 @@
                 <!-- {if $action eq 'comment_list'} -->
                 <h5><span>{$lang.label_comment}</span></h5>
                 <div class="blank"></div>
-                <!--{foreach from=$comment_list item=comment} -->
+                <!--{foreach $comment_list as $comment} -->
                 <div class="f_l">
                     <b>{if $comment.comment_type eq
                         '0'}{$lang.goods_comment}{else}{$lang.article_comment}{/if}: </b><font class="f4">{$comment.cmt_name}</font>&nbsp;&nbsp;({$comment.formated_add_time})
@@ -171,7 +171,7 @@
                 <h5><span>{$lang.label_tag}</span></h5>
                 <div class="blank"></div>
                 <!-- {if $tags} -->
-                <!-- 标签云开始 {foreach from=$tags item=tag}-->
+                <!-- 标签云开始 {foreach $tags as $tag}-->
                 <a href="search.php?keywords={$tag.tag_words|escape:url}" class="f6">{$tag.tag_words|escape:html}</a> <a
                 href="user.php?act=act_del_tag&amp;tag_words={$tag.tag_words|escape:url}"
                 onclick="if (!confirm('{$lang.confirm_drop_tag}')) return false;" title="{$lang.drop}"><img
@@ -193,7 +193,7 @@
                         <th width="30%" bgcolor="#ffffff">{$lang.price}</th>
                         <th width="35%" bgcolor="#ffffff">{$lang.handle}</th>
                     </tr>
-                    <!--{foreach from=$goods_list item=goods}-->
+                    <!--{foreach $goods_list as $goods}-->
                     <tr>
                         <td bgcolor="#ffffff"><a href="{$goods.url}" class="f6">{$goods.goods_name|escape:html}</a></td>
                         <td bgcolor="#ffffff"><!-- {if $goods.promote_price neq ""} -->
@@ -359,7 +359,7 @@
                     width = "15%"
                     bgcolor = "#ffffff" > {$lang.handle} < /td>
                         < /tr>
-                        <!-- {foreach from=$booking_list item=item} -->
+                        <!-- {foreach $booking_list as $item} -->
                         < tr >
                         < td
                     align = "left"
@@ -472,7 +472,7 @@
                         <td bgcolor="#ffffff">{$lang.level_point}</td>
                         <td bgcolor="#ffffff">{$lang.level_money}</td>
                     </tr>
-                    <!-- {foreach from=$affdb key=level item=val name=affdb} -->
+                    <!-- {foreach $affdb as $level => $val name=affdb} -->
                     <tr align="center">
                         <td bgcolor="#ffffff">{$level}</td>
                         <td bgcolor="#ffffff">{$val.num}</td>
@@ -498,7 +498,7 @@
                         <td bgcolor="#ffffff">{$lang.affiliate_mode}</td>
                         <td bgcolor="#ffffff">{$lang.affiliate_status}</td>
                     </tr>
-                    <!-- {foreach from=$logdb item=val name=logdb} -->
+                    <!-- {foreach $logdb as $val name=logdb} -->
                     <tr align="center">
                         <td bgcolor="#ffffff">{$val.order_sn}</td>
                         <td bgcolor="#ffffff">{$val.money}</td>
@@ -600,7 +600,7 @@
                         <td bgcolor="#ffffff">{$lang.affiliate_view}</td>
                         <td bgcolor="#ffffff">{$lang.affiliate_code}</td>
                     </tr>
-                    <!-- {foreach from=$types item=val name=types} -->
+                    <!-- {foreach $types as $val name=types} -->
                     <tr align="center">
                         <td bgcolor="#ffffff" class="types">
                             <script

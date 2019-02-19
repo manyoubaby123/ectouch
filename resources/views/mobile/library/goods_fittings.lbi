@@ -4,7 +4,7 @@
  <div class="box_1">
   <h3><span>{$lang.accessories_releate}</span></h3>
   <div class="boxCenterList clearfix">
-    <!--{foreach from=$fittings item=goods}-->
+    <!--{foreach $fittings as $goods}-->
     <ul class="clearfix">
       <li class="goodsimg">
       <a href="{$goods.url}" target="_blank"><img src="{$goods.goods_thumb}" alt="{$goods.name|escape:html}" class="B_blue" /></a>

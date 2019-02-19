@@ -3,7 +3,7 @@
 <div class="block">
     <h5><span>{$lang.package_list}</span></h5>
     <div class="blank"></div>
-    <!-- {foreach from=$list item=val} -->
+    <!-- {foreach $list as $val} -->
     <a name="{$val.act_id}"></a>
     <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
         <tr>
@@ -33,7 +33,7 @@
         <tr>
             <th bgcolor="#ffffff">{$lang.package_goods}:</th>
             <td colspan="3" bgcolor="#ffffff">
-                <!-- {foreach from=$val.goods_list item=goods} -->
+                <!-- {foreach $val.goods_list as $goods} -->
                 <a href="goods.php?id={$goods.goods_id}" target="_blank" class="f6"><span class="f_user_info"><u>{$goods.goods_name}</u></span></a>
                 &nbsp;X &nbsp;{$goods.goods_number}<br/>
                 <!-- {/foreach} -->

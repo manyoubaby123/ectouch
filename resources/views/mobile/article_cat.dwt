@@ -17,7 +17,7 @@
                         <th bgcolor="#ffffff">{$lang.article_author}</th>
                         <th bgcolor="#ffffff">{$lang.article_add_time}</th>
                     </tr>
-                    <!-- {foreach from=$artciles_list item=article} -->
+                    <!-- {foreach $artciles_list as $article} -->
                     <tr>
                         <td bgcolor="#ffffff"><a href="{$article.url}" title="{$article.title|escape:html}" class="f6">{$article.short_title}</a>
                         </td>

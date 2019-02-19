@@ -4,7 +4,7 @@
   <div class="box_2 centerPadd">
     <div class="itemTit Hot" id="itemHot"></div>
     <div id="show_hot_area" class="clearfix goodsBox">
-    <!--{foreach from=$hot_goods item=goods}-->
+    <!--{foreach $hot_goods as $goods}-->
       <div class="goodsItem">
         <span class="hot"></span>
         <a href="{$goods.url}"><img src="{$goods.thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></a><br />

@@ -4,7 +4,7 @@
  <div class="box_1">
   <h3><span>{$filter_attr_name}</span></h3>
   <div class="boxCenterList RelaArticle">
-    <!-- {foreach from=$filter_attr_list item=attr} -->
+    <!-- {foreach $filter_attr_list as $attr} -->
     {if $attr.selected}
     <a href="{$attr.url}">{$attr.attr_value}{if $attr.goods_num}({$attr.goods_num}){/if}</a><br />
     {else}

@@ -126,7 +126,7 @@
                         <span style="color:#FF0000" id="conform_password_notice"> *</span>
                     </td>
                 </tr>
-                <!-- {foreach from=$extend_info_list item=field} -->
+                <!-- {foreach $extend_info_list as $field} -->
                 <!-- {if $field.id eq 6} -->
                 <tr>
                     <td align="right">{$lang.passwd_question}</td>

@@ -3,7 +3,7 @@
 <div class="box">
  <div class="box_1">
   <div id="category_tree">
-    <!-- {foreach from=$cat_list item=cat} -->
+    <!-- {foreach $cat_list as $cat} -->
      <dl>
      <dt><a href="{$cat.url}">{$cat.cat_name|escape:html} {if $cat.goods_num}({$cat.goods_num}){/if}</a></dt>
      </dl>

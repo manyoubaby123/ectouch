@@ -11,8 +11,8 @@
                     <div class="blank"></div>
                     <!--{if $virtual_card}-->
                     <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
-                        <!--{foreach from=$virtual_card item=vgoods}-->
-                        <!--{foreach from=$vgoods.info item=card}-->
+                        <!--{foreach $virtual_card as $vgoods}-->
+                        <!--{foreach $vgoods.info as $card}-->
                         <tr>
                             <td bgcolor="#FFFFFF">{$vgoods.goods_name}</td>
                             <td bgcolor="#FFFFFF">

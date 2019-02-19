@@ -9,7 +9,7 @@
 body{margin:0;}
 </style>
 <script type="text/javascript">
-{foreach from=$lang.gallery_js item=lang_js key=key}
+{foreach $lang.gallery_js as $key => $lang_js}
 var {$key} = '{$lang_js}';
 {/foreach}
 </script>

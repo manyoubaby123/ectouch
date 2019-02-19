@@ -4,7 +4,7 @@
   <h3><span>{$lang.new_price}</span></h3>
   <div class="boxCenterList RelaArticle">
     <ul class="clearfix">
-    <!--{foreach from=$price_list item=item}-->
+    <!--{foreach $price_list as $item}-->
     <li>{$item.user_name}&nbsp;&nbsp;{$item.bid_price}</li>
     <!--{/foreach}-->
     </ul>

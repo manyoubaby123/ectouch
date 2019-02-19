@@ -53,7 +53,7 @@
                         </tr>
                         <!--{/if}-->
                         <!--{if $goods_type_selected > 0}-->
-                        <!--{foreach from=$goods_attributes item=item}-->
+                        <!--{foreach $goods_attributes as $item}-->
                         <!--{if $item.type eq 1}-->
                         <tr>
                             <td>{$item.attr}：</td>
@@ -142,7 +142,7 @@
                     <input type="image" name="imageField" src="../images/bnt_go.gif" alt="go"/>
                     <input type="hidden" name="page" value="{$pager.page}"/>
                     <input type="hidden" name="display" value="{$pager.display}" id="display"/>
-                    <!--{foreach from=$pager.search key=key item=item}-->
+                    <!--{foreach $pager.search as $key => $item}-->
                     {if $key neq "sort" and $key neq "order"}
                     {if $key eq 'keywords'}
                     <input type="hidden" name="{$key}" value="{$item|escape:decode_url}"/>
@@ -205,7 +205,7 @@
                 <!-- {elseif $pager.display == 'grid'} -->
                 <div class="centerPadd">
                     <div class="clearfix goodsBox" style="border:none;">
-                        <!--{foreach from=$goods_list item=goods}-->
+                        <!--{foreach $goods_list as $goods}-->
                         <!-- {if $goods.goods_id} -->
                         <div class="goodsItem">
                             <a href="{$goods.url}"><img src="{$goods.goods_thumb}" alt="{$goods.goods_name}"
@@ -231,7 +231,7 @@
                 </div>
                 <!-- {elseif $pager.display == 'text'} -->
                 <div class="goodsList">
-                    <!--{foreach from=$goods_list item=goods}-->
+                    <!--{foreach $goods_list as $goods}-->
                     <ul class="clearfix bgcolor"<!--{if $smarty.foreach.goods_list.index mod 2 eq 0}-->id=""
                     <!--{else}--> id="bgcolor"<!--{/if}--> >
                     <li style="margin-right:15px;">

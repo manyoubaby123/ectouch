@@ -67,11 +67,11 @@
                         </dd>
                     </li>
                     <!-- {* 开始循环所有可选属性 *} -->
-                    <!-- {foreach from=$specification item=spec key=spec_key} 循环规格开始 -->
+                    <!-- {foreach $specification as $spec_key => $spec} 循环规格开始 -->
                     <li class="padd loop">
                         <strong>{$spec.name}:</strong><br/>
                         <!-- {if $cfg.goodsattr_style eq 1} 规格显示方式：单选按钮 -->
-                        <!-- {foreach from=$spec.values item=value key=key} -->
+                        <!-- {foreach $spec.values as $key => $value} -->
                         <label for="spec_value_{$value.id}">
                             <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}"
                                    {if $key eq 0}checked{/if} />
@@ -79,7 +79,7 @@
                         <!-- {/foreach} -->
                         <!-- {else} 规格显示方式：下拉列表 -->
                         <select name="spec_{$spec_key}" style="border:1px solid #ccc;">
-                            <!-- {foreach from=$spec.values item=value key=key} -->
+                            <!-- {foreach $spec.values as $key => $value} -->
                             <option label="{$value.label}" value="{$value.id}">{$value.label}</option>
                             <!-- {/foreach} -->
                         </select>
@@ -117,11 +117,11 @@
 
                 <blockquote>
                     <table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#dddddd">
-                        <!-- {foreach from=$properties item=property_group key=key} -->
+                        <!-- {foreach $properties as $key => $property_group} -->
                         <tr>
                             <th colspan="2" bgcolor="#FFFFFF">{$key|escape}</th>
                         </tr>
-                        <!-- {foreach from=$property_group item=property} -->
+                        <!-- {foreach $property_group as $property} -->
                         <tr>
                             <td bgcolor="#FFFFFF" align="left" width="30%" class="f1">[{$property.name|escape:html}]
                             </td>

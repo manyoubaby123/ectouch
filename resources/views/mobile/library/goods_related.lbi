@@ -4,7 +4,7 @@
      <div class="box_1">
       <h3><span>{$lang.releate_goods}</span></h3>
       <div class="boxCenterList clearfix">
-      <!--{foreach from=$related_goods item=releated_goods_data}-->
+      <!--{foreach $related_goods as $releated_goods_data}-->
         <ul class="clearfix">
           <li class="goodsimg"><a href="{$releated_goods_data.url}"><img src="{$releated_goods_data.goods_thumb}" alt="{$releated_goods_data.goods_name}" class="B_blue" /></a></li>
           <li>

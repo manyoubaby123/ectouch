@@ -8,12 +8,12 @@
   <h3><span>{$lang.online_vote}</span></h3>
   <div  class="boxCenterList">
     <form id="formvote" name="ECS_VOTEFORM" method="post" action="javascript:submit_vote()">
-    <!-- {foreach from=$vote item=title} -->
+    <!-- {foreach $vote as $title} -->
      {$title.vote_name}<br />
      ({$lang.vote_times}:{$title.vote_count})<br />
      <!-- {/foreach} -->
-     <!-- {foreach from=$vote item=title} -->
-          <!-- {foreach from=$title.options item=item} -->
+     <!-- {foreach $vote as $title} -->
+          <!-- {foreach $title.options as $item} -->
             <!-- {if $title.can_multi eq 0} -->
             <input type="checkbox" name="option_id" value="{$item.option_id}" />
             {$item.option_name} ({$item.percent}%)<br />

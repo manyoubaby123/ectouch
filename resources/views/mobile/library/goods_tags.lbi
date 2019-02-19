@@ -6,7 +6,7 @@
       <div class="boxCenterList clearfix ie6">
        <form name="tagForm" action="javascript:;" onSubmit="return submitTag(this)" id="tagForm">
         <p id="ECS_TAGS" style="margin-bottom:5px;">
-          <!-- 标记{foreach from=$tags item=tag}-->
+          <!-- 标记{foreach $tags as $tag}-->
           <a href="search.php?keywords={$tag.tag_words|escape:url}" style="color:#006ace; text-decoration:none; margin-right:5px;">{$tag.tag_words|escape:html}[{$tag.tag_count}]</a>
           <!-- 结束标记{/foreach} -->
         </p>
